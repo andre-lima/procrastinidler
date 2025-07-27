@@ -11,8 +11,14 @@ function App() {
       <NavBar />
 
       <Grid columns="2">
-        <TodosList todoSelector={(state: GameState) => state.todos} />
-        <TodosList todoSelector={(state: GameState) => state.completed} />
+        <TodosList
+          title="Todos"
+          todoSelector={(state: GameState) => state.todos}
+        />
+        <TodosList
+          title="Completed"
+          todoSelector={(state: GameState) => state.completed}
+        />
       </Grid>
 
       {/* <Box maxWidth="240px">

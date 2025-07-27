@@ -14,8 +14,10 @@ const MOCK_TODO = {
 };
 
 const renderComponent = () => {
-  render(<TodoCard {...MOCK_TODO} />);
+  return render(<TodoCard {...MOCK_TODO} />);
 };
+
+const completeTodoSpy = vi.spyOn(useGameStore.getState(), 'completeTodo');
 
 describe('TodoCard component', () => {
   beforeEach(() => {});
@@ -27,8 +29,6 @@ describe('TodoCard component', () => {
   });
 
   it('should complete when clicked enough times', async () => {
-    const completeTodoSpy = vi.spyOn(useGameStore.getState(), 'completeTodo');
-
     renderComponent();
 
     const card = screen.getByRole('button');
