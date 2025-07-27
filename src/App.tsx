@@ -1,6 +1,6 @@
 import '@radix-ui/themes/styles.css';
 import './App.scss';
-import { Theme } from '@radix-ui/themes';
+import { Grid, Theme } from '@radix-ui/themes';
 import type { GameState } from './types';
 import { TodosList } from './components/TodosList/TodosList';
 import { NavBar } from './components/NavBar/NavBar';
@@ -9,15 +9,11 @@ function App() {
   return (
     <Theme>
       <NavBar />
-      <div>
+
+      <Grid columns="2">
         <TodosList todoSelector={(state: GameState) => state.todos} />
-      </div>
-
-      <hr />
-
-      <div>
         <TodosList todoSelector={(state: GameState) => state.completed} />
-      </div>
+      </Grid>
 
       {/* <Box maxWidth="240px">
         <Card>
