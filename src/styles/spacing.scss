@@ -1,0 +1,36 @@
+:root {
+  --base-space: 5px;
+  --space-xxs: calc(var(--base-space) / 2);
+  --space-xs: var(--base-space);
+  --space-sm: calc(var(--base-space) + var(--base-space));
+  --space-md: calc(var(--space-sm) + var(--base-space));
+  --space-lg: calc(var(--space-md) + var(--base-space));
+  --space-xl: calc(var(--space-lg) + var(--base-space));
+  --space-xxl: calc(var(--space-xl) + var(--base-space) * 2);
+
+  --base-text-size: 5px;
+  --text-xs: var(--base-text-size);
+  --text-sm: calc(var(--base-text-size) + var(--base-text-size));
+  --text-md: calc(var(--text-sm) + var(--base-text-size));
+  --text-lg: calc(var(--text-md) + var(--base-text-size));
+  --text-xl: calc(var(--text-lg) + var(--base-text-size) * 2);
+  --text-xxl: calc(var(--text-xl) + var(--base-text-size) * 2);
+
+  --secondary-base-text-size: 9px;
+  --secondary-text-xs: var(--secondary-base-text-size);
+  --secondary-text-sm: calc(
+    var(--secondary-base-text-size) + var(--secondary-base-text-size)
+  );
+  --secondary-text-md: calc(
+    var(--secondary-text-sm) + var(--secondary-base-text-size)
+  );
+  --secondary-text-lg: calc(
+    var(--secondary-text-md) + var(--secondary-base-text-size)
+  );
+  --secondary-text-xl: calc(
+    var(--secondary-text-lg) + var(--secondary-base-text-size) * 2
+  );
+  --secondary-text-xxl: calc(
+    var(--secondary-text-xl) + var(--secondary-base-text-size) * 2
+  );
+}
