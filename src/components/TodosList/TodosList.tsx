@@ -1,16 +1,14 @@
 import { Box, Flex, Heading } from '@radix-ui/themes';
 import { useGameStore } from '../../store/gameStore';
-import type { GameState, Todo } from '../../types';
+import type { GameState } from '../../types';
 import { TodoCard } from '../TodoCard/TodoCard';
+import { useShallow } from 'zustand/shallow';
 
-export const TodosList = ({
-  title,
-  todoSelector,
-}: {
-  title: string;
-  todoSelector: (state: GameState) => Todo[];
-}) => {
-  const items = useGameStore(todoSelector);
+export const TodosList = ({ title }: { title: string }) => {
+  const itemIds = useGameStore(
+    useShallow((state: GameState) => Object.keys(state.todos))
+  );
+  console.log(itemIds);
 
   return (
     <Box
@@ -21,12 +19,12 @@ export const TodosList = ({
       }}
     >
       <Heading size="4" as="h2" mb="4">
-        {title} ({items.length})
+        {title} ({itemIds.length})
       </Heading>
 
       <Flex direction="column" gap="2">
-        {items.map((item) => (
-          <TodoCard key={item.id} {...item} />
+        {itemIds.map((id) => (
+          <TodoCard key={id} id={id} />
         ))}
       </Flex>
     </Box>

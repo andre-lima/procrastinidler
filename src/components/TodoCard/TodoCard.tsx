@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Category, type Todo } from '../../types';
+import { Category } from '../../types';
 import { useGameStore } from '../../store/gameStore';
 import { config } from '../../game/config';
 import {
@@ -16,17 +16,14 @@ import {
 import { DifficultyMeter } from './components/DifficultyMeter';
 import { PiEyeBold } from 'react-icons/pi';
 import { PieChart } from 'react-minimal-pie-chart';
+import { useShallow } from 'zustand/shallow';
 
-export const TodoCard = ({
-  title,
-  category,
-  difficulty,
-  deadline,
-  id,
-  completed,
-}: Todo) => {
+export const TodoCard = ({ id }: { id: string }) => {
   const [clickCount, setClickCount] = useState(0);
   const { completeTodo } = useGameStore();
+  const { title, category, difficulty, deadline, completed } = useGameStore(
+    useShallow((state) => state.todos[id])
+  );
 
   const clicked = () => {
     const newCount = clickCount + 1;
@@ -35,9 +32,7 @@ export const TodoCard = ({
       setClickCount(newCount);
 
       if (newCount >= difficulty * config.clicksPerDifficultyLevel) {
-        setTimeout(() => {
-          completeTodo(id);
-        }, 200);
+        completeTodo(id);
       }
     }
   };
@@ -106,34 +101,33 @@ export const TodoCard = ({
         </Box>
         {deadline && (
           <Box gridArea="deadline">
-            <Container align="left" width="22px">
+            {/* <Container align="left" width="22px">
               <PieChart
                 data={[
                   { title: 'One', value: deadline, color: getDeadlineColor() },
                   { title: 'One', value: 100 - deadline, color: 'transparent' },
                 ]}
               />
-            </Container>
+            </Container> */}
           </Box>
         )}
         <Box gridArea="difficulty">
           <DifficultyMeter difficulty={difficulty} />
         </Box>
-        {!completed && (
-          <Box gridArea="progress">
-            <Flex>
-              <Box flexGrow="1">
-                <Text size="2" color="gray">
-                  Progress
-                </Text>
-              </Box>
+
+        <Box gridArea="progress">
+          <Flex>
+            <Box flexGrow="1">
               <Text size="2" color="gray">
-                {progressPercent}%
+                Progress
               </Text>
-            </Flex>
-            <Progress color="green" value={progressPercent} variant="soft" />
-          </Box>
-        )}
+            </Box>
+            <Text size="2" color="gray">
+              {progressPercent}%
+            </Text>
+          </Flex>
+          <Progress color="green" value={progressPercent} variant="soft" />
+        </Box>
       </Grid>
     </Card>
   );

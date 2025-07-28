@@ -2,13 +2,11 @@ import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
 import { Category, type GameState, type Todo } from '../types';
 import { config } from '../game/config';
-import { faker } from '@faker-js/faker';
 import { generateRandomTask } from '../helpers/generate-task';
 
-const useGameStore = create<GameState>()((set, get) => ({
+const useGameStore = create<GameState>((set, get) => ({
   money: 0,
-  todos: [],
-  completed: [],
+  todos: {},
   addMoney: (amount: number) =>
     set((state: GameState) => ({ money: state.money + amount })),
   newTodo: (todo?: Todo) =>
@@ -23,21 +21,20 @@ const useGameStore = create<GameState>()((set, get) => ({
         completed: false,
       };
 
-      return { todos: [...state.todos, newTodo] };
+      state.todos[newTodo.id] = newTodo;
+
+      return { ...state };
     }),
   completeTodo: (id: string) =>
     set((state: GameState) => {
-      const completedTodo = get().todos.find((todo) => todo.id === id);
+      const completedTodo = get().todos[id];
 
       if (completedTodo) {
         completedTodo.completed = true;
+        get().addMoney(config.moneyPerTodoCompleted * completedTodo.difficulty);
 
         return {
-          money:
-            get().money +
-            config.moneyPerTodoCompleted * completedTodo.difficulty,
-          todos: get().todos.filter((todo) => todo.id !== id),
-          completed: [...get().completed, completedTodo],
+          todos: get().todos,
         };
       }
       return state;
