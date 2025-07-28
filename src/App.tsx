@@ -10,7 +10,7 @@ function App() {
     <Theme>
       <NavBar />
 
-      <Grid columns="2">
+      <Grid columns="3" gap="3" p="4" width="auto">
         <TodosList
           title="Todos"
           todoSelector={(state: GameState) => state.todos}
