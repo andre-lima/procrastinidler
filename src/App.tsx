@@ -4,10 +4,12 @@ import { Grid, Theme } from '@radix-ui/themes';
 import type { GameState } from './types';
 import { TodosList } from './components/TodosList/TodosList';
 import { NavBar } from './components/NavBar/NavBar';
+import { Assistant } from './components/Assistant/Assistant';
 
 function App() {
   return (
     <Theme>
+      <Assistant />
       <NavBar />
 
       <Grid columns="3" gap="3" p="4" width="auto">

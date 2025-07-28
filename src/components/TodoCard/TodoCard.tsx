@@ -84,7 +84,7 @@ export const TodoCard = ({
   };
 
   return (
-    <Card role="button" onClick={clicked}>
+    <Card className="todoCard" role="button" onClick={clicked}>
       <Grid
         gap="3"
         columns="1fr auto"
