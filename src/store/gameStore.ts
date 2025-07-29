@@ -20,7 +20,7 @@ const useGameStore = create<GameState>((set, get) => ({
       title: generateRandomTask(),
       category: Category.Metagame,
       deadline: 90,
-      assignedTo: undefined,
+      assignedTo: [],
       difficulty: 1,
       inReview: false,
       completed: false,
@@ -47,7 +47,7 @@ const useGameStore = create<GameState>((set, get) => ({
   },
   assignTask: (assistantId: string, todo: Todo) => {
     if (todo) {
-      todo.assignedTo = assistantId;
+      todo.assignedTo = [assistantId];
     }
 
     set((state: GameState) =>

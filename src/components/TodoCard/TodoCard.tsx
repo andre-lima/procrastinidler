@@ -74,7 +74,6 @@ export const TodoCard = ({ id }: { id: string }) => {
         rows="2"
         areas="'title category' 'assignedTo difficulty' 'progress progress'"
       >
-        {money}
         <Box gridArea="title">
           <Flex gap="2" align="center">
             <Text>{title}</Text>

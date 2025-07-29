@@ -1,3 +1,4 @@
+import type { Assistant } from './assistant';
 import type { Todo } from './todos';
 
 export interface GameState {
@@ -11,6 +12,10 @@ export interface GameState {
   newTodo: (todo?: Todo) => void;
   makeProgress: (id: string) => void;
   completeTodo: (id: string) => void;
+}
+
+export interface AssistantsState {
+  assistants: Record<string, Assistant>;
 }
 
 // Todo: Split stores: Game, Todos, Assistants, etc
