@@ -8,6 +8,7 @@ const useGameStore = create<GameState>((set, get) => ({
   money: 0,
   assistantInterval: 1000,
   todos: {},
+  getTodosArray: () => Object.values(get().todos),
   addMoney: (amount: number) => {
     const money = get().money + amount;
 
@@ -19,7 +20,7 @@ const useGameStore = create<GameState>((set, get) => ({
       title: generateRandomTask(),
       category: Category.Metagame,
       deadline: 90,
-      assignedTo: 'cat_1',
+      assignedTo: undefined,
       difficulty: 1,
       inReview: false,
       completed: false,
@@ -29,6 +30,29 @@ const useGameStore = create<GameState>((set, get) => ({
     set((state: GameState) => ({
       todos: { ...state.todos, [newTodo.id]: newTodo },
     }));
+  },
+  getNextUnassignedTask: (assistantId: string) => {
+    const unassignedTodo = get()
+      .getTodosArray()
+      .find((todo) => !todo.assignedTo && !todo.completed && !todo.inReview);
+    console.log(unassignedTodo, assistantId);
+
+    if (unassignedTodo) {
+      get().assignTask(assistantId, unassignedTodo);
+
+      return unassignedTodo;
+    }
+
+    return undefined;
+  },
+  assignTask: (assistantId: string, todo: Todo) => {
+    if (todo) {
+      todo.assignedTo = assistantId;
+    }
+
+    set((state: GameState) =>
+      todo ? { todos: { ...state.todos, [todo.id]: todo } } : state
+    );
   },
   makeProgress: (id: string) => {
     const todo = get().todos[id];

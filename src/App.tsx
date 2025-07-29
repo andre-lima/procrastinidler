@@ -9,7 +9,7 @@ import type { GameState } from './types';
 function App() {
   return (
     <Theme>
-      <Assistant />
+      <Assistant id="cat_1" />
       <NavBar />
 
       <Grid columns="3" gap="3" p="4" width="auto">
