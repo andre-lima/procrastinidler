@@ -4,8 +4,10 @@ export interface Todo {
   category: Category;
   difficulty: number;
   deadline?: number;
+  assignedTo?: string;
   inReview: boolean;
   completed: boolean;
+  progress: number;
 }
 
 export enum Category {

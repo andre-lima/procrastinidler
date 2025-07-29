@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import { Category } from '../../types';
 import { useGameStore } from '../../store/gameStore';
-import { config } from '../../game/config';
 import {
   Badge,
   Box,
   Card,
-  Container,
   Flex,
   Grid,
   Progress,
@@ -15,25 +12,21 @@ import {
 } from '@radix-ui/themes';
 import { DifficultyMeter } from './components/DifficultyMeter';
 import { PiEyeBold } from 'react-icons/pi';
-import { PieChart } from 'react-minimal-pie-chart';
+// import { PieChart } from 'react-minimal-pie-chart';
 import { useShallow } from 'zustand/shallow';
 
 export const TodoCard = ({ id }: { id: string }) => {
-  const [clickCount, setClickCount] = useState(0);
-  const { completeTodo } = useGameStore();
-  const { title, category, difficulty, deadline, completed } = useGameStore(
-    useShallow((state) => state.todos[id])
-  );
+  // const [clickCount, setClickCount] = useState(0);
+  const { makeProgress, money } = useGameStore();
+  const { title, category, difficulty, progress, completed, assignedTo } =
+    useGameStore(useShallow((state) => state.todos[id]));
 
   const clicked = () => {
-    const newCount = clickCount + 1;
+    // const newCount = clickCount + 1;
 
     if (!completed) {
-      setClickCount(newCount);
-
-      if (newCount >= difficulty * config.clicksPerDifficultyLevel) {
-        completeTodo(id);
-      }
+      makeProgress(id);
+      // setClickCount(newCount);
     }
   };
 
@@ -57,26 +50,21 @@ export const TodoCard = ({ id }: { id: string }) => {
     return 'gray';
   };
 
-  const progressPercent = Math.min(
-    (clickCount / (difficulty * config.clicksPerDifficultyLevel)) * 100,
-    100
-  );
+  // const getDeadlineColor = () => {
+  //   if (!deadline) {
+  //     return 'gray';
+  //   }
 
-  const getDeadlineColor = () => {
-    if (!deadline) {
-      return 'gray';
-    }
+  //   if (deadline < 5) {
+  //     return 'red';
+  //   }
 
-    if (deadline < 5) {
-      return 'red';
-    }
+  //   if (deadline < 10) {
+  //     return 'orange';
+  //   }
 
-    if (deadline < 10) {
-      return 'orange';
-    }
-
-    return 'green';
-  };
+  //   return 'green';
+  // };
 
   return (
     <Card className="todoCard" role="button" onClick={clicked}>
@@ -84,8 +72,9 @@ export const TodoCard = ({ id }: { id: string }) => {
         gap="3"
         columns="1fr auto"
         rows="2"
-        areas="'title category' 'deadline difficulty' 'progress progress'"
+        areas="'title category' 'assignedTo difficulty' 'progress progress'"
       >
+        {money}
         <Box gridArea="title">
           <Flex gap="2" align="center">
             <Text>{title}</Text>
@@ -99,8 +88,9 @@ export const TodoCard = ({ id }: { id: string }) => {
             <Badge color={getBadgeColor(category)}>{category}</Badge>
           )}
         </Box>
-        {deadline && (
-          <Box gridArea="deadline">
+        {assignedTo && (
+          <Box gridArea="assignedTo">
+            <div>{assignedTo}</div>
             {/* <Container align="left" width="22px">
               <PieChart
                 data={[
@@ -123,10 +113,10 @@ export const TodoCard = ({ id }: { id: string }) => {
               </Text>
             </Box>
             <Text size="2" color="gray">
-              {progressPercent}%
+              {progress}%
             </Text>
           </Flex>
-          <Progress color="green" value={progressPercent} variant="soft" />
+          <Progress color="green" value={progress} variant="soft" />
         </Box>
       </Grid>
     </Card>

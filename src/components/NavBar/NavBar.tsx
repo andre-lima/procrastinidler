@@ -1,5 +1,4 @@
 import { useGameStore } from '../../store/gameStore';
-import type { GameState } from '../../types';
 import {
   Badge,
   Button,
@@ -11,7 +10,7 @@ import {
 import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
 
 export const NavBar = () => {
-  const { newTodo, money } = useGameStore((state: GameState) => state);
+  const { newTodo, money } = useGameStore((state) => state);
 
   return (
     <div className="navBar">

@@ -4,11 +4,14 @@ import type { GameState } from '../../types';
 import { TodoCard } from '../TodoCard/TodoCard';
 import { useShallow } from 'zustand/shallow';
 
-export const TodosList = ({ title }: { title: string }) => {
-  const itemIds = useGameStore(
-    useShallow((state: GameState) => Object.keys(state.todos))
-  );
-  console.log(itemIds);
+export const TodosList = ({
+  title,
+  todosSelector,
+}: {
+  title: string;
+  todosSelector: (state: GameState) => string[];
+}) => {
+  const itemIds = useGameStore(useShallow(todosSelector));
 
   return (
     <Box
