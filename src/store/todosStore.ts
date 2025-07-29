@@ -4,6 +4,7 @@ import { Category, type Todo, type TodosState } from '../types';
 import { config } from '../game/config';
 import { generateRandomTask } from '../helpers/generate-task';
 import { useGameStore } from './gameStore';
+import { useAssistantStore } from './assistantStore';
 
 export const useTodos = create<TodosState>((set, get) => ({
   todos: {},
@@ -69,6 +70,12 @@ export const useTodos = create<TodosState>((set, get) => ({
 
     if (completedTodo) {
       completedTodo.completed = true;
+
+      // Unassign from task and assistant
+      completedTodo.assignedTo.forEach((assistantId) =>
+        useAssistantStore.getState().unassignTask(completedTodo.id, assistantId)
+      );
+      completedTodo.assignedTo = [];
 
       useGameStore
         .getState()

@@ -20,4 +20,5 @@ export interface AssistantsState {
   assistantInterval: number;
   assistants: Partial<Record<string, Assistant>>;
   assignTaskToAssistant: (todoId: string, assistantId: string) => void;
+  unassignTask: (todoId: string, assistantId: string) => void;
 }

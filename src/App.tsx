@@ -4,12 +4,13 @@ import { Grid, Theme } from '@radix-ui/themes';
 import { TodosList } from './components/TodosList/TodosList';
 import { NavBar } from './components/NavBar/NavBar';
 import { Assistant } from './components/Assistant/Assistant';
-import type { GameState, TodosState } from './types';
+import type { TodosState } from './types';
 
 function App() {
   return (
     <Theme>
       <Assistant id="cat_1" />
+      <Assistant id="cat_2" />
       <NavBar />
 
       <Grid columns="3" gap="3" p="4" width="auto">
