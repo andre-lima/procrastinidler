@@ -12,3 +12,5 @@ export interface GameState {
   makeProgress: (id: string) => void;
   completeTodo: (id: string) => void;
 }
+
+// Todo: Split stores: Game, Todos, Assistants, etc
