@@ -18,7 +18,6 @@ export const Assistant = ({ id }: { id: string }) => {
     const assignedTasks =
       useAssistantStore.getState().assistants[id]?.assignedTo;
 
-    console.log({ assignedTasks });
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
         useTodos.getState().makeProgress(task);

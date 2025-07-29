@@ -27,8 +27,6 @@ export const useAssistantStore = create<AssistantsState>((set, get) => ({
       );
     }
 
-    console.log('xxx', assistant?.assignedTo);
-
     set((state: AssistantsState) =>
       assistant
         ? { assistants: { ...state.assistants, [assistant.id]: assistant } }
