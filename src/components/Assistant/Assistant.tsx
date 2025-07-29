@@ -7,7 +7,8 @@ let loopId: number;
 export const Assistant = ({ id }: { id: string }) => {
   const { assistantInterval } = useAssistantStore();
   const assistant = useAssistantStore((state) => state.assistants[id]);
-  const { getNextUnassignedTask } = useTodos();
+  const { getNextUnassignedTask, assignAssistantToTask } = useTodos();
+  const { assignTaskToAssistant } = useAssistantStore();
 
   const assistantLoop = () => {
     // const elements = document.querySelectorAll('.todoCard');
@@ -15,6 +16,12 @@ export const Assistant = ({ id }: { id: string }) => {
     // clickThis?.click();
 
     const task = getNextUnassignedTask(id);
+    if (task) {
+      // Todo: Only assign if not assigned yet
+      assignAssistantToTask(id, task);
+      assignTaskToAssistant(task.id, id);
+    }
+
     console.log(assistant?.assignedTo, task);
   };
 
@@ -24,5 +31,5 @@ export const Assistant = ({ id }: { id: string }) => {
     return () => clearInterval(loopId);
   }, [assistantInterval]);
 
-  return <div>assistant</div>;
+  return <div>assistant {assistant?.assignedTo.length}</div>;
 };

@@ -1,5 +1,4 @@
 import { Category } from '../../types';
-import { useGameStore } from '../../store/gameStore';
 import {
   Badge,
   Box,

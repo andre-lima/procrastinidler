@@ -26,7 +26,7 @@ export const useTodos = create<TodosState>((set, get) => ({
     }));
   },
 
-  getNextUnassignedTask: (assistantId: string) => {
+  getNextUnassignedTask: () => {
     const unassignedTodo = get()
       .getTodosArray()
       .find(
@@ -34,10 +34,9 @@ export const useTodos = create<TodosState>((set, get) => ({
           todo?.assignedTo.length === 0 && !todo?.completed && !todo?.inReview
       );
 
-    // get().assignTask(assistantId, unassignedTodo);
     return unassignedTodo;
   },
-  assignTask: (assistantId: string, todo: Todo) => {
+  assignAssistantToTask: (assistantId: string, todo: Todo) => {
     if (todo) {
       todo.assignedTo = [assistantId];
     }

@@ -10,7 +10,7 @@ export interface TodosState {
   todos: Partial<Record<string, Todo>>;
   getTodosArray: () => (Todo | undefined)[];
   getNextUnassignedTask: (assistantId: string) => Todo | undefined;
-  assignTask: (assistantId: string, todo: Todo) => void;
+  assignAssistantToTask: (assistantId: string, todo: Todo) => void;
   newTodo: (todo?: Todo) => void;
   makeProgress: (id: string) => void;
   completeTodo: (id: string) => void;
@@ -19,4 +19,5 @@ export interface TodosState {
 export interface AssistantsState {
   assistantInterval: number;
   assistants: Partial<Record<string, Assistant>>;
+  assignTaskToAssistant: (todoId: string, assistantId: string) => void;
 }
