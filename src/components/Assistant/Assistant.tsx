@@ -1,29 +1,28 @@
-import { useCallback, useEffect } from 'react';
-import type { GameState } from '../../types';
-import { useGameStore } from '../../store/gameStore';
+import { useEffect } from 'react';
+import { useAssistantStore } from '../../store/assistantStore';
+import { useTodos } from '../../store/todosStore';
 
 let loopId: number;
 
 export const Assistant = ({ id }: { id: string }) => {
-  const assistantInterval = useGameStore(
-    (state: GameState) => state.assistantInterval
-  );
+  const { assistantInterval } = useAssistantStore();
+  const assistant = useAssistantStore((state) => state.assistants[id]);
+  const { getNextUnassignedTask } = useTodos();
 
-  const { getNextUnassignedTask } = useGameStore();
-
-  const clickToFind = useCallback(() => {
+  const assistantLoop = () => {
     // const elements = document.querySelectorAll('.todoCard');
     // const clickThis = elements[0] as HTMLDivElement;
     // clickThis?.click();
 
     const task = getNextUnassignedTask(id);
-  }, [id, getNextUnassignedTask]);
+    console.log(assistant?.assignedTo, task);
+  };
 
   useEffect(() => {
-    loopId = setInterval(clickToFind, assistantInterval);
+    loopId = setInterval(assistantLoop, assistantInterval);
 
     return () => clearInterval(loopId);
-  }, [assistantInterval, clickToFind]);
+  }, [assistantInterval]);
 
-  return <div onClick={clickToFind}>assistant</div>;
+  return <div>assistant</div>;
 };

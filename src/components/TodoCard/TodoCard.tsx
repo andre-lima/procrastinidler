@@ -14,12 +14,18 @@ import { DifficultyMeter } from './components/DifficultyMeter';
 import { PiEyeBold } from 'react-icons/pi';
 // import { PieChart } from 'react-minimal-pie-chart';
 import { useShallow } from 'zustand/shallow';
+import { useTodos } from '../../store/todosStore';
 
 export const TodoCard = ({ id }: { id: string }) => {
   // const [clickCount, setClickCount] = useState(0);
-  const { makeProgress, money } = useGameStore();
-  const { title, category, difficulty, progress, completed, assignedTo } =
-    useGameStore(useShallow((state) => state.todos[id]));
+  const { makeProgress } = useTodos();
+  const todo = useTodos(useShallow((state) => state.todos[id]));
+
+  if (!todo) {
+    return null;
+  }
+
+  const { title, category, difficulty, progress, completed, assignedTo } = todo;
 
   const clicked = () => {
     // const newCount = clickCount + 1;

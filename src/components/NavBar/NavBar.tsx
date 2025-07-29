@@ -8,9 +8,11 @@ import {
   Heading,
 } from '@radix-ui/themes';
 import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
+import { useTodos } from '../../store/todosStore';
 
 export const NavBar = () => {
-  const { newTodo, money } = useGameStore((state) => state);
+  const { newTodo } = useTodos((state) => state);
+  const money = useGameStore((state) => state.money);
 
   return (
     <div className="navBar">

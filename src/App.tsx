@@ -4,7 +4,7 @@ import { Grid, Theme } from '@radix-ui/themes';
 import { TodosList } from './components/TodosList/TodosList';
 import { NavBar } from './components/NavBar/NavBar';
 import { Assistant } from './components/Assistant/Assistant';
-import type { GameState } from './types';
+import type { GameState, TodosState } from './types';
 
 function App() {
   return (
@@ -15,18 +15,18 @@ function App() {
       <Grid columns="3" gap="3" p="4" width="auto">
         <TodosList
           title="Todos"
-          todosSelector={(state: GameState) =>
+          todosSelector={(state: TodosState) =>
             Object.values(state.todos)
-              .filter((todo) => !todo.completed)
-              .map((todo) => todo.id)
+              .filter((todo) => !todo?.completed)
+              .map((todo) => todo?.id || '')
           }
         />
         <TodosList
           title="Completed"
-          todosSelector={(state: GameState) =>
+          todosSelector={(state: TodosState) =>
             Object.values(state.todos)
-              .filter((todo) => todo.completed)
-              .map((todo) => todo.id)
+              .filter((todo) => todo?.completed)
+              .map((todo) => todo?.id || '')
           }
         />
       </Grid>

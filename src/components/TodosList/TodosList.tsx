@@ -1,17 +1,17 @@
 import { Box, Flex, Heading } from '@radix-ui/themes';
-import { useGameStore } from '../../store/gameStore';
-import type { GameState } from '../../types';
+import type { TodosState } from '../../types';
 import { TodoCard } from '../TodoCard/TodoCard';
 import { useShallow } from 'zustand/shallow';
+import { useTodos } from '../../store/todosStore';
 
 export const TodosList = ({
   title,
   todosSelector,
 }: {
   title: string;
-  todosSelector: (state: GameState) => string[];
+  todosSelector: (state: TodosState) => string[];
 }) => {
-  const itemIds = useGameStore(useShallow(todosSelector));
+  const itemIds = useTodos(useShallow(todosSelector));
 
   return (
     <Box

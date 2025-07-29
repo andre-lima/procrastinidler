@@ -3,19 +3,20 @@ import type { Todo } from './todos';
 
 export interface GameState {
   money: number;
-  todos: Record<string, Todo>;
-  getTodosArray: () => Todo[];
-  assistantInterval: number;
+  addMoney: (amount: number) => void;
+}
+
+export interface TodosState {
+  todos: Partial<Record<string, Todo>>;
+  getTodosArray: () => (Todo | undefined)[];
   getNextUnassignedTask: (assistantId: string) => Todo | undefined;
   assignTask: (assistantId: string, todo: Todo) => void;
-  addMoney: (amount: number) => void;
   newTodo: (todo?: Todo) => void;
   makeProgress: (id: string) => void;
   completeTodo: (id: string) => void;
 }
 
 export interface AssistantsState {
-  assistants: Record<string, Assistant>;
+  assistantInterval: number;
+  assistants: Partial<Record<string, Assistant>>;
 }
-
-// Todo: Split stores: Game, Todos, Assistants, etc
