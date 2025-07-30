@@ -1,13 +1,33 @@
 import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
-import { Category, type Todo, type TodosState } from '../types';
+import { Category, TaskState, type Todo, type TodosState } from '../types';
 import { config } from '../game/config';
 import { generateRandomTask } from '../helpers/generate-task';
 import { useGameStore } from './gameStore';
 import { useAssistantStore } from './assistantStore';
 
-export const useTodos = create<TodosState>((set, get) => ({
-  todos: {},
+export const useTodosStore = create<TodosState>((set, get) => ({
+  todos: {
+    initial: {
+      id: 'initial',
+      title: 'Click on this card 5 times',
+      category: Category.Metagame,
+      assignedTo: [],
+      difficulty: 1,
+      state: TaskState.Todo,
+      progress: 0,
+    },
+    clickNewTask: {
+      id: 'clickNewTask',
+      title: 'Click the + Task button',
+      category: Category.Metagame,
+      assignedTo: [],
+      difficulty: 1,
+      state: TaskState.Todo,
+      progress: 0,
+      isSpecial: true,
+    },
+  },
   getTodosArray: () => Object.values(get().todos),
   newTodo: (todo?: Todo) => {
     const newTodo = todo || {
@@ -17,8 +37,7 @@ export const useTodos = create<TodosState>((set, get) => ({
       deadline: 90,
       assignedTo: [],
       difficulty: 1,
-      inReview: false,
-      completed: false,
+      state: TaskState.Todo,
       progress: 0,
     };
 
@@ -32,7 +51,7 @@ export const useTodos = create<TodosState>((set, get) => ({
       .getTodosArray()
       .find(
         (todo) =>
-          todo?.assignedTo.length === 0 && !todo?.completed && !todo?.inReview
+          todo?.assignedTo.length === 0 && todo?.state === TaskState.Todo
       );
 
     return unassignedTodo;
@@ -69,7 +88,7 @@ export const useTodos = create<TodosState>((set, get) => ({
     const completedTodo = get().todos[id];
 
     if (completedTodo) {
-      completedTodo.completed = true;
+      completedTodo.state = TaskState.Completed;
 
       // Unassign from task and assistant
       completedTodo.assignedTo.forEach((assistantId) =>

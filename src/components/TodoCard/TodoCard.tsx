@@ -1,4 +1,4 @@
-import { Category } from '../../types';
+import { Category, TaskState } from '../../types';
 import {
   Badge,
   Box,
@@ -11,27 +11,32 @@ import {
 } from '@radix-ui/themes';
 import { DifficultyMeter } from './components/DifficultyMeter';
 import { PiEyeBold } from 'react-icons/pi';
+import './styles.scss';
 // import { PieChart } from 'react-minimal-pie-chart';
 import { useShallow } from 'zustand/shallow';
-import { useTodos } from '../../store/todosStore';
+import { useTodosStore } from '../../store/todosStore';
 
 export const TodoCard = ({ id }: { id: string }) => {
-  // const [clickCount, setClickCount] = useState(0);
-  const { makeProgress } = useTodos();
-  const todo = useTodos(useShallow((state) => state.todos[id]));
+  const { makeProgress } = useTodosStore();
+  const todo = useTodosStore(useShallow((state) => state.todos[id]));
 
   if (!todo) {
     return null;
   }
 
-  const { title, category, difficulty, progress, completed, assignedTo } = todo;
+  const {
+    title,
+    category,
+    difficulty,
+    progress,
+    state,
+    assignedTo,
+    isSpecial,
+  } = todo;
 
   const clicked = () => {
-    // const newCount = clickCount + 1;
-
-    if (!completed) {
+    if (state === TaskState.Todo && !isSpecial) {
       makeProgress(id);
-      // setClickCount(newCount);
     }
   };
 
@@ -72,7 +77,12 @@ export const TodoCard = ({ id }: { id: string }) => {
   // };
 
   return (
-    <Card className="todoCard" role="button" onClick={clicked}>
+    <Card
+      className={'todoCard' + (isSpecial ? ' special' : '')}
+      role="button"
+      onClick={clicked}
+      variant="classic"
+    >
       <Grid
         gap="3"
         columns="1fr auto"

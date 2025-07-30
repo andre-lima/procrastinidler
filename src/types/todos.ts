@@ -1,5 +1,12 @@
 import type { Assistant } from './assistant';
 
+export enum TaskState {
+  Todo = 'todo',
+  InProgress = 'inProgress',
+  InReview = 'inReview',
+  Completed = 'completed',
+}
+
 export interface Todo {
   id: string;
   title: string;
@@ -7,9 +14,9 @@ export interface Todo {
   difficulty: number;
   deadline?: number;
   assignedTo: Assistant['id'][];
-  inReview: boolean;
-  completed: boolean;
+  state: TaskState;
   progress: number;
+  isSpecial?: boolean;
 }
 
 export enum Category {

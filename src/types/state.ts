@@ -1,4 +1,5 @@
 import type { Assistant } from './assistant';
+import type { Boss } from './boss';
 import type { Todo } from './todos';
 
 export interface GameState {
@@ -21,4 +22,11 @@ export interface AssistantsState {
   assistants: Partial<Record<string, Assistant>>;
   assignTaskToAssistant: (todoId: string, assistantId: string) => void;
   unassignTask: (todoId: string, assistantId: string) => void;
+}
+
+export interface BossState {
+  bossInterval: number;
+  boss: Boss;
+  assignTaskToBoss: (todoId: string, bossId: string) => void;
+  unassignTask: (todoId: string) => void;
 }

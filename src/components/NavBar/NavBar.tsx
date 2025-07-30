@@ -8,11 +8,21 @@ import {
   Heading,
 } from '@radix-ui/themes';
 import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
-import { useTodos } from '../../store/todosStore';
+import { useTodosStore } from '../../store/todosStore';
+import { TaskState } from '../../types';
 
 export const NavBar = () => {
-  const { newTodo } = useTodos((state) => state);
+  const { newTodo } = useTodosStore((state) => state);
   const money = useGameStore((state) => state.money);
+  const newTaskTodo = useTodosStore((state) => state.todos.clickNewTask);
+
+  const createNewTask = () => {
+    if (newTaskTodo && newTaskTodo.state === TaskState.Todo) {
+      useTodosStore.getState().completeTodo(newTaskTodo.id);
+    }
+
+    newTodo();
+  };
 
   return (
     <div className="navBar">
@@ -26,7 +36,7 @@ export const NavBar = () => {
               }}
               variant="surface"
               size="3"
-              onClick={() => newTodo()}
+              onClick={createNewTask}
             >
               <LuPlus /> Todo
             </Button>

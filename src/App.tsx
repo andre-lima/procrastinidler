@@ -3,14 +3,14 @@ import './App.scss';
 import { Grid, Theme } from '@radix-ui/themes';
 import { TodosList } from './components/TodosList/TodosList';
 import { NavBar } from './components/NavBar/NavBar';
-import { Assistant } from './components/Assistant/Assistant';
-import type { TodosState } from './types';
+// import { Assistant } from './components/Assistant/Assistant';
+import { TaskState, type TodosState } from './types';
 
 function App() {
   return (
     <Theme>
-      <Assistant id="cat_1" />
-      <Assistant id="cat_2" />
+      {/* <Assistant id="cat_1" />
+      <Assistant id="cat_2" /> */}
       <NavBar />
 
       <Grid columns="3" gap="3" p="4" width="auto">
@@ -18,7 +18,7 @@ function App() {
           title="Todos"
           todosSelector={(state: TodosState) =>
             Object.values(state.todos)
-              .filter((todo) => !todo?.completed)
+              .filter((todo) => todo?.state === TaskState.Todo)
               .map((todo) => todo?.id || '')
           }
         />
@@ -26,7 +26,7 @@ function App() {
           title="Completed"
           todosSelector={(state: TodosState) =>
             Object.values(state.todos)
-              .filter((todo) => todo?.completed)
+              .filter((todo) => todo?.state === TaskState.Completed)
               .map((todo) => todo?.id || '')
           }
         />

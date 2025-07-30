@@ -2,7 +2,7 @@ import { Box, Flex, Heading } from '@radix-ui/themes';
 import type { TodosState } from '../../types';
 import { TodoCard } from '../TodoCard/TodoCard';
 import { useShallow } from 'zustand/shallow';
-import { useTodos } from '../../store/todosStore';
+import { useTodosStore } from '../../store/todosStore';
 
 export const TodosList = ({
   title,
@@ -11,7 +11,7 @@ export const TodosList = ({
   title: string;
   todosSelector: (state: TodosState) => string[];
 }) => {
-  const itemIds = useTodos(useShallow(todosSelector));
+  const itemIds = useTodosStore(useShallow(todosSelector));
 
   return (
     <Box

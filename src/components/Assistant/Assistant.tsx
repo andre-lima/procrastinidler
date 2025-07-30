@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAssistantStore } from '../../store/assistantStore';
-import { useTodos } from '../../store/todosStore';
+import { useTodosStore } from '../../store/todosStore';
 
 let loopId: number;
 
@@ -8,7 +8,7 @@ export const Assistant = ({ id }: { id: string }) => {
   const { assistantInterval } = useAssistantStore();
   const assistant = useAssistantStore((state) => state.assistants[id]);
 
-  const { getNextUnassignedTask, assignAssistantToTask } = useTodos();
+  const { getNextUnassignedTask, assignAssistantToTask } = useTodosStore();
   const { assignTaskToAssistant } = useAssistantStore();
 
   const assistantLoop = () => {
@@ -20,7 +20,7 @@ export const Assistant = ({ id }: { id: string }) => {
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        useTodos.getState().makeProgress(task);
+        useTodosStore.getState().makeProgress(task);
       });
     } else {
       const task = getNextUnassignedTask(id);

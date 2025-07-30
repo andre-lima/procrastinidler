@@ -1,0 +1,10 @@
+.todoCard {
+  cursor: pointer;
+
+  &.special {
+    cursor: default;
+    // --card-background-color: var(--sky-12);
+    // opacity: 1;
+    // color: white;
+  }
+}
