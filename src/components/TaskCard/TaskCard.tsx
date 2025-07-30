@@ -78,7 +78,7 @@ export const TaskCard = ({ id }: { id: string }) => {
   return (
     <Theme
       appearance={!isSpecial ? 'light' : 'dark'}
-      data-has-background={!isSpecial}
+      data-has-background={false}
     >
       <Card
         className={'taskCard' + (isSpecial ? ' special ' : ' ') + state}
@@ -88,7 +88,7 @@ export const TaskCard = ({ id }: { id: string }) => {
         <Grid
           gap="3"
           columns="1fr auto"
-          rows="2"
+          rows="1fr 40px 1fr"
           areas="'title category' 'assignedTo difficulty' 'progress progress'"
         >
           <Box gridArea="title">
@@ -106,9 +106,16 @@ export const TaskCard = ({ id }: { id: string }) => {
               <Badge color={getBadgeColor(category)}>{category}</Badge>
             )}
           </Box>
-          {assignedTo && (
+          {assignedTo.length > 0 && (
             <Box gridArea="assignedTo">
-              <div>{assignedTo}</div>
+              {assignedTo.map((assistantId) => (
+                <div className="assignedAssistantImage">
+                  <img
+                    src={'assistants/' + assistantId + '.png'}
+                    alt={'assistant image'}
+                  />
+                </div>
+              ))}
               {/* <Container align="left" width="22px">
               <PieChart
                 data={[

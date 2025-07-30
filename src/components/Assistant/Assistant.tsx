@@ -1,31 +1,47 @@
 import { useEffect } from 'react';
-import { useAssistantStore } from '../../store/assistantStore';
+import {
+  useAssistantStore,
+  useAssistantUpgradesStore,
+} from '../../store/assistantStore';
 import { useTasksStore } from '../../store/tasksStore';
+import './styles.scss';
+
 let loopId: number;
 
 export const Assistant = ({ id }: { id: string }) => {
-  const { assistantInterval } = useAssistantStore();
-  const assistant = useAssistantStore((state) => state.assistants[id]);
-
-  const { getNextUnassignedTask, assignAssistantToTask } = useTasksStore();
-  const { assignTaskToAssistant } = useAssistantStore();
+  const assistantInterval = useAssistantUpgradesStore(
+    (state) => state.upgrades.interval.currentValue
+  );
+  // const assistant = useAssistantStore((state) => state.assistants[id]);
 
   const assistantLoop = () => {
     const assignedTasks =
       useAssistantStore.getState().assistants[id]?.assignedTo;
 
+    const numOfTasksAssignable =
+      useAssistantUpgradesStore.getState().upgrades.multitasking.currentValue;
+
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
         useTasksStore.getState().makeProgress(task);
       });
-    } else {
-      const task = getNextUnassignedTask(id);
-      if (task) {
-        // Todo: Only assign if not assigned yet
-        assignAssistantToTask(id, task);
-        assignTaskToAssistant(task.id, id);
+    }
+    if ((assignedTasks?.length || 0) < numOfTasksAssignable) {
+      const numToAssign = numOfTasksAssignable - (assignedTasks?.length || 0);
+      const tasks = useTasksStore.getState().getNextUnassignedTask(numToAssign);
+      if (tasks.length) {
+        tasks.forEach((task) => {
+          if (task) {
+            useTasksStore.getState().assignAssistantToTask(id, task);
+            useAssistantStore.getState().assignTaskToAssistant(task.id, id);
+          }
+        });
       }
     }
+  };
+
+  const purchase = () => {
+    useAssistantUpgradesStore.getState().purchaseUpgrade('interval');
   };
 
   useEffect(() => {
@@ -34,5 +50,9 @@ export const Assistant = ({ id }: { id: string }) => {
     return () => clearInterval(loopId);
   }, [assistantInterval]);
 
-  return <div>assistant {assistant?.assignedTo.length}</div>;
+  return (
+    <div className="assistantImage navBarImage" onClick={purchase}>
+      <img src={'assistants/' + id + '.png'} alt={'assistant image'} />
+    </div>
+  );
 };

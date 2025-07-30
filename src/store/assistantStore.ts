@@ -1,12 +1,83 @@
 import { create } from 'zustand';
-import { type AssistantsState } from '../types';
+import { type AssistantsState, type AssistantUpgradesState } from '../types';
+import { useGameStore } from './gameStore';
+
+export const useAssistantUpgradesStore = create<AssistantUpgradesState>(
+  (set, get) => ({
+    upgrades: {
+      buyAssistants: {
+        id: 'buyAssistants',
+        currentValue: 0,
+        baseValue: 0,
+        description: 'Buy a new assistant',
+        cost: 200,
+        rate: 2,
+        owned: 0,
+        ownedLimit: 5,
+        deltaPerOwned: 0,
+        callback: () => {
+          useAssistantStore.getState().addAssistant();
+        },
+      },
+      multitasking: {
+        id: 'multitasking',
+        currentValue: 1,
+        baseValue: 0,
+        description: 'Assistants can take on more tasks at once',
+        cost: 100,
+        rate: 2,
+        owned: 1,
+        ownedLimit: 5,
+        deltaPerOwned: 1,
+      },
+      interval: {
+        id: 'interval',
+        currentValue: 1000,
+        baseValue: 1000,
+        description: 'Speed of assistants',
+        cost: 10,
+        rate: 2,
+        owned: 0,
+        ownedLimit: 10,
+        deltaPerOwned: -50,
+      },
+    },
+
+    purchaseUpgrade: (upgradeId: string) => {
+      const upgrade = get().upgrades[upgradeId];
+      const money = useGameStore.getState().money;
+
+      if (money >= upgrade.cost) {
+        upgrade.owned++;
+        useGameStore.getState().addMoney(-upgrade.cost);
+
+        upgrade.currentValue =
+          upgrade.baseValue + upgrade.deltaPerOwned * upgrade.owned;
+        upgrade.cost = upgrade.cost * upgrade.rate;
+
+        upgrade.callback?.();
+
+        set((state: AssistantUpgradesState) => ({
+          upgrades: { ...state.upgrades, [upgrade.id]: upgrade },
+        }));
+      }
+    },
+  })
+);
 
 export const useAssistantStore = create<AssistantsState>((set, get) => ({
-  assistants: {
-    cat_1: { id: 'cat_1', assignedTo: [] },
-    cat_2: { id: 'cat_2', assignedTo: [] },
+  assistants: {},
+  addAssistant: () => {
+    const newAssistant =
+      'assistant_' + (Object.keys(get().assistants).length + 1);
+
+    set((state: AssistantsState) => ({
+      assistants: {
+        ...state.assistants,
+        [newAssistant]: { id: newAssistant, assignedTo: [] },
+      },
+    }));
   },
-  assistantInterval: 1000,
   assignTaskToAssistant: (todoId: string, assistantId: string) => {
     const assistant = get().assistants[assistantId];
 

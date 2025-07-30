@@ -1,4 +1,4 @@
-import type { Assistant } from './assistant';
+import type { Assistant, AssistantUpgrade } from './assistant';
 import type { Boss } from './boss';
 import type { Task } from './tasks';
 
@@ -10,7 +10,7 @@ export interface GameState {
 export interface TasksState {
   tasks: Partial<Record<string, Task>>;
   getTasksArray: () => (Task | undefined)[];
-  getNextUnassignedTask: (assistantId: string) => Task | undefined;
+  getNextUnassignedTask: (maxNumOfTasks: number) => (Task | undefined)[];
   assignAssistantToTask: (assistantId: string, task: Task) => void;
   newTask: (task?: Task) => void;
   makeProgress: (id: string) => void;
@@ -18,10 +18,15 @@ export interface TasksState {
 }
 
 export interface AssistantsState {
-  assistantInterval: number;
   assistants: Partial<Record<string, Assistant>>;
+  addAssistant: () => void;
   assignTaskToAssistant: (taskId: string, assistantId: string) => void;
   unassignTask: (taskId: string, assistantId: string) => void;
+}
+
+export interface AssistantUpgradesState {
+  upgrades: Record<string, AssistantUpgrade>;
+  purchaseUpgrade: (upgradeId: string) => void;
 }
 
 export interface BossState {

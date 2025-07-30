@@ -5,6 +5,7 @@ import { config } from '../game/config';
 import { generateRandomTask } from '../helpers/generate-task';
 import { useGameStore } from './gameStore';
 import { useAssistantStore } from './assistantStore';
+import { getRandomCategory } from '../helpers/random-category';
 
 export const useTasksStore = create<TasksState>((set, get) => ({
   tasks: {
@@ -33,7 +34,7 @@ export const useTasksStore = create<TasksState>((set, get) => ({
     const newTask = task || {
       id: uuid(),
       title: generateRandomTask(),
-      category: Category.Metagame,
+      category: getRandomCategory(),
       deadline: 90,
       assignedTo: [],
       difficulty: 1,
@@ -47,15 +48,28 @@ export const useTasksStore = create<TasksState>((set, get) => ({
     }));
   },
 
-  getNextUnassignedTask: () => {
-    const unassignedTask = get()
-      .getTasksArray()
-      .find(
-        (task) =>
-          task?.assignedTo.length === 0 && task?.state === TaskState.Todo
-      );
+  getNextUnassignedTask: (numToAssign: number = 1) => {
+    const tasksToAssign: Task[] = [];
 
-    return unassignedTask;
+    const tasks = get().getTasksArray();
+
+    for (let i = 0; i < tasks.length; i++) {
+      const task = tasks[i];
+
+      if (
+        task?.assignedTo.length === 0 &&
+        task?.state === TaskState.Todo &&
+        !task.isSpecial
+      ) {
+        tasksToAssign.push(task);
+      }
+
+      if (tasksToAssign.length === numToAssign) {
+        break;
+      }
+    }
+
+    return tasksToAssign;
   },
   assignAssistantToTask: (assistantId: string, task: Task) => {
     if (task) {
@@ -69,14 +83,16 @@ export const useTasksStore = create<TasksState>((set, get) => ({
   makeProgress: (id: string) => {
     const task = get().tasks[id];
 
-    if (task) {
+    if (task && task.progress < 100) {
       const progressPerClick =
         100 / (task.difficulty * config.clicksPerDifficultyLevel);
 
       task.progress += progressPerClick;
 
       if (task.progress >= 100) {
-        get().completeTask(id);
+        setTimeout(() => {
+          get().completeTask(id);
+        }, 300);
       }
     }
 

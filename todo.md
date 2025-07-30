@@ -1,7 +1,15 @@
 
 Boss generates tasks
 
-Investigate performance issues
+Assistant images
+
+Upgrades purchase component
+
+Random categories
+
+Boss upgrades: reviews speed, reviews quality, 
+
+Assistant: Task completion quality (based on difficulty too)
 
 
 --------
