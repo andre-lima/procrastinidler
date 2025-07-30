@@ -1,8 +1,12 @@
-.todoCard {
+.taskCard {
   cursor: pointer;
 
   &.special {
     cursor: default;
     background-color: var(--blue-2);
+  }
+
+  &:not(.todo) {
+    cursor: default;
   }
 }

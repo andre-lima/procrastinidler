@@ -1,26 +1,22 @@
 import { useEffect } from 'react';
 import { useAssistantStore } from '../../store/assistantStore';
-import { useTodosStore } from '../../store/todosStore';
-
+import { useTasksStore } from '../../store/tasksStore';
 let loopId: number;
 
 export const Assistant = ({ id }: { id: string }) => {
   const { assistantInterval } = useAssistantStore();
   const assistant = useAssistantStore((state) => state.assistants[id]);
 
-  const { getNextUnassignedTask, assignAssistantToTask } = useTodosStore();
+  const { getNextUnassignedTask, assignAssistantToTask } = useTasksStore();
   const { assignTaskToAssistant } = useAssistantStore();
 
   const assistantLoop = () => {
-    // const elements = document.querySelectorAll('.todoCard');
-    // const clickThis = elements[0] as HTMLDivElement;
-    // clickThis?.click();
     const assignedTasks =
       useAssistantStore.getState().assistants[id]?.assignedTo;
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        useTodosStore.getState().makeProgress(task);
+        useTasksStore.getState().makeProgress(task);
       });
     } else {
       const task = getNextUnassignedTask(id);

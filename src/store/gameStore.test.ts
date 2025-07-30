@@ -8,15 +8,15 @@ describe('useGameStore', () => {
     const { setState } = useGameStore;
     setState({
       money: 0,
-      todos: [],
+      tasks: [],
       completed: [],
     });
   });
 
-  it('should start with 0 money and empty todos', () => {
+  it('should start with 0 money and empty tasks', () => {
     const state = useGameStore.getState();
     expect(state.money).toBe(0);
-    expect(state.todos).toEqual([]);
+    expect(state.tasks).toEqual([]);
     expect(state.completed).toEqual([]);
   });
 
@@ -29,7 +29,7 @@ describe('useGameStore', () => {
     expect(useGameStore.getState().money).toBe(100);
   });
 
-  it('should add a new todo with provided data', () => {
+  it('should add a new task with provided data', () => {
     const customTodo = {
       id: '123',
       title: 'Test Todo',
@@ -42,25 +42,25 @@ describe('useGameStore', () => {
       useGameStore.getState().newTodo(customTodo);
     });
 
-    const todos = useGameStore.getState().todos;
-    expect(todos.length).toBe(1);
-    expect(todos[0]).toEqual(customTodo);
+    const tasks = useGameStore.getState().tasks;
+    expect(tasks.length).toBe(1);
+    expect(tasks[0]).toEqual(customTodo);
   });
 
-  it('should add a new todo with default values when no arg is passed', () => {
+  it('should add a new task with default values when no arg is passed', () => {
     act(() => {
       useGameStore.getState().newTodo();
     });
 
-    const todos = useGameStore.getState().todos;
-    expect(todos.length).toBe(1);
-    expect(todos[0].title).toBe('random todo title');
-    expect(todos[0].difficulty).toBe(1);
-    expect(todos[0].completed).toBe(false);
+    const tasks = useGameStore.getState().tasks;
+    expect(tasks.length).toBe(1);
+    expect(tasks[0].title).toBe('random task title');
+    expect(tasks[0].difficulty).toBe(1);
+    expect(tasks[0].completed).toBe(false);
   });
 
-  it('should move a todo to completed', () => {
-    const todo = {
+  it('should move a task to completed', () => {
+    const task = {
       id: 'abc',
       title: 'Complete Me',
       difficulty: 3,
@@ -69,24 +69,24 @@ describe('useGameStore', () => {
     };
 
     act(() => {
-      useGameStore.getState().newTodo(todo);
+      useGameStore.getState().newTodo(task);
     });
 
     act(() => {
-      useGameStore.getState().completeTodo(todo.id);
+      useGameStore.getState().completeTask(task.id);
     });
 
     const state = useGameStore.getState();
-    expect(state.todos).toHaveLength(0);
+    expect(state.tasks).toHaveLength(0);
     expect(state.completed).toHaveLength(1);
     expect(state.completed[0].id).toBe('abc');
     expect(state.completed[0].completed).toBe(true);
   });
 
-  it('should do nothing if completing a non-existent todo', () => {
+  it('should do nothing if completing a non-existent task', () => {
     const initialState = useGameStore.getState();
     act(() => {
-      useGameStore.getState().completeTodo('non-existent-id');
+      useGameStore.getState().completeTask('non-existent-id');
     });
     expect(useGameStore.getState()).toEqual(initialState);
   });

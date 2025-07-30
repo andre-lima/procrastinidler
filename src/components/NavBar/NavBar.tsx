@@ -8,20 +8,19 @@ import {
   Heading,
 } from '@radix-ui/themes';
 import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
-import { useTodosStore } from '../../store/todosStore';
 import { TaskState } from '../../types';
+import { useTasksStore } from '../../store/tasksStore';
 
 export const NavBar = () => {
-  const { newTodo } = useTodosStore((state) => state);
   const money = useGameStore((state) => state.money);
-  const newTaskTodo = useTodosStore((state) => state.todos.clickNewTask);
 
   const createNewTask = () => {
+    const newTaskTodo = useTasksStore.getState().tasks.clickNewTask;
     if (newTaskTodo && newTaskTodo.state === TaskState.Todo) {
-      useTodosStore.getState().completeTodo(newTaskTodo.id);
+      useTasksStore.getState().completeTask(newTaskTodo.id);
     }
 
-    newTodo();
+    useTasksStore.getState().newTask();
   };
 
   return (
@@ -38,7 +37,7 @@ export const NavBar = () => {
               size="3"
               onClick={createNewTask}
             >
-              <LuPlus /> Todo
+              <LuPlus /> Task
             </Button>
             <Button
               style={{
@@ -46,7 +45,7 @@ export const NavBar = () => {
                 color: 'var(--gray-12)',
               }}
               variant="surface"
-              onClick={() => newTodo()}
+              onClick={createNewTask}
             >
               <LuCrown /> Boss
             </Button>
@@ -56,14 +55,14 @@ export const NavBar = () => {
                 color: 'var(--gray-12)',
               }}
               variant="surface"
-              onClick={() => newTodo()}
+              onClick={createNewTask}
             >
               <LuUsers /> Assistants
             </Button>
           </Flex>
           <Flex align="center" justify="center" width="auto">
             <Heading size="4" as="h1">
-              Not a todo list app!
+              Not a task list app!
             </Heading>
           </Flex>
           <Flex justify="end" align="center" width="auto">

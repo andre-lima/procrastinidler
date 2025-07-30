@@ -1,4 +1,4 @@
-import type { Category, Todo } from './todos';
+import type { Category, Todo } from './tasks';
 
 export interface Assistant {
   id: string;

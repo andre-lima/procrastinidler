@@ -1,17 +1,17 @@
 import { Box, Flex, Heading } from '@radix-ui/themes';
-import type { TodosState } from '../../types';
-import { TodoCard } from '../TodoCard/TodoCard';
+import { TaskCard } from '../TaskCard/TaskCard';
 import { useShallow } from 'zustand/shallow';
-import { useTodosStore } from '../../store/todosStore';
+import { useTasksStore } from '../../store/tasksStore';
+import type { TasksState } from '../../types';
 
-export const TodosList = ({
+export const TasksList = ({
   title,
-  todosSelector,
+  tasksSelector,
 }: {
   title: string;
-  todosSelector: (state: TodosState) => string[];
+  tasksSelector: (state: TasksState) => string[];
 }) => {
-  const itemIds = useTodosStore(useShallow(todosSelector));
+  const itemIds = useTasksStore(useShallow(tasksSelector));
 
   return (
     <Box
@@ -27,7 +27,7 @@ export const TodosList = ({
 
       <Flex direction="column" gap="2">
         {itemIds.map((id) => (
-          <TodoCard key={id} id={id} />
+          <TaskCard key={id} id={id} />
         ))}
       </Flex>
     </Box>

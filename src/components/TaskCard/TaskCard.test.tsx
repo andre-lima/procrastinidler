@@ -1,31 +1,31 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TodoCard } from './TodoCard';
-import { useGameStore } from '../../store/gameStore';
+import { TaskCard } from './TaskCard';
 import { config } from '../../game/config';
+import { useTasksStore } from '../../store/tasksStore';
 
-const MOCK_TODO = {
+const MOCK_TASK = {
   id: '1',
-  title: 'Test Todo',
+  title: 'Test Task',
   difficulty: 1,
   inProgress: false,
   completed: false,
 };
 
 const renderComponent = () => {
-  return render(<TodoCard {...MOCK_TODO} />);
+  return render(<TaskCard {...MOCK_TASK} />);
 };
 
-const completeTodoSpy = vi.spyOn(useGameStore.getState(), 'completeTodo');
+const completeTaskSpy = vi.spyOn(useTasksStore.getState(), 'completeTask');
 
-describe('TodoCard component', () => {
+describe('TaskCard component', () => {
   beforeEach(() => {});
 
   it('should render component', () => {
     renderComponent();
 
-    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+    expect(screen.getByText('Test Task')).toBeInTheDocument();
   });
 
   it('should complete when clicked enough times', async () => {
@@ -35,13 +35,13 @@ describe('TodoCard component', () => {
 
     for (
       let i = 0;
-      i < config.clicksPerDifficultyLevel * MOCK_TODO.difficulty;
+      i < config.clicksPerDifficultyLevel * MOCK_TASK.difficulty;
       i++
     ) {
       await userEvent.click(card);
     }
 
-    expect(completeTodoSpy).toHaveBeenCalledWith(MOCK_TODO.id);
+    expect(completeTaskSpy).toHaveBeenCalledWith(MOCK_TASK.id);
 
     // Todo: Change to check progress value
     expect(screen.getByText('5')).toBeInTheDocument();

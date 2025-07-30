@@ -15,30 +15,27 @@ import { PiEyeBold } from 'react-icons/pi';
 import './styles.scss';
 // import { PieChart } from 'react-minimal-pie-chart';
 import { useShallow } from 'zustand/shallow';
-import { useTodosStore } from '../../store/todosStore';
+import { useTasksStore } from '../../store/tasksStore';
 
-export const TodoCard = ({ id }: { id: string }) => {
-  const { makeProgress } = useTodosStore();
-  const todo = useTodosStore(useShallow((state) => state.todos[id]));
-
-  if (!todo) {
-    return null;
-  }
-
+export const TaskCard = ({ id }: { id: string }) => {
   const {
     title,
     category,
     difficulty,
-    progress,
     state,
     assignedTo,
     isSpecial,
     requiresReview,
-  } = todo;
+    progress,
+  } = useTasksStore(useShallow((state) => ({ ...state.tasks[id]! })));
+
+  if (!title) {
+    return null;
+  }
 
   const clicked = () => {
     if (state === TaskState.Todo && !isSpecial) {
-      makeProgress(id);
+      useTasksStore.getState().makeProgress(id);
     }
   };
 
@@ -84,7 +81,7 @@ export const TodoCard = ({ id }: { id: string }) => {
       data-has-background={!isSpecial}
     >
       <Card
-        className={'todoCard' + (isSpecial ? ' special' : '')}
+        className={'taskCard' + (isSpecial ? ' special ' : ' ') + state}
         role="button"
         onClick={clicked}
       >

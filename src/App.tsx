@@ -1,10 +1,10 @@
 import '@radix-ui/themes/styles.css';
 import './App.scss';
 import { Grid, Theme } from '@radix-ui/themes';
-import { TodosList } from './components/TodosList/TodosList';
 import { NavBar } from './components/NavBar/NavBar';
 // import { Assistant } from './components/Assistant/Assistant';
-import { TaskState, type TodosState } from './types';
+import { TaskState, type TasksState } from './types';
+import { TasksList } from './components/TasksList/TasksList';
 
 function App() {
   return (
@@ -14,20 +14,20 @@ function App() {
       <NavBar />
 
       <Grid columns="3" gap="3" p="4" width="auto">
-        <TodosList
-          title="Todos"
-          todosSelector={(state: TodosState) =>
-            Object.values(state.todos)
-              .filter((todo) => todo?.state === TaskState.Todo)
-              .map((todo) => todo?.id || '')
+        <TasksList
+          title="To Do"
+          tasksSelector={(state: TasksState) =>
+            Object.values(state.tasks)
+              .filter((task) => task?.state === TaskState.Todo)
+              .map((task) => task?.id || '')
           }
         />
-        <TodosList
+        <TasksList
           title="Completed"
-          todosSelector={(state: TodosState) =>
-            Object.values(state.todos)
-              .filter((todo) => todo?.state === TaskState.Completed)
-              .map((todo) => todo?.id || '')
+          tasksSelector={(state: TasksState) =>
+            Object.values(state.tasks)
+              .filter((task) => task?.state === TaskState.Completed)
+              .map((task) => task?.id || '')
           }
         />
       </Grid>

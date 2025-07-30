@@ -7,7 +7,7 @@ export enum TaskState {
   Completed = 'completed',
 }
 
-export interface Todo {
+export interface Task {
   id: string;
   title: string;
   category: Category;
