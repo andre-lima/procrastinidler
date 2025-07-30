@@ -7,6 +7,7 @@ import {
   Grid,
   Progress,
   Text,
+  Theme,
   Tooltip,
 } from '@radix-ui/themes';
 import { DifficultyMeter } from './components/DifficultyMeter';
@@ -32,6 +33,7 @@ export const TodoCard = ({ id }: { id: string }) => {
     state,
     assignedTo,
     isSpecial,
+    requiresReview,
   } = todo;
 
   const clicked = () => {
@@ -77,35 +79,40 @@ export const TodoCard = ({ id }: { id: string }) => {
   // };
 
   return (
-    <Card
-      className={'todoCard' + (isSpecial ? ' special' : '')}
-      role="button"
-      onClick={clicked}
-      variant="classic"
+    <Theme
+      appearance={!isSpecial ? 'light' : 'dark'}
+      data-has-background={!isSpecial}
     >
-      <Grid
-        gap="3"
-        columns="1fr auto"
-        rows="2"
-        areas="'title category' 'assignedTo difficulty' 'progress progress'"
+      <Card
+        className={'todoCard' + (isSpecial ? ' special' : '')}
+        role="button"
+        onClick={clicked}
       >
-        <Box gridArea="title">
-          <Flex gap="2" align="center">
-            <Text>{title}</Text>
-            <Tooltip content="This task requires review after completion">
-              <PiEyeBold size={16} color="gray" />
-            </Tooltip>
-          </Flex>
-        </Box>
-        <Box gridArea="category">
-          {category && (
-            <Badge color={getBadgeColor(category)}>{category}</Badge>
-          )}
-        </Box>
-        {assignedTo && (
-          <Box gridArea="assignedTo">
-            <div>{assignedTo}</div>
-            {/* <Container align="left" width="22px">
+        <Grid
+          gap="3"
+          columns="1fr auto"
+          rows="2"
+          areas="'title category' 'assignedTo difficulty' 'progress progress'"
+        >
+          <Box gridArea="title">
+            <Flex gap="2" align="center">
+              <Text>{title}</Text>
+              {requiresReview && (
+                <Tooltip content="This task requires review after completion">
+                  <PiEyeBold size={16} color="gray" />
+                </Tooltip>
+              )}
+            </Flex>
+          </Box>
+          <Box gridArea="category">
+            {category && (
+              <Badge color={getBadgeColor(category)}>{category}</Badge>
+            )}
+          </Box>
+          {assignedTo && (
+            <Box gridArea="assignedTo">
+              <div>{assignedTo}</div>
+              {/* <Container align="left" width="22px">
               <PieChart
                 data={[
                   { title: 'One', value: deadline, color: getDeadlineColor() },
@@ -113,26 +120,31 @@ export const TodoCard = ({ id }: { id: string }) => {
                 ]}
               />
             </Container> */}
-          </Box>
-        )}
-        <Box gridArea="difficulty">
-          <DifficultyMeter difficulty={difficulty} />
-        </Box>
-
-        <Box gridArea="progress">
-          <Flex>
-            <Box flexGrow="1">
-              <Text size="2" color="gray">
-                Progress
-              </Text>
             </Box>
-            <Text size="2" color="gray">
-              {progress}%
-            </Text>
-          </Flex>
-          <Progress color="green" value={progress} variant="soft" />
-        </Box>
-      </Grid>
-    </Card>
+          )}
+          <Box gridArea="difficulty">
+            <DifficultyMeter difficulty={difficulty} />
+          </Box>
+
+          <Box gridArea="progress">
+            <Flex>
+              <Box flexGrow="1">
+                <Text size="2" color="gray">
+                  Progress
+                </Text>
+              </Box>
+              <Text size="2" color="gray">
+                {progress}%
+              </Text>
+            </Flex>
+            <Progress
+              color="green"
+              value={state === TaskState.Completed ? 100 : progress}
+              variant="soft"
+            />
+          </Box>
+        </Grid>
+      </Card>
+    </Theme>
   );
 };

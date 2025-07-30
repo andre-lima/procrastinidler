@@ -27,6 +27,6 @@ export interface AssistantsState {
 export interface BossState {
   bossInterval: number;
   boss: Boss;
-  assignTaskToBoss: (todoId: string, bossId: string) => void;
+  assignTaskToBoss: (todoId: string) => void;
   unassignTask: (todoId: string) => void;
 }

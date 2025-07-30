@@ -17,6 +17,7 @@ export interface Todo {
   state: TaskState;
   progress: number;
   isSpecial?: boolean;
+  requiresReview?: boolean;
 }
 
 export enum Category {

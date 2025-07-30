@@ -37,6 +37,7 @@ export const useTodosStore = create<TodosState>((set, get) => ({
       deadline: 90,
       assignedTo: [],
       difficulty: 1,
+      requiresReview: false,
       state: TaskState.Todo,
       progress: 0,
     };
@@ -89,6 +90,7 @@ export const useTodosStore = create<TodosState>((set, get) => ({
 
     if (completedTodo) {
       completedTodo.state = TaskState.Completed;
+      completedTodo.progress = 100;
 
       // Unassign from task and assistant
       completedTodo.assignedTo.forEach((assistantId) =>
