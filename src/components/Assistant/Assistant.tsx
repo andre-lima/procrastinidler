@@ -40,10 +40,6 @@ export const Assistant = ({ id }: { id: string }) => {
     }
   };
 
-  const purchase = () => {
-    useAssistantUpgradesStore.getState().purchaseUpgrade('interval');
-  };
-
   useEffect(() => {
     loopId = setInterval(assistantLoop, assistantInterval);
 
@@ -51,7 +47,7 @@ export const Assistant = ({ id }: { id: string }) => {
   }, [assistantInterval]);
 
   return (
-    <div className="assistantImage navBarImage" onClick={purchase}>
+    <div className="assistantImage navBarImage">
       <img src={'assistants/' + id + '.png'} alt={'assistant image'} />
     </div>
   );

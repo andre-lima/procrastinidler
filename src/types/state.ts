@@ -24,7 +24,7 @@ export interface AssistantsState {
   unassignTask: (taskId: string, assistantId: string) => void;
 }
 
-export interface AssistantUpgradesState {
+export interface UpgradesState {
   upgrades: Record<string, Upgrade>;
   purchaseUpgrade: (upgradeId: string) => void;
 }

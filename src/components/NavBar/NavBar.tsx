@@ -1,17 +1,20 @@
 import { useGameStore } from '../../store/gameStore';
 import { Badge, Button, Dialog, Flex, Grid, Heading } from '@radix-ui/themes';
 import { LuCoins, LuCrown, LuPlus } from 'react-icons/lu';
-import { TaskState, type AssistantUpgradesState } from '../../types';
+import { TaskState, type UpgradesState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
 import { useAssistantStore } from '../../store/assistantStore';
 import { PurchaseUpgrades } from '../PurchaseUpgrades/PurchaseUpgrades';
 import { useShallow } from 'zustand/shallow';
 import { NavDialogButton } from './NavDialogButton';
+import { useBossStore } from '../../store/bossStore';
+import { Boss } from '../Boss/Boss';
 
 export const NavBar = () => {
   const money = useGameStore((state) => state.money);
   const assistants = useAssistantStore((state) => state.assistants);
+  const boss = useBossStore((state) => state.boss);
 
   const createNewTask = () => {
     const newTaskTodo = useTasksStore.getState().tasks.clickNewTask;
@@ -55,7 +58,7 @@ export const NavBar = () => {
 
             <NavDialogButton id="assistants">
               <PurchaseUpgrades
-                upgradesSelector={useShallow((state: AssistantUpgradesState) =>
+                upgradesSelector={useShallow((state: UpgradesState) =>
                   Object.values(state.upgrades)
                 )}
               />
@@ -65,6 +68,8 @@ export const NavBar = () => {
               (assistant) =>
                 assistant && <Assistant key={assistant.id} id={assistant.id} />
             )}
+
+            {boss && <Boss />}
           </Flex>
           <Flex align="center" justify="center" width="auto">
             <Heading size="4" as="h1">
