@@ -1,19 +1,22 @@
 import { Flex } from '@radix-ui/themes';
-import { useAssistantUpgradesStore } from '../../store/assistantStore';
-import type { AssistantUpgradesState } from '../../types';
-import type { Upgrade } from '../../types/assistant';
 import { UpgradeCard } from './UpgradeCard';
+import { useUpgradesStore } from '../../store/upgradesStore';
+import { useShallow } from 'zustand/shallow';
 
 export const PurchaseUpgrades = ({
-  upgradesSelector,
+  id,
 }: {
-  upgradesSelector: (state: AssistantUpgradesState) => Upgrade[];
+  id: 'assistants' | 'boss' | 'personal';
 }) => {
-  const upgrades = useAssistantUpgradesStore(upgradesSelector);
+  const upgrades = useUpgradesStore(
+    useShallow((state) =>
+      Object.values(state.upgrades).filter((upgrade) => upgrade.type === id)
+    )
+  );
 
   return (
     <Flex direction="column" gap="3">
-      {Object.values(upgrades).map((upgrade) => (
+      {upgrades.map((upgrade) => (
         <UpgradeCard key={upgrade.id} upgrade={upgrade} />
       ))}
     </Flex>

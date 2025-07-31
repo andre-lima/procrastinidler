@@ -31,7 +31,8 @@ export interface UpgradesState {
 
 export interface BossState {
   bossInterval: number;
-  boss: Boss;
+  boss: Boss | null;
+  addBoss: () => void;
   assignTaskToBoss: (todoId: string) => void;
   unassignTask: (todoId: string) => void;
 }

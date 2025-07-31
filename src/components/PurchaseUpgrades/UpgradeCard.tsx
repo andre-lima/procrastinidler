@@ -2,7 +2,7 @@ import { Box, Button, Card, Flex, Grid, Text, Theme } from '@radix-ui/themes';
 import type { Upgrade } from '../../types/assistant';
 import { LuCoins } from 'react-icons/lu';
 import './styles.scss';
-import { useAssistantUpgradesStore } from '../../store/assistantStore';
+import { useUpgradesStore } from '../../store/upgradesStore';
 import { useGameStore } from '../../store/gameStore';
 
 export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
@@ -49,7 +49,7 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
               }}
               variant="surface"
               onClick={() =>
-                useAssistantUpgradesStore.getState().purchaseUpgrade(upgrade.id)
+                useUpgradesStore.getState().purchaseUpgrade(upgrade.id)
               }
               disabled={
                 upgrade.owned >= upgrade.ownedLimit || upgrade.cost > money

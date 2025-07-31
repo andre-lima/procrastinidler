@@ -8,6 +8,7 @@ export interface Assistant {
 
 export interface Upgrade {
   id: string;
+  type: 'assistants' | 'boss' | 'personal';
   baseValue: number;
   currentValue: number;
   description: string;

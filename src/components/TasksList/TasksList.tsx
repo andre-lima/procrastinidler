@@ -30,7 +30,7 @@ export const TasksList = ({
         scrollbars="vertical"
         style={{ maxHeight: '70vh' }}
       >
-        <Flex direction="column-reverse" gap="2">
+        <Flex direction="column" gap="2">
           {itemIds.map((id) => (
             <TaskCard key={id} id={id} />
           ))}

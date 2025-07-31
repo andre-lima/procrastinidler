@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useBossUpgradesStore } from '../../store/bossStore';
 import { useTasksStore } from '../../store/tasksStore';
+import { useUpgradesStore } from '../../store/upgradesStore';
 
 let loopId: number;
 
 export const Boss = () => {
-  const bossInterval = useBossUpgradesStore(
-    (state) => state.upgrades.interval.currentValue
+  const bossInterval = useUpgradesStore(
+    (state) => state.upgrades.bossInterval.currentValue
   );
   // const boss = useBossStore((state) => state.boss[id]);
 
@@ -39,6 +39,8 @@ export const Boss = () => {
 
   useEffect(() => {
     loopId = setInterval(bossLoop, bossInterval);
+
+    console.log(bossInterval);
 
     return () => clearInterval(loopId);
   }, [bossInterval]);

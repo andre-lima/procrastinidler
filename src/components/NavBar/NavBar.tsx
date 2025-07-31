@@ -1,12 +1,11 @@
 import { useGameStore } from '../../store/gameStore';
-import { Badge, Button, Dialog, Flex, Grid, Heading } from '@radix-ui/themes';
-import { LuCoins, LuCrown, LuPlus } from 'react-icons/lu';
-import { TaskState, type UpgradesState } from '../../types';
+import { Badge, Button, Flex, Grid, Heading } from '@radix-ui/themes';
+import { LuCoins, LuPlus } from 'react-icons/lu';
+import { TaskState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
 import { useAssistantStore } from '../../store/assistantStore';
 import { PurchaseUpgrades } from '../PurchaseUpgrades/PurchaseUpgrades';
-import { useShallow } from 'zustand/shallow';
 import { NavDialogButton } from './NavDialogButton';
 import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
@@ -42,26 +41,12 @@ export const NavBar = () => {
               <LuPlus /> Task
             </Button>
 
-            <Dialog.Root>
-              <Dialog.Trigger>
-                <Button
-                  style={{
-                    backgroundColor: 'var(--gray-1)',
-                    color: 'var(--gray-12)',
-                  }}
-                  variant="surface"
-                >
-                  <LuCrown /> Boss
-                </Button>
-              </Dialog.Trigger>
-            </Dialog.Root>
+            <NavDialogButton id="boss">
+              <PurchaseUpgrades id="boss" />
+            </NavDialogButton>
 
             <NavDialogButton id="assistants">
-              <PurchaseUpgrades
-                upgradesSelector={useShallow((state: UpgradesState) =>
-                  Object.values(state.upgrades)
-                )}
-              />
+              <PurchaseUpgrades id="assistants" />
             </NavDialogButton>
 
             {Object.values(assistants).map(

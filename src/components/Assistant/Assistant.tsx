@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
-import {
-  useAssistantStore,
-  useAssistantUpgradesStore,
-} from '../../store/assistantStore';
+import { useAssistantStore } from '../../store/assistantStore';
 import { useTasksStore } from '../../store/tasksStore';
 import './styles.scss';
+import { useUpgradesStore } from '../../store/upgradesStore';
 
 let loopId: number;
 
 export const Assistant = ({ id }: { id: string }) => {
-  const assistantInterval = useAssistantUpgradesStore(
-    (state) => state.upgrades.interval.currentValue
+  const assistantInterval = useUpgradesStore(
+    (state) => state.upgrades.assistantInterval.currentValue
   );
   // const assistant = useAssistantStore((state) => state.assistants[id]);
 
@@ -19,7 +17,7 @@ export const Assistant = ({ id }: { id: string }) => {
       useAssistantStore.getState().assistants[id]?.assignedTo;
 
     const numOfTasksAssignable =
-      useAssistantUpgradesStore.getState().upgrades.multitasking.currentValue;
+      useUpgradesStore.getState().upgrades.assistantsMultitasking.currentValue;
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
