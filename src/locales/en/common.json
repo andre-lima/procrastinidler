@@ -1,0 +1,26 @@
+{
+  "assistants": "Assistants",
+  "boss": "Boss",
+  "tasks": {
+    "title": "Tasks",
+    "todo": "To Do",
+    "inReview": "In Review",
+    "done": "Done"
+  },
+  "menus": {
+    "boss": {
+      "navButton": "Boss",
+      "dialog": {
+        "title": "Boss Upgrades"
+      }
+    },
+    "assistants": {
+      "navButton": "Assistants",
+      "dialog": {
+        "title": "Assistants Upgrades"
+      }
+    },
+    "addTask": "Task",
+    "purchase": "Purchase"
+  }
+}

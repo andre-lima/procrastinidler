@@ -9,11 +9,13 @@ import { PurchaseUpgrades } from '../PurchaseUpgrades/PurchaseUpgrades';
 import { NavDialogButton } from './NavDialogButton';
 import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
+import { useTranslation } from 'react-i18next';
 
 export const NavBar = () => {
   const money = useGameStore((state) => state.money);
   const assistants = useAssistantStore((state) => state.assistants);
   const boss = useBossStore((state) => state.boss);
+  const { t } = useTranslation('common');
 
   const createNewTask = () => {
     const newTaskTodo = useTasksStore.getState().tasks.clickNewTask;
@@ -38,7 +40,7 @@ export const NavBar = () => {
               size="3"
               onClick={createNewTask}
             >
-              <LuPlus /> Task
+              <LuPlus /> {t('menus.addTask')}
             </Button>
 
             <NavDialogButton id="boss">

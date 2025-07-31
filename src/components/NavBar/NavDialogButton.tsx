@@ -1,6 +1,7 @@
 import { Button, Dialog, Flex } from '@radix-ui/themes';
 import { LuCrown, LuUsers, LuX } from 'react-icons/lu';
 import { useCallback, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const NavDialogButton = ({
   id,
@@ -9,6 +10,8 @@ export const NavDialogButton = ({
   id: string;
   children: ReactNode;
 }) => {
+  const { t } = useTranslation('common');
+
   const getTitleIcon = useCallback(() => {
     switch (id) {
       case 'assistants':
@@ -31,7 +34,7 @@ export const NavDialogButton = ({
           }}
           variant="surface"
         >
-          <LuUsers /> {id + '.navButton'}
+          <LuUsers /> {t('menus.' + id + '.navButton')}
         </Button>
       </Dialog.Trigger>
 
@@ -39,7 +42,7 @@ export const NavDialogButton = ({
         <Dialog.Title mb="4">
           <Flex gap="2" align="center">
             <Flex gap="2" align="center" flexGrow="1">
-              {getTitleIcon()()} {id + '.dialog.title'}
+              {getTitleIcon()()} {t('menus.' + id + '.dialog.title')}
             </Flex>
             <Dialog.Close>
               {/* <Button variant="ghost"> */}
