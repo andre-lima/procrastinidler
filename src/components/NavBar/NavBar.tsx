@@ -1,12 +1,13 @@
 import { useGameStore } from '../../store/gameStore';
 import { Badge, Button, Dialog, Flex, Grid, Heading } from '@radix-ui/themes';
-import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
+import { LuCoins, LuCrown, LuPlus } from 'react-icons/lu';
 import { TaskState, type AssistantUpgradesState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
 import { useAssistantStore } from '../../store/assistantStore';
 import { PurchaseUpgrades } from '../PurchaseUpgrades/PurchaseUpgrades';
 import { useShallow } from 'zustand/shallow';
+import { NavDialogButton } from './NavDialogButton';
 
 export const NavBar = () => {
   const money = useGameStore((state) => state.money);
@@ -52,33 +53,13 @@ export const NavBar = () => {
               </Dialog.Trigger>
             </Dialog.Root>
 
-            <Dialog.Root>
-              <Dialog.Trigger>
-                <Button
-                  style={{
-                    backgroundColor: 'var(--gray-1)',
-                    color: 'var(--gray-12)',
-                  }}
-                  variant="surface"
-                >
-                  <LuUsers /> Assistants
-                </Button>
-              </Dialog.Trigger>
-
-              <Dialog.Content maxWidth="450px">
-                <Dialog.Title mb="4">
-                  <Flex gap="2" align="center">
-                    <LuUsers color="orange" /> Assistants Upgrades
-                  </Flex>
-                </Dialog.Title>
-                <PurchaseUpgrades
-                  upgradesSelector={useShallow(
-                    (state: AssistantUpgradesState) =>
-                      Object.values(state.upgrades)
-                  )}
-                />
-              </Dialog.Content>
-            </Dialog.Root>
+            <NavDialogButton id="assistants">
+              <PurchaseUpgrades
+                upgradesSelector={useShallow((state: AssistantUpgradesState) =>
+                  Object.values(state.upgrades)
+                )}
+              />
+            </NavDialogButton>
 
             {Object.values(assistants).map(
               (assistant) =>

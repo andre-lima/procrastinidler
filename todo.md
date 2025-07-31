@@ -2,6 +2,8 @@ Boss generates tasks
 
 Upgrades purchase component: more efficient click per category
 
+i18n
+
 Boss upgrades: reviews speed, reviews quality,
 
 Personal upgrades
