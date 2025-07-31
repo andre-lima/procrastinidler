@@ -4,7 +4,6 @@ import { Grid, Theme } from '@radix-ui/themes';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './types';
 import { TasksList } from './components/TasksList/TasksList';
-import { PurchaseUpgrades } from './components/PurchaseUpgrades/PurchaseUpgrades';
 
 function App() {
   return (
@@ -29,8 +28,6 @@ function App() {
           }
         />
       </Grid>
-
-      <PurchaseUpgrades />
     </Theme>
   );
 }

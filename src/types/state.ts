@@ -1,4 +1,4 @@
-import type { Assistant, AssistantUpgrade } from './assistant';
+import type { Assistant, Upgrade } from './assistant';
 import type { Boss } from './boss';
 import type { Task } from './tasks';
 
@@ -25,7 +25,7 @@ export interface AssistantsState {
 }
 
 export interface AssistantUpgradesState {
-  upgrades: Record<string, AssistantUpgrade>;
+  upgrades: Record<string, Upgrade>;
   purchaseUpgrade: (upgradeId: string) => void;
 }
 

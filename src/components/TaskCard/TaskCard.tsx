@@ -121,7 +121,7 @@ export const TaskCard = ({ id }: { id: string }) => {
           {assignedTo.length > 0 && (
             <Box gridArea="assignedTo">
               {assignedTo.map((assistantId) => (
-                <div className="assignedAssistantImage">
+                <div key={assistantId} className="assignedAssistantImage">
                   <img
                     src={'assistants/' + assistantId + '.png'}
                     alt={'assistant image'}

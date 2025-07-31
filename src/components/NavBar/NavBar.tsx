@@ -1,10 +1,12 @@
 import { useGameStore } from '../../store/gameStore';
 import { Badge, Button, Dialog, Flex, Grid, Heading } from '@radix-ui/themes';
 import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
-import { TaskState } from '../../types';
+import { TaskState, type AssistantUpgradesState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
 import { useAssistantStore } from '../../store/assistantStore';
+import { PurchaseUpgrades } from '../PurchaseUpgrades/PurchaseUpgrades';
+import { useShallow } from 'zustand/shallow';
 
 export const NavBar = () => {
   const money = useGameStore((state) => state.money);
@@ -44,7 +46,6 @@ export const NavBar = () => {
                     color: 'var(--gray-12)',
                   }}
                   variant="surface"
-                  onClick={createNewTask}
                 >
                   <LuCrown /> Boss
                 </Button>
@@ -59,11 +60,24 @@ export const NavBar = () => {
                     color: 'var(--gray-12)',
                   }}
                   variant="surface"
-                  onClick={createNewTask}
                 >
                   <LuUsers /> Assistants
                 </Button>
               </Dialog.Trigger>
+
+              <Dialog.Content>
+                <Dialog.Title>
+                  <Flex gap="2" align="center">
+                    <LuUsers color="orange" /> Assistants Upgrades
+                  </Flex>
+                </Dialog.Title>
+                <PurchaseUpgrades
+                  upgradesSelector={useShallow(
+                    (state: AssistantUpgradesState) =>
+                      Object.values(state.upgrades)
+                  )}
+                />
+              </Dialog.Content>
             </Dialog.Root>
 
             {Object.values(assistants).map(

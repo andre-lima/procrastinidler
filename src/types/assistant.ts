@@ -6,7 +6,7 @@ export interface Assistant {
   category?: Category;
 }
 
-export interface AssistantUpgrade {
+export interface Upgrade {
   id: string;
   baseValue: number;
   currentValue: number;

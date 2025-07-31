@@ -1,8 +1,14 @@
 import { useAssistantUpgradesStore } from '../../store/assistantStore';
 import { useGameStore } from '../../store/gameStore';
+import type { AssistantUpgradesState } from '../../types';
+import type { Upgrade } from '../../types/assistant';
 
-export const PurchaseUpgrades = () => {
-  const upgrades = useAssistantUpgradesStore((state) => state.upgrades);
+export const PurchaseUpgrades = ({
+  upgradesSelector,
+}: {
+  upgradesSelector: (state: AssistantUpgradesState) => Upgrade[];
+}) => {
+  const upgrades = useAssistantUpgradesStore(upgradesSelector);
   const money = useGameStore((state) => state.money);
 
   return (
