@@ -1,18 +1,15 @@
 
 Boss generates tasks
 
-Assistant images
-
 Upgrades purchase component
-
-Random categories
 
 Boss upgrades: reviews speed, reviews quality, 
 
-Assistant: Task completion quality (based on difficulty too)
 
 
 --------
+
+Assistant: Task completion quality (based on difficulty too)
 
 upgrades for personal efficiency: pomodoro clock, time management, focus, ritalin, prioritization 
 

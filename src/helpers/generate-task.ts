@@ -14,5 +14,9 @@ export const generateRandomTask = () => {
     adjective,
   ]);
 
-  return verb + ' ' + random + ' ' + faker.word.noun();
+  let sentence = verb + ' ' + random + ' ' + faker.word.noun();
+
+  sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+
+  return sentence;
 };

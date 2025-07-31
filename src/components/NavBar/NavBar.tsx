@@ -1,5 +1,5 @@
 import { useGameStore } from '../../store/gameStore';
-import { Badge, Button, Flex, Grid, Heading } from '@radix-ui/themes';
+import { Badge, Button, Dialog, Flex, Grid, Heading } from '@radix-ui/themes';
 import { LuCoins, LuCrown, LuUsers, LuPlus } from 'react-icons/lu';
 import { TaskState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
@@ -35,26 +35,36 @@ export const NavBar = () => {
             >
               <LuPlus /> Task
             </Button>
-            <Button
-              style={{
-                backgroundColor: 'var(--gray-1)',
-                color: 'var(--gray-12)',
-              }}
-              variant="surface"
-              onClick={createNewTask}
-            >
-              <LuCrown /> Boss
-            </Button>
-            <Button
-              style={{
-                backgroundColor: 'var(--gray-1)',
-                color: 'var(--gray-12)',
-              }}
-              variant="surface"
-              onClick={createNewTask}
-            >
-              <LuUsers /> Assistants
-            </Button>
+
+            <Dialog.Root>
+              <Dialog.Trigger>
+                <Button
+                  style={{
+                    backgroundColor: 'var(--gray-1)',
+                    color: 'var(--gray-12)',
+                  }}
+                  variant="surface"
+                  onClick={createNewTask}
+                >
+                  <LuCrown /> Boss
+                </Button>
+              </Dialog.Trigger>
+            </Dialog.Root>
+
+            <Dialog.Root>
+              <Dialog.Trigger>
+                <Button
+                  style={{
+                    backgroundColor: 'var(--gray-1)',
+                    color: 'var(--gray-12)',
+                  }}
+                  variant="surface"
+                  onClick={createNewTask}
+                >
+                  <LuUsers /> Assistants
+                </Button>
+              </Dialog.Trigger>
+            </Dialog.Root>
 
             {Object.values(assistants).map(
               (assistant) =>

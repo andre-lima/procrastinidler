@@ -52,8 +52,20 @@ export const TaskCard = ({ id }: { id: string }) => {
       return 'blue';
     }
 
-    if (category === Category.Other) {
+    if (category === Category.Education) {
+      return 'yellow';
+    }
+
+    if (category === Category.Health) {
+      return 'purple';
+    }
+
+    if (category === Category.Leisure) {
       return 'orange';
+    }
+
+    if (category === Category.Other) {
+      return 'indigo';
     }
 
     return 'gray';
@@ -86,7 +98,7 @@ export const TaskCard = ({ id }: { id: string }) => {
         onClick={clicked}
       >
         <Grid
-          gap="3"
+          gap="1"
           columns="1fr auto"
           rows="1fr 40px 1fr"
           areas="'title category' 'assignedTo difficulty' 'progress progress'"
@@ -101,11 +113,11 @@ export const TaskCard = ({ id }: { id: string }) => {
               )}
             </Flex>
           </Box>
-          <Box gridArea="category">
+          <Flex justify="end" gridArea="category">
             {category && (
               <Badge color={getBadgeColor(category)}>{category}</Badge>
             )}
-          </Box>
+          </Flex>
           {assignedTo.length > 0 && (
             <Box gridArea="assignedTo">
               {assignedTo.map((assistantId) => (

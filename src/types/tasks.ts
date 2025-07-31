@@ -23,6 +23,8 @@ export interface Task {
 export enum Category {
   Personal = 'Personal',
   Health = 'Health',
+  Education = 'Education',
+  Leisure = 'Leisure',
   Work = 'Work',
   Metagame = 'Metagame',
   Other = 'Other',
