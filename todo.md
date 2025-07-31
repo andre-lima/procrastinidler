@@ -1,17 +1,24 @@
-
 Boss generates tasks
 
-Upgrades purchase component
+Upgrades purchase component: more efficient click per category
 
-Boss upgrades: reviews speed, reviews quality, 
+Boss upgrades: reviews speed, reviews quality,
 
+Personal upgrades
 
+More metagame cards (create a simple story?)
 
---------
+Save
+
+Clear save
+
+End dialog
+
+---
 
 Assistant: Task completion quality (based on difficulty too)
 
-upgrades for personal efficiency: pomodoro clock, time management, focus, ritalin, prioritization 
+upgrades for personal efficiency: pomodoro clock, time management, focus, ritalin, prioritization
 
 bomb all tasks from a certain low level of difficulty for a high price?
 

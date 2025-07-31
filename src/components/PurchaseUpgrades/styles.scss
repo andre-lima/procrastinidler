@@ -1,0 +1,9 @@
+.purchaseUpgradeButton {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+    color: var(--gray-10) !important;
+  }
+}

@@ -65,8 +65,8 @@ export const NavBar = () => {
                 </Button>
               </Dialog.Trigger>
 
-              <Dialog.Content>
-                <Dialog.Title>
+              <Dialog.Content maxWidth="450px">
+                <Dialog.Title mb="4">
                   <Flex gap="2" align="center">
                     <LuUsers color="orange" /> Assistants Upgrades
                   </Flex>
