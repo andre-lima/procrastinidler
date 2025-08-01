@@ -4,7 +4,8 @@ import type { Task } from './tasks';
 
 export interface GameState {
   money: number;
-  addMoney: (amount: number) => void;
+  addMoney: (amount: number, options?: { hasDeadline?: boolean }) => void;
+  spendMoney: (amount: number) => void;
 }
 
 export interface TasksState {
@@ -13,7 +14,7 @@ export interface TasksState {
   getNextUnassignedTask: (maxNumOfTasks: number) => (Task | undefined)[];
   assignAssistantToTask: (assistantId: string, task: Task) => void;
   newTask: (task?: Task) => void;
-  makeProgress: (id: string) => void;
+  makeProgress: (id: string, worker: 'assistant' | 'personal') => void;
   completeTask: (id: string) => void;
 }
 

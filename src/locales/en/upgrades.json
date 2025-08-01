@@ -1,8 +1,58 @@
 {
-  "assistant": {
-    "upgrades": "Assistant Upgrades"
+  "personalEfficiency": {
+    "title": "Efficiency",
+    "description": "Increase chunk of work completion by click by 5%"
   },
-  "boss": {
-    "upgrades": "Boss Upgrades"
+  "personalMoneyPerTask": {
+    "title": "Money per task",
+    "description": "Increase money rewards per completed task by 5%"
+  },
+  "taskPairing": {
+    "title": "Pairing",
+    "description": "Allows you to help on tasks already assigned to an assistant."
+  },
+  "buyAssistants": {
+    "title": "New Assistant",
+    "description": "Hire a new assistant to help you complete tasks."
+  },
+  "assistantsMultitasking": {
+    "title": "Multitasking",
+    "description": "Assistants can take on more tasks at once."
+  },
+  "assistantEfficiency": {
+    "title": "Efficiency",
+    "description": "Increase chunk of work completion rate by 5%."
+  },
+  "assistantInterval": {
+    "title": "Fast worker",
+    "description": "Increase Assistants work speed by 5%."
+  },
+  "buyBoss": {
+    "title": "Get a Boss",
+    "description": "Hire a new boss to help you create and review tasks."
+  },
+  "increaseDifficulty": {
+    "title": "Increase difficulty",
+    "description": "Increase difficulty of tasks by 1 and reward $ by 100%."
+  },
+  "requiresReview": {
+    "title": "Requires review",
+    "description": "Tasks require review after completion."
+  },
+  "hasDeadline": {
+    "title": "Has deadline",
+    "description": "Doubles $ reward but tasks will expire after a while."
+  },
+  "negotiateDeadline": {
+    "title": "Negotiate deadline",
+    "description": "Increase deadline for tasks by 10%."
+  },
+  "bossMultitasking": {
+    "title": "Multitasking",
+    "description": "Boss can review more tasks at once."
+  },
+  "bossInterval": {
+    "title": "Moar!",
+    "description": "Increase Boss tasks generation speed by 5%."
   }
 }

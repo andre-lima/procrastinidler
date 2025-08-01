@@ -1,13 +1,12 @@
 .taskCard {
-  cursor: pointer;
+  cursor: default;
 
-  &.special {
-    cursor: default;
-    background-color: var(--blue-2);
+  &.canClick {
+    cursor: pointer;
   }
 
-  &:not(.todo) {
-    cursor: default;
+  &.special {
+    background-color: var(--blue-2);
   }
 
   .assignedAssistantImage {

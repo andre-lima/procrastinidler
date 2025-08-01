@@ -11,7 +11,6 @@ export interface Upgrade {
   type: 'assistants' | 'boss' | 'personal';
   baseValue: number;
   currentValue: number;
-  description: string;
   cost: number;
   rate: number;
   owned: number;

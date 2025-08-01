@@ -16,6 +16,7 @@ import './styles.scss';
 // import { PieChart } from 'react-minimal-pie-chart';
 import { useShallow } from 'zustand/shallow';
 import { useTasksStore } from '../../store/tasksStore';
+import { useUpgradesStore } from '../../store/upgradesStore';
 
 export const TaskCard = ({ id }: { id: string }) => {
   const {
@@ -28,14 +29,22 @@ export const TaskCard = ({ id }: { id: string }) => {
     requiresReview,
     progress,
   } = useTasksStore(useShallow((state) => ({ ...state.tasks[id]! })));
+  const canPair = useUpgradesStore(
+    (state) => state.upgrades.taskPairing.owned > 0
+  );
 
   if (!title) {
     return null;
   }
 
+  const canClick =
+    !isSpecial &&
+    (canPair || assignedTo.length === 0) &&
+    state === TaskState.Todo;
+
   const clicked = () => {
-    if (state === TaskState.Todo && !isSpecial) {
-      useTasksStore.getState().makeProgress(id);
+    if (canClick) {
+      useTasksStore.getState().makeProgress(id, 'personal');
     }
   };
 
@@ -93,7 +102,12 @@ export const TaskCard = ({ id }: { id: string }) => {
       data-has-background={false}
     >
       <Card
-        className={'taskCard' + (isSpecial ? ' special ' : ' ') + state}
+        className={
+          'taskCard' +
+          (isSpecial ? ' special ' : ' ') +
+          state +
+          (canClick ? ' canClick' : '')
+        }
         role="button"
         onClick={clicked}
       >
@@ -108,7 +122,7 @@ export const TaskCard = ({ id }: { id: string }) => {
               <Text>{title}</Text>
               {requiresReview && (
                 <Tooltip content="This task requires review after completion">
-                  <PiEyeBold size={16} color="gray" />
+                  <PiEyeBold size={16} color="crimson" />
                 </Tooltip>
               )}
             </Flex>
@@ -141,7 +155,6 @@ export const TaskCard = ({ id }: { id: string }) => {
           <Box gridArea="difficulty">
             <DifficultyMeter difficulty={difficulty} />
           </Box>
-
           <Box gridArea="progress">
             <Flex>
               <Box flexGrow="1">

@@ -6,6 +6,7 @@ import { generateRandomTask } from '../helpers/generate-task';
 import { useGameStore } from './gameStore';
 import { useAssistantStore } from './assistantStore';
 import { getRandomCategory } from '../helpers/random-category';
+import { useUpgradesStore } from './upgradesStore';
 
 export const useTasksStore = create<TasksState>((set, get) => ({
   tasks: {
@@ -31,14 +32,21 @@ export const useTasksStore = create<TasksState>((set, get) => ({
   },
   getTasksArray: () => Object.values(get().tasks),
   newTask: (task?: Task) => {
+    const deadline =
+      useUpgradesStore.getState().upgrades.hasDeadline.owned === 1
+        ? useUpgradesStore.getState().upgrades.negotiateDeadline.currentValue
+        : undefined;
+
     const newTask = task || {
       id: uuid(),
       title: generateRandomTask(),
       category: getRandomCategory(),
-      deadline: 90,
+      deadline,
       assignedTo: [],
-      difficulty: 1,
-      requiresReview: false,
+      difficulty:
+        useUpgradesStore.getState().upgrades.increaseDifficulty.currentValue,
+      requiresReview:
+        useUpgradesStore.getState().upgrades.requiresReview.owned === 1,
       state: TaskState.Todo,
       progress: 0,
     };
@@ -80,14 +88,20 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       task ? { tasks: { ...state.tasks, [task.id]: task } } : state
     );
   },
-  makeProgress: (id: string) => {
+  makeProgress: (id: string, worker: 'assistant' | 'personal') => {
     const task = get().tasks[id];
+
+    const progressEfficiency =
+      worker === 'personal'
+        ? useUpgradesStore.getState().upgrades.personalEfficiency.currentValue
+        : useUpgradesStore.getState().upgrades.assistantEfficiency.currentValue;
 
     if (task && task.progress < 100) {
       const progressPerClick =
-        100 / (task.difficulty * config.clicksPerDifficultyLevel);
+        progressEfficiency /
+        (task.difficulty * config.clicksPerDifficultyLevel);
 
-      task.progress += progressPerClick;
+      task.progress = Math.min(task.progress + progressPerClick, 100);
 
       if (task.progress >= 100) {
         setTimeout(() => {
@@ -116,7 +130,9 @@ export const useTasksStore = create<TasksState>((set, get) => ({
 
       useGameStore
         .getState()
-        .addMoney(config.moneyPerTaskCompleted * completedTask.difficulty);
+        .addMoney(config.moneyPerTaskCompleted * completedTask.difficulty, {
+          hasDeadline: completedTask.deadline !== undefined,
+        });
     }
 
     set((state: TasksState) =>

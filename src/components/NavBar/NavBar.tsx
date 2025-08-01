@@ -43,6 +43,10 @@ export const NavBar = () => {
               <LuPlus /> {t('menus.addTask')}
             </Button>
 
+            <NavDialogButton id="personal">
+              <PurchaseUpgrades id="personal" />
+            </NavDialogButton>
+
             <NavDialogButton id="boss">
               <PurchaseUpgrades id="boss" />
             </NavDialogButton>

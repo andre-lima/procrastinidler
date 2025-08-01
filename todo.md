@@ -1,12 +1,6 @@
-Boss generates tasks
+Boss upgrades affecting new tasks
 
-Upgrades purchase component: more efficient click per category
-
-i18n
-
-Boss upgrades: reviews speed, reviews quality,
-
-Personal upgrades
+Boss reviews
 
 More metagame cards (create a simple story?)
 

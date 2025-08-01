@@ -8,6 +8,12 @@
     "done": "Done"
   },
   "menus": {
+    "personal": {
+      "navButton": "Personal",
+      "dialog": {
+        "title": "Personal Upgrades"
+      }
+    },
     "boss": {
       "navButton": "Boss",
       "dialog": {

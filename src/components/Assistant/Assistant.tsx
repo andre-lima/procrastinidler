@@ -21,7 +21,7 @@ export const Assistant = ({ id }: { id: string }) => {
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        useTasksStore.getState().makeProgress(task);
+        useTasksStore.getState().makeProgress(task, 'assistant');
       });
     }
     if ((assignedTasks?.length || 0) < numOfTasksAssignable) {
