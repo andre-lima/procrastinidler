@@ -1,6 +1,8 @@
-Boss upgrades affecting new tasks
-
 Boss reviews
+
+task deadline counter
+
+rejected tasks
 
 More metagame cards (create a simple story?)
 

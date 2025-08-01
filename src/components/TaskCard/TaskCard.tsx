@@ -159,7 +159,7 @@ export const TaskCard = ({ id }: { id: string }) => {
             <Flex>
               <Box flexGrow="1">
                 <Text size="2" color="gray">
-                  Progress
+                  {state === TaskState.InReview ? 'Review' : 'Progress'}
                 </Text>
               </Box>
               <Text size="2" color="gray">

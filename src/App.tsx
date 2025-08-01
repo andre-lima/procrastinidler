@@ -4,8 +4,14 @@ import { Grid, Theme } from '@radix-ui/themes';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './types';
 import { TasksList } from './components/TasksList/TasksList';
+import { useTasksStore } from './store/tasksStore';
+import { useUpgradesStore } from './store/upgradesStore';
 
 function App() {
+  const showReviewsColumn = useUpgradesStore(
+    (state) => state.upgrades.requiresReview.owned > 0
+  );
+
   return (
     <Theme>
       <NavBar />
@@ -19,6 +25,16 @@ function App() {
               .map((task) => task?.id || '')
           }
         />
+        {/* {showReviewsColumn)&& ( */}
+        <TasksList
+          title="In Review"
+          tasksSelector={(state: TasksState) =>
+            Object.values(state.tasks)
+              .filter((task) => task?.state === TaskState.InReview)
+              .map((task) => task?.id || '')
+          }
+        />
+        {/* )} */}
         <TasksList
           title="Completed"
           tasksSelector={(state: TasksState) =>
