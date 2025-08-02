@@ -7,6 +7,7 @@ import { useGameStore } from './gameStore';
 import { useAssistantStore } from './assistantStore';
 import { getRandomCategory } from '../helpers/random-category';
 import { useUpgradesStore } from './upgradesStore';
+import { useBossStore } from './bossStore';
 
 export const useTasksStore = create<TasksState>((set, get) => ({
   tasks: {
@@ -76,7 +77,10 @@ export const useTasksStore = create<TasksState>((set, get) => ({
     }));
   },
 
-  getNextUnassignedTask: (numToAssign: number = 1) => {
+  getNextUnassignedTask: (
+    numToAssign: number = 1,
+    taskState = TaskState.Todo
+  ) => {
     const tasksToAssign: Task[] = [];
 
     const tasks = get().getTasksArray();
@@ -86,7 +90,7 @@ export const useTasksStore = create<TasksState>((set, get) => ({
 
       if (
         task?.assignedTo.length === 0 &&
-        task?.state === TaskState.Todo &&
+        task?.state === taskState &&
         !task.isSpecial
       ) {
         tasksToAssign.push(task);
@@ -108,13 +112,37 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       task ? { tasks: { ...state.tasks, [task.id]: task } } : state
     );
   },
-  makeProgress: (id: string, worker: 'assistant' | 'personal') => {
+  assignBossToTask: (task: Task) => {
+    if (task) {
+      task.assignedTo = ['boss'];
+    }
+
+    set((state: TasksState) =>
+      task ? { tasks: { ...state.tasks, [task.id]: task } } : state
+    );
+  },
+  makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => {
     const task = get().tasks[id];
 
-    const progressEfficiency =
-      worker === 'personal'
-        ? useUpgradesStore.getState().upgrades.personalEfficiency.currentValue
-        : useUpgradesStore.getState().upgrades.assistantEfficiency.currentValue;
+    let progressEfficiency;
+
+    switch (worker) {
+      case 'assistant':
+        progressEfficiency =
+          useUpgradesStore.getState().upgrades.assistantEfficiency.currentValue;
+        break;
+      case 'personal':
+        progressEfficiency =
+          useUpgradesStore.getState().upgrades.personalEfficiency.currentValue;
+        break;
+      case 'boss':
+        progressEfficiency = 100;
+        break;
+      default:
+        progressEfficiency =
+          useUpgradesStore.getState().upgrades.personalEfficiency.currentValue;
+        break;
+    }
 
     if (task && task.progress < 100) {
       const progressPerClick =
@@ -151,9 +179,11 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       }
 
       // Unassign from task and assistant
+      // what about BOSS?
       completedTask.assignedTo.forEach((assistantId) =>
         useAssistantStore.getState().unassignTask(completedTask.id, assistantId)
       );
+      useBossStore.getState().unassignTask(completedTask.id);
       completedTask.assignedTo = [];
 
       useGameStore

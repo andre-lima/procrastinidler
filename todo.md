@@ -1,8 +1,4 @@
-Boss reviews
-
 task deadline counter
-
-rejected tasks
 
 More metagame cards (create a simple story?)
 
