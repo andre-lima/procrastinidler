@@ -3,7 +3,7 @@ import { type GameState } from '../types';
 import { useUpgradesStore } from './upgradesStore';
 
 const useGameStore = create<GameState>((set, get) => ({
-  money: 20000,
+  money: 0,
   addMoney: (amount: number, options?: { hasDeadline?: boolean }) => {
     if (options?.hasDeadline) {
       amount *= 2;

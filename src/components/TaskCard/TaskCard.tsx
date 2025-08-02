@@ -108,6 +108,7 @@ export const TaskCard = ({ id }: { id: string }) => {
           state +
           (canClick ? ' canClick' : '')
         }
+        mr="3"
         role="button"
         onClick={clicked}
       >

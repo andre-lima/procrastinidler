@@ -1,4 +1,5 @@
 .taskCard {
+  user-select: none;
   cursor: default;
 
   &.canClick {

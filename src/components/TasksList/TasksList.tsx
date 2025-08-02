@@ -16,6 +16,7 @@ export const TasksList = ({
   return (
     <Box
       p="4"
+      pr="2"
       style={{
         background: 'var(--gray-a3)',
         borderRadius: 'var(--radius-3)',

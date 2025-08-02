@@ -5,7 +5,7 @@
   },
   "personalMoneyPerTask": {
     "title": "Money per task",
-    "description": "Increase money rewards per completed task by 5%"
+    "description": "Increase money rewards per completed task by 20%"
   },
   "taskPairing": {
     "title": "Pairing",

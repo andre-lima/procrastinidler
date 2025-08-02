@@ -68,7 +68,11 @@ export const NavBar = () => {
             </Heading>
           </Flex>
           <Flex justify="end" align="center" width="auto">
-            <Badge style={{ fontSize: '1.2em' }} color="yellow" size="3">
+            <Badge
+              style={{ padding: '8px 16px', fontSize: '1.4em' }}
+              color="yellow"
+              size="3"
+            >
               <LuCoins /> {money}$
             </Badge>
           </Flex>
