@@ -5,6 +5,7 @@ import './styles.scss';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useGameStore } from '../../store/gameStore';
 import { useTranslation } from 'react-i18next';
+import humanFormat from 'human-format';
 
 export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
   const money = useGameStore((state) => state.money);
@@ -33,7 +34,7 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
             <Flex gap="1" align="center">
               <LuCoins color="orange" />
               <Text size="2" weight="bold">
-                {upgrade.cost}
+                {humanFormat(upgrade.cost)}
               </Text>
             </Flex>
           </Text>

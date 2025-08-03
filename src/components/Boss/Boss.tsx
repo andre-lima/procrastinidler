@@ -7,9 +7,9 @@ import { TaskState } from '../../types';
 let loopId: number;
 
 export const Boss = () => {
-  const bossInterval = useUpgradesStore(
-    (state) => state.upgrades.bossInterval.currentValue
-  );
+  // const bossInterval = useUpgradesStore(
+  //   (state) => state.upgrades.bossInterval.currentValue
+  // );
   // const boss = useBossStore((state) => state.boss[id]);
 
   const bossLoop = () => {
@@ -43,10 +43,10 @@ export const Boss = () => {
   };
 
   useEffect(() => {
-    loopId = setInterval(bossLoop, bossInterval);
+    loopId = setInterval(bossLoop, 1000);
 
     return () => clearInterval(loopId);
-  }, [bossInterval]);
+  }, []);
 
   return null;
 };

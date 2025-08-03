@@ -1,5 +1,12 @@
 import { useGameStore } from '../../store/gameStore';
-import { Badge, Button, Flex, Grid, Heading } from '@radix-ui/themes';
+import {
+  Badge,
+  Button,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+} from '@radix-ui/themes';
 import { LuCoins, LuPlus } from 'react-icons/lu';
 import { TaskState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
@@ -10,9 +17,10 @@ import { NavDialogButton } from './NavDialogButton';
 import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
+import { humanNumber } from '../../helpers/human-number';
 
 export const NavBar = () => {
-  const money = useGameStore((state) => state.money);
+  const money = useGameStore((state) => humanNumber(state.money));
   const assistants = useAssistantStore((state) => state.assistants);
   const boss = useBossStore((state) => state.boss);
   const { t } = useTranslation('common');
@@ -27,57 +35,50 @@ export const NavBar = () => {
   };
 
   return (
-    <div className="navBar">
-      <Flex p="4" maxWidth="100%" height={'80px'}>
-        <Grid columns="3" gap="3" rows="1" width="100%" align="center">
-          <Flex gap="2" align="center">
-            <Button
-              style={{
-                backgroundColor: 'var(--gray-12)',
-                color: 'var(--gray-1)',
-              }}
-              variant="surface"
-              size="3"
-              onClick={createNewTask}
-            >
-              <LuPlus /> {t('menus.addTask')}
-            </Button>
+    <Flex p="4" width="100%" height={'80px'}>
+      <Grid columns="1fr auto" gap="3" rows="1" width="100%" align="center">
+        <Flex gap="2" align="center">
+          <Button
+            style={{
+              backgroundColor: 'var(--gray-12)',
+              color: 'var(--gray-1)',
+            }}
+            variant="surface"
+            size="3"
+            onClick={createNewTask}
+          >
+            <LuPlus /> {t('menus.addTask')}
+          </Button>
 
-            <NavDialogButton id="personal">
-              <PurchaseUpgrades id="personal" />
-            </NavDialogButton>
+          <NavDialogButton id="personal">
+            <PurchaseUpgrades id="personal" />
+          </NavDialogButton>
 
-            <NavDialogButton id="boss">
-              <PurchaseUpgrades id="boss" />
-            </NavDialogButton>
+          <NavDialogButton id="boss">
+            <PurchaseUpgrades id="boss" />
+          </NavDialogButton>
 
-            <NavDialogButton id="assistants">
-              <PurchaseUpgrades id="assistants" />
-            </NavDialogButton>
+          <NavDialogButton id="assistants">
+            <PurchaseUpgrades id="assistants" />
+          </NavDialogButton>
 
-            {Object.values(assistants).map(
-              (assistant) =>
-                assistant && <Assistant key={assistant.id} id={assistant.id} />
-            )}
+          {Object.values(assistants).map(
+            (assistant) =>
+              assistant && <Assistant key={assistant.id} id={assistant.id} />
+          )}
 
-            {boss && <Boss />}
-          </Flex>
-          <Flex align="center" justify="center" width="auto">
-            <Heading size="4" as="h1">
-              Not a task list app!
-            </Heading>
-          </Flex>
-          <Flex justify="end" align="center" width="auto">
-            <Badge
-              style={{ padding: '8px 16px', fontSize: '1.4em' }}
-              color="yellow"
-              size="3"
-            >
-              <LuCoins /> {money}$
-            </Badge>
-          </Flex>
-        </Grid>
-      </Flex>
-    </div>
+          {boss && <Boss />}
+        </Flex>
+        <Flex justify="end" align="center" width="auto">
+          <Badge
+            style={{ padding: '8px 16px', fontSize: '1.4em' }}
+            color="yellow"
+            size="3"
+          >
+            <LuCoins /> {money}$
+          </Badge>
+        </Flex>
+      </Grid>
+    </Flex>
   );
 };

@@ -5,6 +5,7 @@ export enum TaskState {
   InProgress = 'inProgress',
   InReview = 'inReview',
   Completed = 'completed',
+  Rejected = 'rejected',
 }
 
 export interface Task {

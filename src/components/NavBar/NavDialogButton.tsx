@@ -3,6 +3,8 @@ import { LuCrown, LuUser, LuX } from 'react-icons/lu';
 import { useCallback, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GrGroup } from 'react-icons/gr';
+// import { HiExclamationCircle } from 'react-icons/hi';
+import './styles.scss';
 
 export const NavDialogButton = ({
   id,
@@ -33,15 +35,22 @@ export const NavDialogButton = ({
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button
-          style={{
-            backgroundColor: 'var(--gray-1)',
-            color: 'var(--gray-12)',
-          }}
-          variant="surface"
-        >
-          {getTitleIcon()()} {t('menus.' + id + '.navButton')}
-        </Button>
+        <div className="navButton">
+          <Button
+            style={{
+              backgroundColor: 'var(--gray-1)',
+              color: 'var(--gray-12)',
+            }}
+            variant="surface"
+          >
+            {getTitleIcon()()} {t('menus.' + id + '.navButton')}
+          </Button>
+          {/* <HiExclamationCircle
+            className="exclamationIcon"
+            color="tomato"
+            size="20px"
+          /> */}
+        </div>
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth="450px">

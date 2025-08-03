@@ -17,6 +17,9 @@ import './styles.scss';
 import { useShallow } from 'zustand/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
+import { DeadlineCountdown } from '../DeadlineCountdown/DeadlineCountdown';
+import { useCallback } from 'react';
+import { LuCheck, LuX } from 'react-icons/lu';
 
 export const TaskCard = ({ id }: { id: string }) => {
   const {
@@ -26,12 +29,16 @@ export const TaskCard = ({ id }: { id: string }) => {
     state,
     assignedTo,
     isSpecial,
+    deadline,
     requiresReview,
     progress,
   } = useTasksStore(useShallow((state) => ({ ...state.tasks[id]! })));
   const canPair = useUpgradesStore(
     (state) => state.upgrades.taskPairing.owned > 0
   );
+  const onDeadlineFinished = useCallback(() => {
+    useTasksStore.getState().rejectTask(id);
+  }, [id]);
 
   if (!title) {
     return null;
@@ -80,22 +87,6 @@ export const TaskCard = ({ id }: { id: string }) => {
     return 'gray';
   };
 
-  // const getDeadlineColor = () => {
-  //   if (!deadline) {
-  //     return 'gray';
-  //   }
-
-  //   if (deadline < 5) {
-  //     return 'red';
-  //   }
-
-  //   if (deadline < 10) {
-  //     return 'orange';
-  //   }
-
-  //   return 'green';
-  // };
-
   return (
     <Theme
       appearance={!isSpecial ? 'light' : 'dark'}
@@ -114,18 +105,26 @@ export const TaskCard = ({ id }: { id: string }) => {
       >
         <Grid
           gap="1"
-          columns="1fr auto"
-          rows="1fr 40px 1fr"
-          areas="'title category' 'assignedTo difficulty' 'progress progress'"
+          columns="2fr 1fr 1fr"
+          rows="1fr 40px auto"
+          areas="'title title category' 'assignedTo deadline difficulty' 'progress progress progress'"
         >
           <Box gridArea="title">
-            <Flex gap="2" align="center">
-              <Text>{title}</Text>
-              {requiresReview && (
-                <Tooltip content="This task requires review after completion">
-                  <PiEyeBold size={16} color="crimson" />
-                </Tooltip>
-              )}
+            <Flex gap="2" align="start">
+              <Text className="taskTitle">{title}</Text>
+              <Box flexShrink="0" pt="1">
+                {requiresReview && state !== TaskState.Completed && (
+                  <Tooltip content="This task requires review after completion">
+                    <PiEyeBold size="16px" color="crimson" />
+                  </Tooltip>
+                )}
+                {state === TaskState.Completed && (
+                  <LuCheck size="22px" color="green" />
+                )}
+                {state === TaskState.Rejected && (
+                  <LuX size="22px" color="red" />
+                )}
+              </Box>
             </Flex>
           </Box>
           <Flex justify="end" gridArea="category">
@@ -133,6 +132,7 @@ export const TaskCard = ({ id }: { id: string }) => {
               <Badge color={getBadgeColor(category)}>{category}</Badge>
             )}
           </Flex>
+
           {assignedTo.length > 0 && (
             <Box gridArea="assignedTo">
               {assignedTo.map((assistantId) => (
@@ -143,16 +143,16 @@ export const TaskCard = ({ id }: { id: string }) => {
                   />
                 </div>
               ))}
-              {/* <Container align="left" width="22px">
-              <PieChart
-                data={[
-                  { title: 'One', value: deadline, color: getDeadlineColor() },
-                  { title: 'One', value: 100 - deadline, color: 'transparent' },
-                ]}
-              />
-            </Container> */}
             </Box>
           )}
+          <Box gridArea="deadline">
+            {deadline && state === TaskState.Todo && (
+              <DeadlineCountdown
+                seconds={deadline}
+                completionCallback={onDeadlineFinished}
+              />
+            )}
+          </Box>
           <Box gridArea="difficulty">
             <DifficultyMeter difficulty={difficulty} />
           </Box>

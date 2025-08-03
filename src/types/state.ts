@@ -4,7 +4,15 @@ import { TaskState, type Task } from './tasks';
 
 export interface GameState {
   money: number;
-  addMoney: (amount: number, options?: { hasDeadline?: boolean }) => void;
+  filters: {
+    newerTasksFirst: boolean;
+    showRejectedTasks: boolean;
+  };
+  gameProgress: {
+    unlockedReviews: boolean;
+    unlockedDeadline: boolean;
+  };
+  addMoney: (amount: number) => void;
   spendMoney: (amount: number) => void;
 }
 
@@ -20,6 +28,8 @@ export interface TasksState {
   newTask: (task?: Task) => void;
   makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => void;
   completeTask: (id: string) => void;
+  rejectTask: (id: string) => void;
+  recoverTasks: () => void;
 }
 
 export interface AssistantsState {

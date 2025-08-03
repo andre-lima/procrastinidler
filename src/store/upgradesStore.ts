@@ -3,6 +3,7 @@ import type { UpgradesState } from '../types';
 import { useAssistantStore } from './assistantStore';
 import { useGameStore } from './gameStore';
 import { useBossStore } from './bossStore';
+import { useTasksStore } from './tasksStore';
 
 export const useUpgradesStore = create<UpgradesState>((set, get) => ({
   upgrades: {
@@ -103,12 +104,12 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
     negotiateDeadline: {
       id: 'negotiateDeadline',
       type: 'boss',
-      currentValue: 30,
-      baseValue: 30,
+      currentValue: 20,
+      baseValue: 20,
       cost: 4000,
       rate: 1.5,
       owned: 0,
-      ownedLimit: 10,
+      ownedLimit: 5,
       deltaPerOwned: 5,
     },
     // LGTM: {
@@ -144,6 +145,17 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
     //   ownedLimit: 10,
     //   deltaPerOwned: -50,
     // },
+    personalMoneyPerTask: {
+      id: 'personalMoneyPerTask',
+      type: 'personal',
+      currentValue: 1,
+      baseValue: 1,
+      cost: 5,
+      rate: 1.2,
+      owned: 0,
+      ownedLimit: 30,
+      deltaPerOwned: 0.2,
+    },
     personalEfficiency: {
       id: 'personalEfficiency',
       type: 'personal',
@@ -155,27 +167,30 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       ownedLimit: 30,
       deltaPerOwned: 5,
     },
-    personalMoneyPerTask: {
-      id: 'personalMoneyPerTask',
-      type: 'personal',
-      currentValue: 1,
-      baseValue: 1,
-      cost: 10,
-      rate: 1.2,
-      owned: 0,
-      ownedLimit: 30,
-      deltaPerOwned: 0.2,
-    },
     taskPairing: {
       id: 'taskPairing',
       type: 'personal',
       currentValue: 0,
       baseValue: 0,
-      cost: 10000,
+      cost: 8000,
       rate: 1,
       owned: 0,
       ownedLimit: 1,
       deltaPerOwned: 0,
+    },
+    secondChance: {
+      id: 'secondChance',
+      type: 'personal',
+      currentValue: 0,
+      baseValue: 0,
+      cost: 10000,
+      rate: 3,
+      owned: 0,
+      ownedLimit: 10,
+      deltaPerOwned: 0,
+      callback: () => {
+        useTasksStore.getState().recoverTasks();
+      },
     },
   },
 

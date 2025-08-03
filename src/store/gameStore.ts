@@ -3,12 +3,16 @@ import { type GameState } from '../types';
 import { useUpgradesStore } from './upgradesStore';
 
 const useGameStore = create<GameState>((set, get) => ({
-  money: 0,
-  addMoney: (amount: number, options?: { hasDeadline?: boolean }) => {
-    if (options?.hasDeadline) {
-      amount *= 2;
-    }
-
+  money: 5000000,
+  gameProgress: {
+    unlockedReviews: false,
+    unlockedDeadline: false,
+  },
+  filters: {
+    newerTasksFirst: false,
+    showRejectedTasks: false,
+  },
+  addMoney: (amount: number) => {
     const money =
       get().money +
       amount *

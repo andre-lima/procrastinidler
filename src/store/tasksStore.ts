@@ -13,16 +13,18 @@ export const useTasksStore = create<TasksState>((set, get) => ({
   tasks: {
     initial: {
       id: 'initial',
-      title: 'Click on this card 5 times',
+      title: 'Click white cards to complete them and earn money $',
       category: Category.Metagame,
       assignedTo: [],
       difficulty: 1,
       state: TaskState.Todo,
       progress: 0,
+      deadline: 15,
+      requiresReview: false,
     },
     clickNewTask: {
       id: 'clickNewTask',
-      title: 'Click the + Task button',
+      title: 'Click the + Task button on the top left to create new tasks',
       category: Category.Metagame,
       assignedTo: [],
       difficulty: 1,
@@ -76,7 +78,19 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       tasks: { ...state.tasks, [newTask.id]: newTask },
     }));
   },
+  recoverTasks: () => {
+    const tasks = get().getTasksArray();
 
+    tasks.forEach((task) => {
+      if (task?.state === TaskState.Rejected) {
+        task.state = TaskState.Todo;
+      }
+    });
+
+    set((state: TasksState) => ({
+      tasks: { ...state.tasks },
+    }));
+  },
   getNextUnassignedTask: (
     numToAssign: number = 1,
     taskState = TaskState.Todo
@@ -162,7 +176,25 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       task ? { tasks: { ...state.tasks, [id]: task } } : state
     );
   },
+  rejectTask: (id: string) => {
+    const rejectedTask = get().tasks[id];
 
+    if (rejectedTask) {
+      rejectedTask.state = TaskState.Rejected;
+      // rejectedTask.progress = 0;
+
+      // Unassign from task, assistant, boss
+      rejectedTask.assignedTo.forEach((assistantId) =>
+        useAssistantStore.getState().unassignTask(rejectedTask.id, assistantId)
+      );
+      useBossStore.getState().unassignTask(rejectedTask.id);
+      rejectedTask.assignedTo = [];
+    }
+
+    set((state: TasksState) =>
+      rejectedTask ? { tasks: { ...state.tasks, [id]: rejectedTask } } : state
+    );
+  },
   completeTask: (id: string) => {
     const completedTask = get().tasks[id];
 
@@ -177,20 +209,23 @@ export const useTasksStore = create<TasksState>((set, get) => ({
         completedTask.state = TaskState.Completed;
         completedTask.progress = 100;
       }
-
-      // Unassign from task and assistant
-      // what about BOSS?
+      console.log(completedTask.state);
+      // Unassign from task, assistant, boss
       completedTask.assignedTo.forEach((assistantId) =>
         useAssistantStore.getState().unassignTask(completedTask.id, assistantId)
       );
       useBossStore.getState().unassignTask(completedTask.id);
       completedTask.assignedTo = [];
 
+      const deadlineBonus = completedTask.deadline ? 2 : 1;
+
       useGameStore
         .getState()
-        .addMoney(config.moneyPerTaskCompleted * completedTask.difficulty, {
-          hasDeadline: completedTask.deadline !== undefined,
-        });
+        .addMoney(
+          config.moneyPerTaskCompleted *
+            completedTask.difficulty *
+            deadlineBonus
+        );
     }
 
     set((state: TasksState) =>
