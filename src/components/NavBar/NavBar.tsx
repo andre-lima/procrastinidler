@@ -1,12 +1,5 @@
 import { useGameStore } from '../../store/gameStore';
-import {
-  Badge,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Heading,
-} from '@radix-ui/themes';
+import { Badge, Button, Flex, Grid } from '@radix-ui/themes';
 import { LuCoins, LuPlus } from 'react-icons/lu';
 import { TaskState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
@@ -35,7 +28,7 @@ export const NavBar = () => {
   };
 
   return (
-    <Flex p="4" width="100%" height={'80px'}>
+    <Flex px="4" py="3" width="100%" height={'70px'}>
       <Grid columns="1fr auto" gap="3" rows="1" width="100%" align="center">
         <Flex gap="2" align="center">
           <Button

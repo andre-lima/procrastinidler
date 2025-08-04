@@ -3,6 +3,7 @@ import { TaskCard } from '../TaskCard/TaskCard';
 import { useShallow } from 'zustand/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import type { TasksState } from '../../types';
+import { useGameStore } from '../../store/gameStore';
 
 export const TasksList = ({
   title,
@@ -12,6 +13,7 @@ export const TasksList = ({
   tasksSelector: (state: TasksState) => string[];
 }) => {
   const itemIds = useTasksStore(useShallow(tasksSelector));
+  const sortByNewer = useGameStore((state) => state.filters.newerTasksFirst);
 
   return (
     <Box
@@ -31,7 +33,7 @@ export const TasksList = ({
         scrollbars="vertical"
         style={{ maxHeight: '70vh' }}
       >
-        <Flex direction="column" gap="2">
+        <Flex direction={sortByNewer ? 'column-reverse' : 'column'} gap="2">
           {itemIds.map((id) => (
             <TaskCard key={id} id={id} />
           ))}

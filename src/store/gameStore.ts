@@ -25,6 +25,11 @@ const useGameStore = create<GameState>((set, get) => ({
 
     set(() => ({ money }));
   },
+  setTaskSorting: (sortByNewer: boolean) => {
+    set((state) => ({
+      filters: { ...state.filters, newerTasksFirst: sortByNewer },
+    }));
+  },
 }));
 
 export { useGameStore };

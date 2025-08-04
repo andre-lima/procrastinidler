@@ -14,6 +14,7 @@ export interface GameState {
   };
   addMoney: (amount: number) => void;
   spendMoney: (amount: number) => void;
+  setTaskSorting: (sortByNewer: boolean) => void;
 }
 
 export interface TasksState {
