@@ -1,6 +1,11 @@
-task deadline counter
 
 More metagame cards (create a simple story?)
+
+Filters (newer, show rejected/expired)
+
+game state
+
+exclamation marks when upgrades are available for the first time
 
 Balancing
 
