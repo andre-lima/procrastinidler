@@ -1,10 +1,14 @@
 import { create } from 'zustand';
 import { type GameState } from '../types';
 import { useUpgradesStore } from './upgradesStore';
+import { checkProgressTriggers } from './gameProgressTriggers';
 
 const useGameStore = create<GameState>((set, get) => ({
   money: 5000000,
   gameProgress: {
+    canPurchasePersonalUpgrades: false,
+    canPurchaseBossUpgrades: false,
+    canPurchaseAssistantUpgrades: false,
     unlockedReviews: false,
     unlockedDeadline: false,
   },
@@ -18,6 +22,8 @@ const useGameStore = create<GameState>((set, get) => ({
       amount *
         useUpgradesStore.getState().upgrades.personalMoneyPerTask.currentValue;
 
+    checkProgressTriggers();
+
     set(() => ({ money }));
   },
   spendMoney: (amount: number) => {
@@ -28,6 +34,16 @@ const useGameStore = create<GameState>((set, get) => ({
   setTaskSorting: (sortByNewer: boolean) => {
     set((state) => ({
       filters: { ...state.filters, newerTasksFirst: sortByNewer },
+    }));
+  },
+  setShowingRejected: (showRejected: boolean) => {
+    set((state) => ({
+      filters: { ...state.filters, showRejectedTasks: showRejected },
+    }));
+  },
+  setGameProgress: (progressUpdate) => {
+    set((state) => ({
+      gameProgress: { ...state.gameProgress, ...progressUpdate },
     }));
   },
 }));

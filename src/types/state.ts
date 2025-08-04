@@ -9,12 +9,17 @@ export interface GameState {
     showRejectedTasks: boolean;
   };
   gameProgress: {
+    canPurchasePersonalUpgrades: boolean;
+    canPurchaseBossUpgrades: boolean;
+    canPurchaseAssistantUpgrades: boolean;
     unlockedReviews: boolean;
     unlockedDeadline: boolean;
   };
   addMoney: (amount: number) => void;
   spendMoney: (amount: number) => void;
   setTaskSorting: (sortByNewer: boolean) => void;
+  setShowingRejected: (showRejected: boolean) => void;
+  setGameProgress: (progressUpdate: Partial<GameState['gameProgress']>) => void;
 }
 
 export interface TasksState {

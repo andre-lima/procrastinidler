@@ -1,7 +1,4 @@
-
 More metagame cards (create a simple story?)
-
-Filters (newer, show rejected/expired)
 
 game state
 

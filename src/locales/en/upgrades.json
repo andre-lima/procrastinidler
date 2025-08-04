@@ -11,6 +11,10 @@
     "title": "Pairing",
     "description": "Allows you to help on tasks already assigned to an assistant."
   },
+  "secondChance": {
+    "title": "Second chance",
+    "description": "Send all expired or rejected tasks back to the To Do column."
+  },
   "buyAssistants": {
     "title": "New Assistant",
     "description": "Hire a new assistant to help you complete tasks."

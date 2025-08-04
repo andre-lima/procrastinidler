@@ -17,7 +17,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       owned: 0,
       ownedLimit: 5,
       deltaPerOwned: 0,
-      callback: () => {
+      runWhenPurchased: () => {
         useAssistantStore.getState().addAssistant();
       },
     },
@@ -64,7 +64,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       owned: 0,
       ownedLimit: 1,
       deltaPerOwned: 0,
-      callback: () => {
+      runWhenPurchased: () => {
         useBossStore.getState().addBoss();
       },
     },
@@ -89,6 +89,9 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       owned: 0,
       ownedLimit: 1,
       deltaPerOwned: 0,
+      runWhenPurchased: () => {
+        useGameStore.getState().setGameProgress({ unlockedReviews: true });
+      },
     },
     hasDeadline: {
       id: 'hasDeadline',
@@ -100,6 +103,9 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       owned: 0,
       ownedLimit: 1,
       deltaPerOwned: 0,
+      runWhenPurchased: () => {
+        useGameStore.getState().setGameProgress({ unlockedDeadline: true });
+      },
     },
     negotiateDeadline: {
       id: 'negotiateDeadline',
@@ -188,7 +194,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       owned: 0,
       ownedLimit: 10,
       deltaPerOwned: 0,
-      callback: () => {
+      runWhenPurchased: () => {
         useTasksStore.getState().recoverTasks();
       },
     },
@@ -206,7 +212,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
         upgrade.baseValue + upgrade.deltaPerOwned * upgrade.owned;
       upgrade.cost = upgrade.cost * upgrade.rate;
 
-      upgrade.callback?.();
+      upgrade.runWhenPurchased?.();
 
       set((state: UpgradesState) => ({
         upgrades: { ...state.upgrades, [upgrade.id]: upgrade },

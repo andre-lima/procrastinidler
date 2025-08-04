@@ -74,7 +74,7 @@ function App() {
 
           {showRejectedColumn && (
             <TasksList
-              title="Rejected"
+              title="Expired"
               tasksSelector={(state: TasksState) =>
                 Object.values(state.tasks)
                   .filter((task) => task?.state === TaskState.Rejected)

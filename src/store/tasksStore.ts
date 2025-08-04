@@ -209,7 +209,7 @@ export const useTasksStore = create<TasksState>((set, get) => ({
         completedTask.state = TaskState.Completed;
         completedTask.progress = 100;
       }
-      console.log(completedTask.state);
+
       // Unassign from task, assistant, boss
       completedTask.assignedTo.forEach((assistantId) =>
         useAssistantStore.getState().unassignTask(completedTask.id, assistantId)
@@ -217,14 +217,14 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       useBossStore.getState().unassignTask(completedTask.id);
       completedTask.assignedTo = [];
 
-      const deadlineBonus = completedTask.deadline ? 2 : 1;
+      const deadlineMoneyMultiplier = completedTask.deadline ? 2 : 1;
 
       useGameStore
         .getState()
         .addMoney(
           config.moneyPerTaskCompleted *
             completedTask.difficulty *
-            deadlineBonus
+            deadlineMoneyMultiplier
         );
     }
 
