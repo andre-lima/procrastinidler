@@ -11,6 +11,14 @@
     "title": "Pairing",
     "description": "Allows you to help on tasks already assigned to an assistant."
   },
+  "FIRE": {
+    "title": "Retire early",
+    "description": "You can take a break now... enjoy what you accomplished and be free."
+  },
+  "Billions": {
+    "title": "Fire, as in, set the world on fire!",
+    "description": "You have billions to burn... burn the world down with it."
+  },
   "secondChance": {
     "title": "Second chance",
     "description": "Send all expired or rejected tasks back to the To Do column."

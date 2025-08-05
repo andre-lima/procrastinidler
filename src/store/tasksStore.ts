@@ -32,26 +32,6 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       progress: 0,
       isSpecial: true,
     },
-    // requiresReview: {
-    //   id: 'requiresReview',
-    //   requiresReview: true,
-    //   title: 'This task requires review',
-    //   category: Category.Metagame,
-    //   assignedTo: [],
-    //   difficulty: 1,
-    //   state: TaskState.Todo,
-    //   progress: 0,
-    // },
-    // inReview: {
-    //   id: 'inReview',
-    //   requiresReview: true,
-    //   title: 'This task is in review',
-    //   category: Category.Metagame,
-    //   assignedTo: [],
-    //   difficulty: 1,
-    //   state: TaskState.InReview,
-    //   progress: 0,
-    // },
   },
   getTasksArray: () => Object.values(get().tasks),
   newTask: (task?: Task) => {
@@ -218,14 +198,20 @@ export const useTasksStore = create<TasksState>((set, get) => ({
       completedTask.assignedTo = [];
 
       const deadlineMoneyMultiplier = completedTask.deadline ? 2 : 1;
+      const requiresReviewMoneyMultiplier = completedTask.requiresReview
+        ? 2
+        : 1;
 
-      useGameStore
-        .getState()
-        .addMoney(
-          config.moneyPerTaskCompleted *
-            completedTask.difficulty *
-            deadlineMoneyMultiplier
-        );
+      if (completedTask.state === TaskState.Completed) {
+        useGameStore
+          .getState()
+          .addMoney(
+            config.moneyPerTaskCompleted *
+              completedTask.difficulty *
+              deadlineMoneyMultiplier *
+              requiresReviewMoneyMultiplier
+          );
+      }
     }
 
     set((state: TasksState) =>

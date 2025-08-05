@@ -19,6 +19,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       deltaPerOwned: 0,
       runWhenPurchased: () => {
         useAssistantStore.getState().addAssistant();
+        useTasksStore.getState().completeTask('canPurchaseAssistantUpgrades');
       },
     },
     assistantEfficiency: {
@@ -26,8 +27,8 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       type: 'assistants',
       currentValue: 100,
       baseValue: 100,
-      cost: 50,
-      rate: 1.2,
+      cost: 30,
+      rate: 1.3,
       owned: 0,
       ownedLimit: 30,
       deltaPerOwned: 5,
@@ -66,6 +67,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       deltaPerOwned: 0,
       runWhenPurchased: () => {
         useBossStore.getState().addBoss();
+        useTasksStore.getState().completeTask('canPurchaseBossUpgrades');
       },
     },
     increaseDifficulty: {
@@ -73,8 +75,8 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       type: 'boss',
       currentValue: 1,
       baseValue: 0,
-      cost: 1000,
-      rate: 1.5,
+      cost: 300,
+      rate: 2,
       owned: 1,
       ownedLimit: 10,
       deltaPerOwned: 1,
@@ -84,7 +86,7 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       type: 'boss',
       currentValue: 0,
       baseValue: 0,
-      cost: 2000,
+      cost: 1500,
       rate: 1,
       owned: 0,
       ownedLimit: 1,
@@ -92,6 +94,17 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       runWhenPurchased: () => {
         useGameStore.getState().setGameProgress({ unlockedReviews: true });
       },
+    },
+    bossMultitasking: {
+      id: 'bossMultitasking',
+      type: 'boss',
+      currentValue: 1,
+      baseValue: 0,
+      cost: 2000,
+      rate: 1.5,
+      owned: 1,
+      ownedLimit: 5,
+      deltaPerOwned: 1,
     },
     hasDeadline: {
       id: 'hasDeadline',
@@ -129,17 +142,6 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
     //   ownedLimit: 5,
     //   deltaPerOwned: 1,
     // },
-    bossMultitasking: {
-      id: 'bossMultitasking',
-      type: 'boss',
-      currentValue: 1,
-      baseValue: 0,
-      cost: 100,
-      rate: 2,
-      owned: 1,
-      ownedLimit: 5,
-      deltaPerOwned: 1,
-    },
     // bossInterval: {
     //   id: 'bossInterval',
     //   type: 'boss',
@@ -159,8 +161,11 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
       cost: 5,
       rate: 1.2,
       owned: 0,
-      ownedLimit: 30,
+      ownedLimit: 50,
       deltaPerOwned: 0.2,
+      runWhenPurchased: () => {
+        useTasksStore.getState().completeTask('canPurchasePersonalUpgrades');
+      },
     },
     personalEfficiency: {
       id: 'personalEfficiency',
@@ -198,6 +203,28 @@ export const useUpgradesStore = create<UpgradesState>((set, get) => ({
         useTasksStore.getState().recoverTasks();
       },
     },
+    FIRE: {
+      id: 'FIRE',
+      type: 'personal',
+      currentValue: 0,
+      baseValue: 0,
+      cost: 10000000,
+      rate: 1,
+      owned: 0,
+      ownedLimit: 1,
+      deltaPerOwned: 0,
+    },
+    // Billions: {
+    //   id: 'Billions',
+    //   type: 'personal',
+    //   currentValue: 0,
+    //   baseValue: 0,
+    //   cost: 2000000000,
+    //   rate: 1,
+    //   owned: 0,
+    //   ownedLimit: 1,
+    //   deltaPerOwned: 0,
+    // },
   },
 
   purchaseUpgrade: (upgradeId: string) => {

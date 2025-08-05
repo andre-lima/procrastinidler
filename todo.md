@@ -1,10 +1,6 @@
-More metagame cards (create a simple story?)
-
-game state
-
-exclamation marks when upgrades are available for the first time
-
 Balancing
+
+Check if completing a completed tasks gives money again
 
 Save
 

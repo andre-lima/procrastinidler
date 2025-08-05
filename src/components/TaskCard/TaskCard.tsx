@@ -20,6 +20,7 @@ import { useUpgradesStore } from '../../store/upgradesStore';
 import { DeadlineCountdown } from '../DeadlineCountdown/DeadlineCountdown';
 import { useCallback } from 'react';
 import { LuCheck, LuX } from 'react-icons/lu';
+import { humanNumber } from '../../helpers/human-number';
 
 export const TaskCard = ({ id }: { id: string }) => {
   const {
@@ -89,6 +90,7 @@ export const TaskCard = ({ id }: { id: string }) => {
 
   return (
     <Theme
+      style={{ order: isSpecial ? 0 : 1 }}
       appearance={!isSpecial ? 'light' : 'dark'}
       data-has-background={false}
     >
@@ -164,7 +166,7 @@ export const TaskCard = ({ id }: { id: string }) => {
                 </Text>
               </Box>
               <Text size="2" color="gray">
-                {progress}%
+                {humanNumber(progress, 0)}%
               </Text>
             </Flex>
             <Progress

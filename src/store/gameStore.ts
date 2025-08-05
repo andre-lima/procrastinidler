@@ -4,7 +4,7 @@ import { useUpgradesStore } from './upgradesStore';
 import { checkProgressTriggers } from './gameProgressTriggers';
 
 const useGameStore = create<GameState>((set, get) => ({
-  money: 5000000,
+  money: 0,
   gameProgress: {
     canPurchasePersonalUpgrades: false,
     canPurchaseBossUpgrades: false,
@@ -22,9 +22,8 @@ const useGameStore = create<GameState>((set, get) => ({
       amount *
         useUpgradesStore.getState().upgrades.personalMoneyPerTask.currentValue;
 
-    checkProgressTriggers();
-
     set(() => ({ money }));
+    checkProgressTriggers();
   },
   spendMoney: (amount: number) => {
     const money = get().money - amount;
