@@ -1,13 +1,20 @@
 import { Button, Flex, Text } from '@radix-ui/themes';
 import { useState } from 'react';
-import { LuSaveOff } from 'react-icons/lu';
+import { LuMoon, LuSaveOff, LuSun } from 'react-icons/lu';
 import { resetAllStores } from '../../store/resetStores';
+import { useGameStore } from '../../store/gameStore';
 
 export const Settings = () => {
   const [confirmClear, setConfirmClear] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const clearSave = () => {
     resetAllStores();
+  };
+
+  const toggleDarkMode = () => {
+    useGameStore.getState().setDarkMode(!isDarkMode);
+    setIsDarkMode(!isDarkMode);
   };
 
   return (
@@ -49,6 +56,24 @@ export const Settings = () => {
         role="button"
         onClick={() => setConfirmClear(true)}
       />
+
+      {isDarkMode ? (
+        <LuSun
+          role="button"
+          size="22px"
+          color="gray"
+          cursor="pointer"
+          onClick={toggleDarkMode}
+        />
+      ) : (
+        <LuMoon
+          role="button"
+          size="22px"
+          color="gray"
+          cursor="pointer"
+          onClick={toggleDarkMode}
+        />
+      )}
     </Flex>
   );
 };

@@ -1,7 +1,5 @@
 Balancing
 
-End dialog? maybe FIRE is enough?
-
 ---
 
 Assistant: Task completion quality (based on difficulty too) - review rejections

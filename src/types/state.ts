@@ -7,6 +7,7 @@ export interface GameState {
   filters: {
     newerTasksFirst: boolean;
     showRejectedTasks: boolean;
+    isDarkMode: boolean;
   };
   gameProgress: {
     canPurchasePersonalUpgrades: boolean;
@@ -19,6 +20,7 @@ export interface GameState {
   spendMoney: (amount: number) => void;
   setTaskSorting: (sortByNewer: boolean) => void;
   setShowingRejected: (showRejected: boolean) => void;
+  setDarkMode: (darkMode: boolean) => void;
   setGameProgress: (progressUpdate: Partial<GameState['gameProgress']>) => void;
 }
 

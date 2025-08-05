@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { UpgradesState } from '../types';
+import { Category, TaskState, type UpgradesState } from '../types';
 import { useAssistantStore } from './assistantStore';
 import { useGameStore } from './gameStore';
 import { useBossStore } from './bossStore';
@@ -15,16 +15,14 @@ export const useUpgradesStore = create<UpgradesState>()(
           type: 'assistants',
           currentValue: 0,
           baseValue: 0,
-          cost: 20,
+          cost: 15,
           rate: 3,
           owned: 0,
           ownedLimit: 5,
           deltaPerOwned: 0,
           runWhenPurchased: (upgrade) => {
             useAssistantStore.getState().addAssistant();
-            console.log('will complete?');
             if (upgrade.owned === 1) {
-              console.log('complete');
               useTasksStore
                 .getState()
                 .completeTask('canPurchaseAssistantUpgrades');
@@ -226,6 +224,33 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 1,
           deltaPerOwned: 0,
+          runWhenPurchased() {
+            useTasksStore.getState().newTask({
+              id: 'youbeatthedemo',
+              title: 'YOU BEAT THE DEMO!',
+              category: Category.Metagame,
+              assignedTo: [],
+              difficulty: 10,
+              requiresReview: false,
+              state: TaskState.Todo,
+              progress: 0,
+              isSpecial: true,
+            });
+
+            setTimeout(() => {
+              useTasksStore.getState().newTask({
+                id: 'whatsNext',
+                title: "What's hapenning to me? Am I stuck... Help me!",
+                category: Category.Metagame,
+                assignedTo: [],
+                difficulty: 10,
+                requiresReview: false,
+                state: TaskState.Todo,
+                progress: 0,
+                isSpecial: true,
+              });
+            }, 5000);
+          },
         },
         // Billions: {
         //   id: 'Billions',

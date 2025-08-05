@@ -7,7 +7,7 @@ import { persist } from 'zustand/middleware';
 const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
-      money: 500,
+      money: 50000000,
       gameProgress: {
         canPurchasePersonalUpgrades: false,
         canPurchaseBossUpgrades: false,
@@ -18,6 +18,7 @@ const useGameStore = create<GameState>()(
       filters: {
         newerTasksFirst: false,
         showRejectedTasks: false,
+        isDarkMode: false,
       },
       addMoney: (amount: number) => {
         const money =
@@ -44,6 +45,10 @@ const useGameStore = create<GameState>()(
           filters: { ...state.filters, showRejectedTasks: showRejected },
         }));
       },
+      setDarkMode: (isDarkMode: boolean) =>
+        set((state) => ({
+          filters: { ...state.filters, isDarkMode },
+        })),
       setGameProgress: (progressUpdate) => {
         set((state) => ({
           gameProgress: { ...state.gameProgress, ...progressUpdate },

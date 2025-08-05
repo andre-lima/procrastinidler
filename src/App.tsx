@@ -16,9 +16,10 @@ function App() {
   const showRejectedColumn = useGameStore(
     (state) => state.filters.showRejectedTasks
   );
+  const isDarkMode = useGameStore((state) => state.filters.isDarkMode);
 
   return (
-    <Theme>
+    <Theme appearance={isDarkMode ? 'dark' : 'light'} accentColor="violet">
       <Grid
         gap="1"
         columns="100%"
