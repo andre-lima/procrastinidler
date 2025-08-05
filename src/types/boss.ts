@@ -1,5 +1,5 @@
-import type { Todo } from './tasks';
+import type { Task } from './tasks';
 
 export interface Boss {
-  assignedTo: Todo['id'][];
+  assignedTo: Task['id'][];
 }
