@@ -7,6 +7,7 @@ import { TasksList } from './components/TasksList/TasksList';
 import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';
 import { TasksFilter } from './components/TasksFilter/TasksFilter';
+import { Settings } from './components/Settings/Settings';
 
 function App() {
   const showReviewsColumn = useUpgradesStore(
@@ -30,9 +31,10 @@ function App() {
           <NavBar />
         </Box>
 
-        <Box gridArea="filters" width="100%">
+        <Flex gridArea="filters" align="center" justify="between" width="100%">
           <TasksFilter />
-        </Box>
+          <Settings />
+        </Flex>
 
         <Grid
           gap="4"

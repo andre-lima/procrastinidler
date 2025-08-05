@@ -90,7 +90,7 @@ export const TaskCard = ({ id }: { id: string }) => {
 
   return (
     <Theme
-      style={{ order: isSpecial ? 0 : 1 }}
+      // style={{ order: isSpecial ? 0 : 1 }}
       appearance={!isSpecial ? 'light' : 'dark'}
       data-has-background={false}
     >

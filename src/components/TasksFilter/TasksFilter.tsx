@@ -26,39 +26,37 @@ export const TasksFilter = () => {
   };
 
   return (
-    <>
-      <Flex px="4" width="100%" align="center" gap="4">
-        <TbFilterCog color="gray" size="20px" />
-        <Separator orientation="vertical" />
-        <Text as="label" size="1">
-          <Flex gap="2">
-            Show newer first
-            <Switch
-              checked={newerTasksFirst}
-              size="1"
-              onCheckedChange={(value) => onChangeDateFilter(value)}
-              variant="surface"
-            />
-          </Flex>
-        </Text>
-        <Separator orientation="vertical" />
-        {unlockedDeadline && (
-          <>
-            <Text as="label" size="1">
-              <Flex gap="2">
-                Show expired ({rejetedTasksLength})
-                <Switch
-                  checked={showRejectedTasks}
-                  size="1"
-                  onCheckedChange={(value) => onChangeExpiredFilter(value)}
-                  variant="surface"
-                />
-              </Flex>
-            </Text>
-            <Separator orientation="vertical" />
-          </>
-        )}
-      </Flex>
-    </>
+    <Flex px="4" align="center" gap="4">
+      <TbFilterCog color="gray" size="20px" />
+      <Separator orientation="vertical" />
+      <Text as="label" size="1">
+        <Flex gap="2">
+          Show newer first
+          <Switch
+            checked={newerTasksFirst}
+            size="1"
+            onCheckedChange={(value) => onChangeDateFilter(value)}
+            variant="surface"
+          />
+        </Flex>
+      </Text>
+      <Separator orientation="vertical" />
+      {unlockedDeadline && (
+        <>
+          <Text as="label" size="1">
+            <Flex gap="2">
+              Show expired ({rejetedTasksLength})
+              <Switch
+                checked={showRejectedTasks}
+                size="1"
+                onCheckedChange={(value) => onChangeExpiredFilter(value)}
+                variant="surface"
+              />
+            </Flex>
+          </Text>
+          <Separator orientation="vertical" />
+        </>
+      )}
+    </Flex>
   );
 };
