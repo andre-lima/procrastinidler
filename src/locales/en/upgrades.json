@@ -49,7 +49,7 @@
   },
   "requiresReview": {
     "title": "Requires review",
-    "description": "Tasks require review after completion."
+    "description": "Tasks require review after completion. Reward is doubled."
   },
   "hasDeadline": {
     "title": "Has deadline",
