@@ -7,13 +7,12 @@ import { useRef } from 'react';
 export const MoneyDisplay = ({ money }: { money: string }) => {
   const [shaking, setShaking] = useState(false);
 
-  const audio = useRef<HTMLAudioElement>(new Audio('/sfx/money.ogg'));
+  const audio = useRef<HTMLAudioElement>(new Audio('./sfx/money.ogg'));
 
   useEffect(() => {
     setShaking(true);
     const timeout = setTimeout(() => setShaking(false), 400); // match CSS duration
 
-    console.log(audio.current);
     audio.current?.play().catch((err) => {
       console.warn('Audio play failed:', err);
     });

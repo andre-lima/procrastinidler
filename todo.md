@@ -2,7 +2,7 @@ Improve random titles a bit
 
 Balancing
 
-Number go up with money amount (money sound?) - money container animation
+Number go up with money amount
 
 ---
 
