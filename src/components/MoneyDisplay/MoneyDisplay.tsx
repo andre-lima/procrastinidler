@@ -1,4 +1,4 @@
-import { Badge } from '@radix-ui/themes';
+import { Badge, Flex, Text } from '@radix-ui/themes';
 import { LuCoins } from 'react-icons/lu';
 import { useEffect, useState } from 'react';
 import './styles.scss';
@@ -32,7 +32,10 @@ export const MoneyDisplay = ({ money }: { money: string }) => {
       color="yellow"
       size="3"
     >
-      <LuCoins /> {money}$
+      <Flex align="center" gap="2">
+        <LuCoins />
+        <Text>{money}$</Text>
+      </Flex>
     </Badge>
   );
 };

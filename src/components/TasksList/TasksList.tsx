@@ -4,6 +4,8 @@ import { useShallow } from 'zustand/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import type { TasksState } from '../../types';
 import { useGameStore } from '../../store/gameStore';
+import { config } from '../../game/config';
+import { LuEllipsisVertical } from 'react-icons/lu';
 
 export const TasksList = ({
   title,
@@ -34,9 +36,16 @@ export const TasksList = ({
         style={{ maxHeight: '70vh' }}
       >
         <Flex direction={sortByNewer ? 'column-reverse' : 'column'} gap="2">
-          {itemIds.map((id) => (
+          {itemIds.slice(0, config.maxCardsPerColumn - 1).map((id) => (
             <TaskCard key={id} id={id} />
           ))}
+          {itemIds.length > config.maxCardsPerColumn && (
+            <LuEllipsisVertical
+              color="gray"
+              style={{ padding: '12px', margin: '0 auto' }}
+              size="60px"
+            />
+          )}
         </Flex>
       </ScrollArea>
     </Box>

@@ -43,6 +43,10 @@ export const useTasksStore = create<TasksState>()(
                 .currentValue
             : undefined;
 
+        const shouldRequireReview =
+          Math.random() * 100 <
+          useUpgradesStore.getState().upgrades.requiresReview.currentValue;
+
         const newTask = task || {
           id: uuid(),
           title: generateRandomTask(),
@@ -52,8 +56,7 @@ export const useTasksStore = create<TasksState>()(
           difficulty:
             useUpgradesStore.getState().upgrades.increaseDifficulty
               .currentValue,
-          requiresReview:
-            useUpgradesStore.getState().upgrades.requiresReview.owned === 1,
+          requiresReview: shouldRequireReview,
           state: TaskState.Todo,
           progress: 0,
         };

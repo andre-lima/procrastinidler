@@ -2,6 +2,10 @@ body {
   .rt-BaseDialogOverlay::before {
     // background-color: transparent;
   }
+
+  * {
+    user-select: none;
+  }
 }
 
 .radix-themes {

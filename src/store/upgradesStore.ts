@@ -94,10 +94,10 @@ export const useUpgradesStore = create<UpgradesState>()(
           currentValue: 0,
           baseValue: 0,
           cost: 1000,
-          rate: 1,
+          rate: 1.2,
           owned: 0,
-          ownedLimit: 1,
-          deltaPerOwned: 0,
+          ownedLimit: 5,
+          deltaPerOwned: 20,
           runWhenPurchased: () => {
             useGameStore.getState().setGameProgress({ unlockedReviews: true });
           },
