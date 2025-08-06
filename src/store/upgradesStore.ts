@@ -1,10 +1,8 @@
 import { create } from 'zustand';
-import { Category, TaskState, type UpgradesState } from '../types';
-import { useAssistantStore } from './assistantStore';
+import { type UpgradesState } from '../types';
 import { useGameStore } from './gameStore';
-import { useBossStore } from './bossStore';
-import { useTasksStore } from './tasksStore';
 import { persist } from 'zustand/middleware';
+import { gameEvents } from './gameEvents';
 
 export const useUpgradesStore = create<UpgradesState>()(
   persist(
@@ -20,14 +18,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 5,
           deltaPerOwned: 0,
-          runWhenPurchased: (upgrade) => {
-            useAssistantStore.getState().addAssistant();
-            if (upgrade.owned === 1) {
-              useTasksStore
-                .getState()
-                .completeTask('canPurchaseAssistantUpgrades');
-            }
-          },
         },
         assistantEfficiency: {
           id: 'assistantEfficiency',
@@ -72,10 +62,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 1,
           deltaPerOwned: 0,
-          runWhenPurchased: () => {
-            useBossStore.getState().addBoss();
-            useTasksStore.getState().completeTask('canPurchaseBossUpgrades');
-          },
         },
         increaseDifficulty: {
           id: 'increaseDifficulty',
@@ -98,9 +84,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 5,
           deltaPerOwned: 20,
-          runWhenPurchased: () => {
-            useGameStore.getState().setGameProgress({ unlockedReviews: true });
-          },
         },
         bossMultitasking: {
           id: 'bossMultitasking',
@@ -123,9 +106,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 1,
           deltaPerOwned: 0,
-          runWhenPurchased: () => {
-            useGameStore.getState().setGameProgress({ unlockedDeadline: true });
-          },
         },
         negotiateDeadline: {
           id: 'negotiateDeadline',
@@ -170,13 +150,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 50,
           deltaPerOwned: 0.2,
-          runWhenPurchased: (upgrade) => {
-            if (upgrade.owned === 1) {
-              useTasksStore
-                .getState()
-                .completeTask('canPurchasePersonalUpgrades');
-            }
-          },
         },
         personalEfficiency: {
           id: 'personalEfficiency',
@@ -210,9 +183,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 10,
           deltaPerOwned: 0,
-          runWhenPurchased: () => {
-            useTasksStore.getState().recoverTasks();
-          },
         },
         FIRE: {
           id: 'FIRE',
@@ -224,33 +194,6 @@ export const useUpgradesStore = create<UpgradesState>()(
           owned: 0,
           ownedLimit: 1,
           deltaPerOwned: 0,
-          runWhenPurchased() {
-            useTasksStore.getState().newTask({
-              id: 'youbeatthedemo',
-              title: 'YOU BEAT THE DEMO!',
-              category: Category.Metagame,
-              assignedTo: [],
-              difficulty: 10,
-              requiresReview: false,
-              state: TaskState.Todo,
-              progress: 0,
-              isSpecial: true,
-            });
-
-            setTimeout(() => {
-              useTasksStore.getState().newTask({
-                id: 'whatsNext',
-                title: "What's hapenning to me? Am I stuck... Help me!",
-                category: Category.Metagame,
-                assignedTo: [],
-                difficulty: 10,
-                requiresReview: false,
-                state: TaskState.Todo,
-                progress: 0,
-                isSpecial: true,
-              });
-            }, 5000);
-          },
         },
         // Billions: {
         //   id: 'Billions',
@@ -277,7 +220,7 @@ export const useUpgradesStore = create<UpgradesState>()(
             upgrade.baseValue + upgrade.deltaPerOwned * upgrade.owned;
           upgrade.cost = upgrade.cost * upgrade.rate;
 
-          upgrade.runWhenPurchased?.(upgrade);
+          gameEvents['runWhenPurchased_' + upgradeId]?.(upgrade);
 
           set((state: UpgradesState) => ({
             upgrades: { ...state.upgrades, [upgrade.id]: upgrade },

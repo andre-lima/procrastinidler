@@ -5,8 +5,6 @@ Balancing
 Remove old todos from completed store? (performance)
 ... maybe set old tasks objects to null but keep the id to make sure the length is kept ok
 
-Boss needs an efficiency upgrade?
-
 ---
 
 Number go up with money amount

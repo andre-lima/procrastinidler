@@ -16,5 +16,4 @@ export interface Upgrade {
   owned: number;
   ownedLimit: number;
   deltaPerOwned: number;
-  runWhenPurchased?: (upgrade: Upgrade) => void;
 }
