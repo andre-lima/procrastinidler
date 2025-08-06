@@ -136,7 +136,7 @@ export const useTasksStore = create<TasksState>()(
                 .currentValue;
             break;
           case 'boss':
-            progressEfficiency = 100;
+            progressEfficiency = 200;
             break;
           default:
             progressEfficiency =
