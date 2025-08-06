@@ -15,11 +15,12 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
   return (
     <Card key={upgrade.id}>
       <Grid
-        gap="1"
+        gapX="3"
+        gapY="2"
         columns="1fr auto"
-        rows="auto auto auto"
-        areas="'title title' 'description description' 'price button'"
-        align="center"
+        rows="auto auto"
+        areas="'title price' 'description button"
+        align="end"
       >
         <Box gridArea="title">
           <Text>{tUpgrades(upgrade.id + '.title')}</Text>
@@ -30,6 +31,9 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
           </Text>
         </Box>
         <Flex gap="4" gridArea="price" align="center">
+          <Text size="1" color="gray">
+            Owned {upgrade.owned} / {upgrade.ownedLimit}
+          </Text>
           <Text>
             <Flex gap="1" align="center">
               <LuCoins color="orange" />
@@ -38,12 +42,9 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
               </Text>
             </Flex>
           </Text>
-          <Text size="1" color="gray">
-            Owned {upgrade.owned} / {upgrade.ownedLimit}
-          </Text>
         </Flex>
 
-        <Box gridArea="button">
+        <Box style={{ marginLeft: 'auto' }} gridArea="button">
           <Theme appearance="dark" data-has-background={false}>
             <Button
               className="purchaseUpgradeButton"
