@@ -158,9 +158,21 @@ export const useTasksStore = create<TasksState>()(
           if (task.progress >= 100) {
             setTimeout(() => {
               get().completeTask(id);
-            }, 300);
+            }, 200);
           }
         }
+
+        // console.log(
+        //   task?.progress === 100,
+        //   Date.now() - window.performance.timeOrigin
+        // );
+        // if (
+        //   task?.progress === 100 &&
+        //   Date.now() - window.performance.timeOrigin < 2000
+        // ) {
+        //   console.log('Bug fix???');
+        //   get().completeTask(id);
+        // }
 
         set((state: TasksState) =>
           task ? { tasks: { ...state.tasks, [id]: task } } : state

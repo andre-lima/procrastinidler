@@ -25,7 +25,7 @@ export const MoneyDisplay = ({ money }: { money: string }) => {
       className={shaking ? 'shake' : ''}
       variant="solid"
       style={{
-        padding: '8px 22px',
+        padding: '2px 22px',
         fontSize: '1.6em',
         border: '2px solid var(--yellow-10)',
       }}
