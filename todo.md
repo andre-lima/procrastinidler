@@ -2,7 +2,13 @@ Improve random titles a bit
 
 Balancing
 
+Number go up with money amount (money sound?) - money container animation
+
 ---
+
+Filter on the right side
+
+Put money in the middle of the screen, and the settings on the top right
 
 Assistant: Task completion quality (based on difficulty too) - review rejections
 

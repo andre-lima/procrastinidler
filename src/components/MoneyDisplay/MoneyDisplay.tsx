@@ -1,0 +1,39 @@
+import { Badge } from '@radix-ui/themes';
+import { LuCoins } from 'react-icons/lu';
+import { useEffect, useState } from 'react';
+import './styles.scss';
+import { useRef } from 'react';
+
+export const MoneyDisplay = ({ money }: { money: string }) => {
+  const [shaking, setShaking] = useState(false);
+
+  const audio = useRef<HTMLAudioElement>(new Audio('/sfx/money.ogg'));
+
+  useEffect(() => {
+    setShaking(true);
+    const timeout = setTimeout(() => setShaking(false), 400); // match CSS duration
+
+    console.log(audio.current);
+    audio.current?.play().catch((err) => {
+      console.warn('Audio play failed:', err);
+    });
+
+    return () => clearTimeout(timeout);
+  }, [money]);
+
+  return (
+    <Badge
+      className={shaking ? 'shake' : ''}
+      variant="solid"
+      style={{
+        padding: '8px 22px',
+        fontSize: '1.6em',
+        border: '2px solid var(--yellow-10)',
+      }}
+      color="yellow"
+      size="3"
+    >
+      <LuCoins /> {money}$
+    </Badge>
+  );
+};

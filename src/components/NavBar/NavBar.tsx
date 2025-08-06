@@ -1,6 +1,6 @@
 import { useGameStore } from '../../store/gameStore';
-import { Badge, Button, Flex, Grid } from '@radix-ui/themes';
-import { LuCoins, LuPlus } from 'react-icons/lu';
+import { Button, Flex, Grid } from '@radix-ui/themes';
+import { LuPlus } from 'react-icons/lu';
 import { TaskState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
@@ -11,6 +11,7 @@ import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
 import { humanNumber } from '../../helpers/human-number';
+import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
 
 export const NavBar = () => {
   const money = useGameStore((state) => humanNumber(state.money));
@@ -63,13 +64,7 @@ export const NavBar = () => {
           {boss && <Boss />}
         </Flex>
         <Flex justify="end" align="center" width="auto">
-          <Badge
-            style={{ padding: '8px 16px', fontSize: '1.4em' }}
-            color="yellow"
-            size="3"
-          >
-            <LuCoins /> {money}$
-          </Badge>
+          <MoneyDisplay money={money} />
         </Flex>
       </Grid>
     </Flex>
