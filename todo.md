@@ -4,6 +4,17 @@ Balancing
 
 Number go up with money amount
 
+Remove old todos from completed store? (performance)
+... maybe set old tasks objects to null but keep the id to make sure the length is kept ok
+
+Only show a limited amount of cards?
+
+Boss needs an efficiency upgrade
+
+Big drop in game flow/speed when reviews start - fix that
+
+Remove newer filter for now - only show filters when to trigger the rejected column
+
 ---
 
 Filter on the right side
