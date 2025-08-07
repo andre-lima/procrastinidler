@@ -19,6 +19,7 @@ const useGameStore = create<GameState>()(
         newerTasksFirst: false,
         showRejectedTasks: false,
         isDarkMode: false,
+        sfxOn: true,
       },
       addMoney: (amount: number) => {
         const money =
@@ -48,6 +49,10 @@ const useGameStore = create<GameState>()(
       setDarkMode: (isDarkMode: boolean) =>
         set((state) => ({
           filters: { ...state.filters, isDarkMode },
+        })),
+      setSfxOn: (sfxOn: boolean) =>
+        set((state) => ({
+          filters: { ...state.filters, sfxOn },
         })),
       setGameProgress: (progressUpdate) => {
         set((state) => ({

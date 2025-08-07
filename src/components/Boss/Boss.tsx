@@ -1,19 +1,18 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useBossStore } from '../../store/bossStore';
 import { TaskState } from '../../types';
-import { config } from '../../game/config';
 
 let loopId: number;
 
 export const Boss = () => {
-  // const bossInterval = useUpgradesStore(
-  //   (state) => state.upgrades.bossInterval.currentValue
-  // );
+  const bossInterval = useUpgradesStore(
+    (state) => state.upgrades.bossInterval.currentValue
+  );
   // const boss = useBossStore((state) => state.boss[id]);
 
-  const bossLoop = () => {
+  const bossLoop = useCallback(() => {
     useTasksStore.getState().newTask();
 
     // TODO: Deal with boss reviews
@@ -31,7 +30,7 @@ export const Boss = () => {
       const numToAssign = numOfTasksAssignable - (assignedTasks?.length || 0);
       const tasks = useTasksStore
         .getState()
-        .getNextUnassignedTask(numToAssign, TaskState.InReview);
+        .getNextUnassignedTask(numToAssign, [TaskState.InReview]);
       if (tasks.length) {
         tasks.forEach((task) => {
           if (task) {
@@ -41,13 +40,13 @@ export const Boss = () => {
         });
       }
     }
-  };
+  }, [bossInterval]);
 
   useEffect(() => {
-    loopId = setInterval(bossLoop, config.tickLength);
+    loopId = setInterval(bossLoop, bossInterval);
 
     return () => clearInterval(loopId);
-  }, []);
+  }, [bossInterval]);
 
   return null;
 };

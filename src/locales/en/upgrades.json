@@ -1,11 +1,15 @@
 {
   "personalEfficiency": {
     "title": "Efficiency",
-    "description": "Increase chunk of work completion by click by 5%"
+    "description": "Increase chunk of work completion by click."
   },
   "personalMoneyPerTask": {
     "title": "Money per task",
     "description": "Increase money rewards per completed task by 20%"
+  },
+  "personalTasksCreation": {
+    "title": "Batch tasks creation",
+    "description": "The + Task button creates 10 tasks per upgrade level instead of only 1."
   },
   "taskPairing": {
     "title": "Pairing",
@@ -33,11 +37,15 @@
   },
   "assistantEfficiency": {
     "title": "Efficiency",
-    "description": "Increase chunk of work completion rate by 5%."
+    "description": "Increase chunk of work completion rate."
   },
   "assistantInterval": {
     "title": "Fast worker",
     "description": "Increase Assistants work speed by 5%."
+  },
+  "bossAssistant": {
+    "title": "All hands on deck",
+    "description": "Assistants can help on review tasks."
   },
   "buyBoss": {
     "title": "Get a Boss",

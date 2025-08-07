@@ -8,6 +8,7 @@ export interface GameState {
     newerTasksFirst: boolean;
     showRejectedTasks: boolean;
     isDarkMode: boolean;
+    sfxOn: boolean;
   };
   gameProgress: {
     canPurchasePersonalUpgrades: boolean;
@@ -21,6 +22,7 @@ export interface GameState {
   setTaskSorting: (sortByNewer: boolean) => void;
   setShowingRejected: (showRejected: boolean) => void;
   setDarkMode: (darkMode: boolean) => void;
+  setSfxOn: (sfxOn: boolean) => void;
   setGameProgress: (progressUpdate: Partial<GameState['gameProgress']>) => void;
 }
 
@@ -29,7 +31,7 @@ export interface TasksState {
   getTasksArray: () => (Task | undefined)[];
   getNextUnassignedTask: (
     maxNumOfTasks: number,
-    state?: TaskState
+    states?: TaskState[]
   ) => (Task | undefined)[];
   assignAssistantToTask: (assistantId: string, task: Task) => void;
   assignBossToTask: (task: Task) => void;

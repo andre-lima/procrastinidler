@@ -80,7 +80,7 @@ export const useTasksStore = create<TasksState>()(
       },
       getNextUnassignedTask: (
         numToAssign: number = 1,
-        taskState = TaskState.Todo
+        taskStates: TaskState[] = [TaskState.Todo]
       ) => {
         const tasksToAssign: Task[] = [];
 
@@ -90,8 +90,8 @@ export const useTasksStore = create<TasksState>()(
           const task = tasks[i];
 
           if (
-            task?.assignedTo.length === 0 &&
-            task?.state === taskState &&
+            task?.assignedTo?.length === 0 &&
+            taskStates.includes(task?.state) &&
             !task.isSpecial
           ) {
             tasksToAssign.push(task);
@@ -139,7 +139,7 @@ export const useTasksStore = create<TasksState>()(
                 .currentValue;
             break;
           case 'boss':
-            progressEfficiency = 300;
+            progressEfficiency = 200;
             break;
           default:
             progressEfficiency =
@@ -190,7 +190,7 @@ export const useTasksStore = create<TasksState>()(
         );
       },
       completeTask: (id: string) => {
-        const completedTask = get().tasks[id];
+        let completedTask = get().tasks[id];
 
         if (completedTask) {
           if (
@@ -205,10 +205,10 @@ export const useTasksStore = create<TasksState>()(
           }
 
           // Unassign from task, assistant, boss
-          completedTask.assignedTo.forEach((assistantId) =>
+          completedTask?.assignedTo.forEach((assistantId) =>
             useAssistantStore
               .getState()
-              .unassignTask(completedTask.id, assistantId)
+              .unassignTask(completedTask!.id, assistantId)
           );
           useBossStore.getState().unassignTask(completedTask.id);
           completedTask.assignedTo = [];
@@ -227,6 +227,17 @@ export const useTasksStore = create<TasksState>()(
                   deadlineMoneyMultiplier *
                   requiresReviewMoneyMultiplier
               );
+          }
+        }
+
+        // Limits objects references to something that won't be used anymore.
+        if (completedTask?.state === TaskState.Completed) {
+          const completedTasksLength = get()
+            .getTasksArray()
+            .filter((task) => task?.state === TaskState.Completed).length;
+
+          if (completedTasksLength > 51) {
+            completedTask = undefined;
           }
         }
 

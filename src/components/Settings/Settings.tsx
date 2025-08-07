@@ -1,12 +1,13 @@
 import { Button, Flex, Text } from '@radix-ui/themes';
 import { useState } from 'react';
-import { LuMoon, LuSaveOff, LuSun } from 'react-icons/lu';
+import { LuMoon, LuSaveOff, LuSun, LuVolume2, LuVolumeX } from 'react-icons/lu';
 import { resetAllStores } from '../../store/resetStores';
 import { useGameStore } from '../../store/gameStore';
 
 export const Settings = () => {
   const [confirmClear, setConfirmClear] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [sfxOn, setSfxOn] = useState(false);
 
   const clearSave = () => {
     resetAllStores();
@@ -15,6 +16,11 @@ export const Settings = () => {
   const toggleDarkMode = () => {
     useGameStore.getState().setDarkMode(!isDarkMode);
     setIsDarkMode(!isDarkMode);
+  };
+
+  const toggleSFX = () => {
+    useGameStore.getState().setSfxOn(!sfxOn);
+    setSfxOn(!sfxOn);
   };
 
   return (
@@ -56,6 +62,24 @@ export const Settings = () => {
         role="button"
         onClick={() => setConfirmClear(true)}
       />
+
+      {sfxOn ? (
+        <LuVolume2
+          role="button"
+          size="22px"
+          color="gray"
+          cursor="pointer"
+          onClick={toggleSFX}
+        />
+      ) : (
+        <LuVolumeX
+          role="button"
+          size="22px"
+          color="gray"
+          cursor="pointer"
+          onClick={toggleSFX}
+        />
+      )}
 
       {isDarkMode ? (
         <LuSun

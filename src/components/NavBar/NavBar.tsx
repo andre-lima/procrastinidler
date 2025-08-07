@@ -11,6 +11,7 @@ import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
 import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
+import { useUpgradesStore } from '../../store/upgradesStore';
 
 export const NavBar = () => {
   const money = useGameStore((state) => state.money);
@@ -24,7 +25,13 @@ export const NavBar = () => {
       useTasksStore.getState().completeTask(newTaskTodo.id);
     }
 
-    useTasksStore.getState().newTask();
+    const numOfTasksToCreate = Math.max(
+      useUpgradesStore.getState().upgrades.personalTasksCreation.currentValue,
+      1
+    );
+    for (let i = 0; i < numOfTasksToCreate; i++) {
+      useTasksStore.getState().newTask();
+    }
   };
 
   return (

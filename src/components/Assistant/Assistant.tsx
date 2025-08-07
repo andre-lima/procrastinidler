@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAssistantStore } from '../../store/assistantStore';
 import { useTasksStore } from '../../store/tasksStore';
 import './styles.scss';
 import { useUpgradesStore } from '../../store/upgradesStore';
+import { TaskState, type Task } from '../../types';
 
 let loopId: number;
 
@@ -12,7 +13,7 @@ export const Assistant = ({ id }: { id: string }) => {
   );
   // const assistant = useAssistantStore((state) => state.assistants[id]);
 
-  const assistantLoop = () => {
+  const assistantLoop = useCallback(() => {
     const assignedTasks =
       useAssistantStore.getState().assistants[id]?.assignedTo;
 
@@ -24,9 +25,25 @@ export const Assistant = ({ id }: { id: string }) => {
         useTasksStore.getState().makeProgress(task, 'assistant');
       });
     }
+
     if ((assignedTasks?.length || 0) < numOfTasksAssignable) {
       const numToAssign = numOfTasksAssignable - (assignedTasks?.length || 0);
-      const tasks = useTasksStore.getState().getNextUnassignedTask(numToAssign);
+      let tasks: (Task | undefined)[] = [];
+
+      const todoTasks = useTasksStore
+        .getState()
+        .getNextUnassignedTask(numToAssign, [TaskState.Todo]);
+
+      tasks = [...todoTasks];
+
+      if (useUpgradesStore.getState().upgrades.bossAssistant.owned === 1) {
+        const reviewTasks = useTasksStore
+          .getState()
+          .getNextUnassignedTask(1, [TaskState.InReview]);
+
+        tasks = [...tasks, ...reviewTasks];
+      }
+
       if (tasks.length) {
         tasks.forEach((task) => {
           if (task) {
@@ -36,13 +53,14 @@ export const Assistant = ({ id }: { id: string }) => {
         });
       }
     }
-  };
+  }, [id]);
 
   useEffect(() => {
-    loopId = setInterval(assistantLoop, assistantInterval);
+    const interval = assistantInterval + Math.floor(Math.random() * 10);
+    loopId = setInterval(assistantLoop, interval);
 
     return () => clearInterval(loopId);
-  }, [assistantInterval]);
+  }, [assistantInterval, assistantLoop]);
 
   return (
     <div className="assistantImage navBarImage">
