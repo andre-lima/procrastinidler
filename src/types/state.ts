@@ -30,6 +30,7 @@ export interface GameState {
 export interface TasksState {
   tasks: Partial<Record<string, Task>>;
   getTasksArray: () => (Task | undefined)[];
+  getTodosLength: () => number;
   getNextUnassignedTask: (
     maxNumOfTasks: number,
     states?: TaskState[]

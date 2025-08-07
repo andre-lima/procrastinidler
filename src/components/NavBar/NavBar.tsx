@@ -23,10 +23,9 @@ export const NavBar = () => {
       useTasksStore.getState().completeTask(newTaskTodo.id);
     }
 
-    const numOfTasksToCreate = Math.max(
-      useUpgradesStore.getState().upgrades.personalTasksCreation.currentValue,
-      1
-    );
+    const numOfTasksToCreate =
+      useUpgradesStore.getState().upgrades.personalTasksCreation.currentValue;
+
     for (let i = 0; i < numOfTasksToCreate; i++) {
       useTasksStore.getState().newTask();
     }

@@ -6,7 +6,7 @@ import { TaskState, type TasksState } from './types';
 import { TasksList } from './components/TasksList/TasksList';
 import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';
-import { TasksFilter } from './components/TasksFilter/TasksFilter';
+// import { TasksFilter } from './components/TasksFilter/TasksFilter';
 import { Settings } from './components/Settings/Settings';
 
 function App() {

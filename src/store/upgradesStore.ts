@@ -119,6 +119,17 @@ export const useUpgradesStore = create<UpgradesState>()(
           ownedLimit: 10,
           deltaPerOwned: 1,
         },
+        promotion: {
+          id: 'promotion',
+          type: 'boss',
+          currentValue: 1,
+          baseValue: 0,
+          cost: 10000,
+          rate: 2,
+          owned: 1,
+          ownedLimit: 10,
+          deltaPerOwned: 1,
+        },
         // hasDeadline: {
         //   id: 'hasDeadline',
         //   type: 'boss',
@@ -177,7 +188,7 @@ export const useUpgradesStore = create<UpgradesState>()(
         personalTasksCreation: {
           id: 'personalTasksCreation',
           type: 'personal',
-          currentValue: 0,
+          currentValue: 1,
           baseValue: 0,
           cost: 300,
           rate: 1.4,

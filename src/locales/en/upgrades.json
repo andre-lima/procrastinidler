@@ -59,6 +59,10 @@
     "title": "Requires review",
     "description": "Increase number of tasks that require review after completion by 20%. Reward is tripled."
   },
+  "promotion": {
+    "title": "Promotion",
+    "description": "Get a promotion and get a raise of 100% of base salary."
+  },
   "hasDeadline": {
     "title": "Has deadline",
     "description": "Triples $ reward but tasks will expire after a while."

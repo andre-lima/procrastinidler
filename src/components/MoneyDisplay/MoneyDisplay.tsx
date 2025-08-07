@@ -15,6 +15,7 @@ export const MoneyDisplay = () => {
     personalMoneyPerTask,
     increaseDifficulty,
     hasDeadline,
+    promotion,
     requiresReview,
   } = useUpgradesStore((state) => state.upgrades);
 
@@ -24,7 +25,8 @@ export const MoneyDisplay = () => {
     personalMoneyPerTask.currentValue *
     increaseDifficulty.currentValue *
     (hasDeadline?.owned === 1 ? 3 : 1) *
-    (requiresReview?.owned === 1 ? 3 : 1);
+    (requiresReview?.owned === 1 ? 3 : 1) *
+    promotion.currentValue;
 
   useEffect(() => {
     setShaking(true);

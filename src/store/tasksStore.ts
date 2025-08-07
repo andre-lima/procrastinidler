@@ -36,7 +36,15 @@ export const useTasksStore = create<TasksState>()(
         },
       },
       getTasksArray: () => Object.values(get().tasks),
+      getTodosLength: () =>
+        get()
+          .getTasksArray()
+          .filter((task) => task?.state === TaskState.Todo).length,
       newTask: (task?: Task) => {
+        if (!task?.isSpecial && get().getTodosLength() >= 50) {
+          return;
+        }
+
         const deadline =
           useUpgradesStore.getState().upgrades.hasDeadline?.owned === 1
             ? useUpgradesStore.getState().upgrades.negotiateDeadline
@@ -217,6 +225,8 @@ export const useTasksStore = create<TasksState>()(
           const requiresReviewMoneyMultiplier = completedTask.requiresReview
             ? 3
             : 1;
+          const promotionMoneyMultiplier =
+            useUpgradesStore.getState().upgrades.promotion.currentValue;
 
           if (completedTask.state === TaskState.Completed) {
             useGameStore
@@ -225,7 +235,8 @@ export const useTasksStore = create<TasksState>()(
                 config.moneyPerTaskCompleted *
                   completedTask.difficulty *
                   deadlineMoneyMultiplier *
-                  requiresReviewMoneyMultiplier
+                  requiresReviewMoneyMultiplier *
+                  promotionMoneyMultiplier
               );
           }
         }
