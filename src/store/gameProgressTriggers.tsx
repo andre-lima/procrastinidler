@@ -1,4 +1,6 @@
 import { Category, TaskState } from '../types';
+import { useAssistantStore } from './assistantStore';
+import { useBossStore } from './bossStore';
 import { useGameStore } from './gameStore';
 import { useTasksStore } from './tasksStore';
 import { useUpgradesStore } from './upgradesStore';
@@ -6,13 +8,21 @@ import { useUpgradesStore } from './upgradesStore';
 export const checkProgressTriggers = () => {
   const money = useGameStore.getState().money;
   const upgrades = useUpgradesStore.getState().upgrades;
+  const boss = useBossStore.getState().boss;
+  const assistants = Object.keys(useAssistantStore.getState().assistants);
+  console.log(assistants);
+
   const {
     canPurchaseAssistantUpgrades,
     canPurchaseBossUpgrades,
     canPurchasePersonalUpgrades,
   } = useGameStore.getState().gameProgress;
 
-  if (money >= upgrades.buyAssistants.cost && !canPurchaseAssistantUpgrades) {
+  if (
+    money >= upgrades.buyAssistants.cost &&
+    !canPurchaseAssistantUpgrades &&
+    assistants.length === 0
+  ) {
     useGameStore
       .getState()
       .setGameProgress({ canPurchaseAssistantUpgrades: true });
@@ -31,7 +41,7 @@ export const checkProgressTriggers = () => {
     });
   }
 
-  if (money >= upgrades.buyBoss.cost && !canPurchaseBossUpgrades) {
+  if (money >= upgrades.buyBoss.cost && !canPurchaseBossUpgrades && !boss) {
     useGameStore.getState().setGameProgress({ canPurchaseBossUpgrades: true });
     useTasksStore.getState().newTask({
       id: 'canPurchaseBossUpgrades',
@@ -48,7 +58,8 @@ export const checkProgressTriggers = () => {
 
   if (
     money >= upgrades.personalMoneyPerTask.cost &&
-    !canPurchasePersonalUpgrades
+    !canPurchasePersonalUpgrades &&
+    upgrades.personalMoneyPerTask.owned === 0
   ) {
     useGameStore
       .getState()

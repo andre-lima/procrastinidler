@@ -2,8 +2,6 @@ Improve random titles a bit
 
 Balancing
 
-Fix bug when progress is 100 but setTimeout hasn't fired yet completing the task
-
 Remove old todos from completed store? (performance)
 ... maybe set old tasks objects to null but keep the id to make sure the length is kept ok
 

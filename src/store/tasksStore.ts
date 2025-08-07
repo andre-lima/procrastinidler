@@ -254,3 +254,20 @@ export const useTasksStore = create<TasksState>()(
     { name: 'tasks-store' }
   )
 );
+
+// UGLY HACK: Fixes a bug where when progress is 100 but setTimeout
+// hasn't fired yet completing the task the tasks will stay stuck at 100%
+setTimeout(() => {
+  useTasksStore
+    .getState()
+    .getTasksArray()
+    .forEach((task) => {
+      if (
+        (task?.progress === 100 && task?.state === TaskState.Todo) ||
+        (task?.progress === 100 && task?.state === TaskState.InReview)
+      ) {
+        console.warn('Stuck??? ', task.id);
+        useTasksStore.getState().completeTask(task.id);
+      }
+    });
+}, 0);

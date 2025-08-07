@@ -14,8 +14,10 @@ export const gameEvents: Record<string, (upgrade: Upgrade) => void> = {
   },
 
   runWhenPurchased_buyBoss: () => {
-    useBossStore.getState().addBoss();
-    useTasksStore.getState().completeTask('canPurchaseBossUpgrades');
+    if (!useBossStore.getState().boss) {
+      useBossStore.getState().addBoss();
+      useTasksStore.getState().completeTask('canPurchaseBossUpgrades');
+    }
   },
 
   runWhenPurchased_requiresReview: () => {
