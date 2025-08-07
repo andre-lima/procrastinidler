@@ -7,7 +7,7 @@ import { persist } from 'zustand/middleware';
 const useGameStore = create<GameState>()(
   persist(
     (set, get) => ({
-      money: 0,
+      money: 4500,
       gameProgress: {
         canPurchasePersonalUpgrades: false,
         canPurchaseBossUpgrades: false,

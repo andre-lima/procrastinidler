@@ -213,9 +213,9 @@ export const useTasksStore = create<TasksState>()(
           useBossStore.getState().unassignTask(completedTask.id);
           completedTask.assignedTo = [];
 
-          const deadlineMoneyMultiplier = completedTask.deadline ? 2 : 1;
+          const deadlineMoneyMultiplier = completedTask.deadline ? 3 : 1;
           const requiresReviewMoneyMultiplier = completedTask.requiresReview
-            ? 2
+            ? 3
             : 1;
 
           if (completedTask.state === TaskState.Completed) {

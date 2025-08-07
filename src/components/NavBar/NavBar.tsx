@@ -1,4 +1,3 @@
-import { useGameStore } from '../../store/gameStore';
 import { Button, Flex, Grid } from '@radix-ui/themes';
 import { LuPlus } from 'react-icons/lu';
 import { TaskState } from '../../types';
@@ -14,7 +13,6 @@ import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
 import { useUpgradesStore } from '../../store/upgradesStore';
 
 export const NavBar = () => {
-  const money = useGameStore((state) => state.money);
   const assistants = useAssistantStore((state) => state.assistants);
   const boss = useBossStore((state) => state.boss);
   const { t } = useTranslation('common');
@@ -70,7 +68,7 @@ export const NavBar = () => {
           {boss && <Boss />}
         </Flex>
         <Flex justify="end" align="center" width="auto">
-          <MoneyDisplay money={money} />
+          <MoneyDisplay />
         </Flex>
       </Grid>
     </Flex>

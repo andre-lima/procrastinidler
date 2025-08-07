@@ -1,12 +1,12 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useTransition } from 'react';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useBossStore } from '../../store/bossStore';
 import { TaskState } from '../../types';
-
-let loopId: number;
+import { IntervalController } from '../../helpers/interval-controller';
 
 export const Boss = () => {
+  const [, startTransition] = useTransition();
   const bossInterval = useUpgradesStore(
     (state) => state.upgrades.bossInterval.currentValue
   );
@@ -23,7 +23,9 @@ export const Boss = () => {
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        useTasksStore.getState().makeProgress(task, 'boss');
+        startTransition(() => {
+          useTasksStore.getState().makeProgress(task, 'boss');
+        });
       });
     }
     if ((assignedTasks?.length || 0) < numOfTasksAssignable) {
@@ -40,12 +42,15 @@ export const Boss = () => {
         });
       }
     }
-  }, [bossInterval]);
+  }, []);
 
   useEffect(() => {
-    loopId = setInterval(bossLoop, bossInterval);
+    const timer = new IntervalController(() => {
+      bossLoop();
+    }, bossInterval);
+    timer.start();
 
-    return () => clearInterval(loopId);
+    return () => timer.stop();
   }, [bossInterval]);
 
   return null;

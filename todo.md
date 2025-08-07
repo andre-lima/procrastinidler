@@ -2,11 +2,6 @@ Improve random titles a bit
 
 Balancing
 
-Check performance on plugin
-
-Remove old todos from completed store? (performance)
-... maybe set old tasks objects to null but keep the id to make sure the length is kept ok
-
 ---
 
 
@@ -20,9 +15,7 @@ Assistant: Task completion quality (based on difficulty too) - review rejections
 
 upgrades for personal efficiency: pomodoro clock, time management, focus, ritalin, prioritization
 
-bomb all tasks from a certain low level of difficulty for a high price?
-
-Mystery secrete through meta cards
+Mystery secret through meta cards
 
 Reduce % of rejections on reviews (LGTM)
 
@@ -50,11 +43,11 @@ While I (im)patiently wait for the artist to finish some key art for my other in
 
 It's called Procrastinidler and it's a parody Todo App where you complete fake tasks and hire assistants and a boss to help you, while getting paid for these tasks.
 
-Lots of upgrades are available to increase your speed, efficiency and the difficulty/reward of the tasks. Play time should be around xh until you can afford the FIRE upgrade.
+Lots of upgrades are available to increase your speed, efficiency and the difficulty/reward of the tasks.
 
 You can play it here: https://andre-lima.itch.io/procrastinidler
 
-If you try it out, let me know if you had fun and what other features you want in case I decide to turn this into a longer game.
+If you try it out, let me know if you had fun, how long it took for you to get bored and what other features you want in case I decide to turn this into a longer game.
 
 // Reddit - react
 

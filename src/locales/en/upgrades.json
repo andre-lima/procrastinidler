@@ -57,11 +57,11 @@
   },
   "requiresReview": {
     "title": "Requires review",
-    "description": "Increase number of tasks that require review after completion by 20%. Reward is doubled."
+    "description": "Increase number of tasks that require review after completion by 20%. Reward is tripled."
   },
   "hasDeadline": {
     "title": "Has deadline",
-    "description": "Doubles $ reward but tasks will expire after a while."
+    "description": "Triples $ reward but tasks will expire after a while."
   },
   "negotiateDeadline": {
     "title": "Negotiate deadline",

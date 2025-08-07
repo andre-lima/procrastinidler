@@ -51,27 +51,27 @@ function App() {
           <TasksList
             title="To Do"
             tasksSelector={(state: TasksState) =>
-              Object.values(state.tasks)
-                .filter((task) => task?.state === TaskState.Todo)
-                .map((task) => task?.id || '')
+              Object.keys(state.tasks).filter(
+                (task) => state.tasks[task]?.state === TaskState.Todo
+              )
             }
           />
           {showReviewsColumn && (
             <TasksList
               title="In Review"
               tasksSelector={(state: TasksState) =>
-                Object.values(state.tasks)
-                  .filter((task) => task?.state === TaskState.InReview)
-                  .map((task) => task?.id || '')
+                Object.keys(state.tasks).filter(
+                  (task) => state.tasks[task]?.state === TaskState.InReview
+                )
               }
             />
           )}
           <TasksList
             title="Completed"
             tasksSelector={(state: TasksState) =>
-              Object.values(state.tasks)
-                .filter((task) => task?.state === TaskState.Completed)
-                .map((task) => task?.id || '')
+              Object.keys(state.tasks).filter(
+                (task) => state.tasks[task]?.state === TaskState.Completed
+              )
             }
           />
 
@@ -79,9 +79,9 @@ function App() {
             <TasksList
               title="Expired"
               tasksSelector={(state: TasksState) =>
-                Object.values(state.tasks)
-                  .filter((task) => task?.state === TaskState.Rejected)
-                  .map((task) => task?.id || '')
+                Object.keys(state.tasks).filter(
+                  (task) => state.tasks[task]?.state === TaskState.Rejected
+                )
               }
             />
           )}

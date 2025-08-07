@@ -1,13 +1,14 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useTransition } from 'react';
 import { useAssistantStore } from '../../store/assistantStore';
 import { useTasksStore } from '../../store/tasksStore';
 import './styles.scss';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { TaskState, type Task } from '../../types';
-
-let loopId: number;
+import { IntervalController } from '../../helpers/interval-controller';
 
 export const Assistant = ({ id }: { id: string }) => {
+  const [, startTransition] = useTransition();
+
   const assistantInterval = useUpgradesStore(
     (state) => state.upgrades.assistantInterval.currentValue
   );
@@ -22,7 +23,9 @@ export const Assistant = ({ id }: { id: string }) => {
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        useTasksStore.getState().makeProgress(task, 'assistant');
+        startTransition(() => {
+          useTasksStore.getState().makeProgress(task, 'assistant');
+        });
       });
     }
 
@@ -57,9 +60,12 @@ export const Assistant = ({ id }: { id: string }) => {
 
   useEffect(() => {
     const interval = assistantInterval + Math.floor(Math.random() * 10);
-    loopId = setInterval(assistantLoop, interval);
+    const timer = new IntervalController(() => {
+      assistantLoop();
+    }, interval);
+    timer.start();
 
-    return () => clearInterval(loopId);
+    return () => timer.stop();
   }, [assistantInterval, assistantLoop]);
 
   return (
@@ -68,3 +74,21 @@ export const Assistant = ({ id }: { id: string }) => {
     </div>
   );
 };
+
+// useEffect(() => {
+//   const timer = new IntervalController(() => {
+//     dispatch({ type: GUIActions.GENERATE_GENERATORS });
+//   }, tickLength);
+
+//   if (!gameStatus.playedCoupDeGrace) {
+//     timer.start();
+//   }
+
+//   on(GameplayEvents.WAIT_FOR_LAST_HIT, () => {
+//     timer.stop();
+//   });
+
+//   return () => {
+//     timer.stop();
+//   };
+// }, [tickLength]);

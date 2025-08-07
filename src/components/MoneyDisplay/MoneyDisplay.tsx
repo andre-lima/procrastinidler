@@ -7,14 +7,24 @@ import { humanNumber } from '../../helpers/human-number';
 import { useGameStore } from '../../store/gameStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 
-export const MoneyDisplay = ({ money }: { money: number }) => {
+export const MoneyDisplay = () => {
   const [shaking, setShaking] = useState(false);
+  const money = useGameStore((state) => state.money);
   const sfxOn = useGameStore((state) => state.filters.sfxOn);
-  const personalMoneyPerTask = useUpgradesStore(
-    (state) => state.upgrades.personalMoneyPerTask.currentValue
-  );
+  const {
+    personalMoneyPerTask,
+    increaseDifficulty,
+    hasDeadline,
+    requiresReview,
+  } = useUpgradesStore((state) => state.upgrades);
 
   const audio = useRef<HTMLAudioElement>(new Audio('./sfx/money.ogg'));
+
+  const moneyPerTask =
+    personalMoneyPerTask.currentValue *
+    increaseDifficulty.currentValue *
+    (hasDeadline.owned === 1 ? 3 : 1) *
+    (requiresReview.owned === 1 ? 3 : 1);
 
   useEffect(() => {
     setShaking(true);
@@ -32,7 +42,7 @@ export const MoneyDisplay = ({ money }: { money: number }) => {
   return (
     <Flex gap="3" align="end">
       <Text size="2" color="gray">
-        +{personalMoneyPerTask}$ per task
+        +{moneyPerTask}$ per task
       </Text>
       <Badge
         className={shaking ? 'shake' : ''}
