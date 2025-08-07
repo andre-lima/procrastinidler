@@ -11,6 +11,7 @@ export interface GameState {
     sfxOn: boolean;
   };
   gameProgress: {
+    startedAt: number;
     canPurchasePersonalUpgrades: boolean;
     canPurchaseBossUpgrades: boolean;
     canPurchaseAssistantUpgrades: boolean;

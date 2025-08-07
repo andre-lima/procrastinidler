@@ -1,3 +1,4 @@
+import { humanNumber } from '../helpers/human-number';
 import { Category, TaskState } from '../types';
 import type { Upgrade } from '../types/assistant';
 import { useAssistantStore } from './assistantStore';
@@ -41,7 +42,12 @@ export const gameEvents: Record<string, (upgrade: Upgrade) => void> = {
   runWhenPurchased_FIRE: () => {
     useTasksStore.getState().newTask({
       id: 'youbeatthedemo',
-      title: 'YOU BEAT THE DEMO!',
+      title:
+        'YOU BEAT THE DEMO! It took you ' +
+        humanNumber(
+          (Date.now() - useGameStore.getState().gameProgress.startedAt) / 60000
+        ) +
+        ' minutes.',
       category: Category.Metagame,
       assignedTo: [],
       difficulty: 10,

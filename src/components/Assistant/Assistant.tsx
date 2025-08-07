@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useTransition } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAssistantStore } from '../../store/assistantStore';
 import { useTasksStore } from '../../store/tasksStore';
 import './styles.scss';
@@ -7,8 +7,6 @@ import { TaskState, type Task } from '../../types';
 import { IntervalController } from '../../helpers/interval-controller';
 
 export const Assistant = ({ id }: { id: string }) => {
-  const [, startTransition] = useTransition();
-
   const assistantInterval = useUpgradesStore(
     (state) => state.upgrades.assistantInterval.currentValue
   );
@@ -23,9 +21,7 @@ export const Assistant = ({ id }: { id: string }) => {
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        startTransition(() => {
-          useTasksStore.getState().makeProgress(task, 'assistant');
-        });
+        useTasksStore.getState().makeProgress(task, 'assistant');
       });
     }
 
@@ -59,7 +55,7 @@ export const Assistant = ({ id }: { id: string }) => {
   }, [id]);
 
   useEffect(() => {
-    const interval = assistantInterval + Math.floor(Math.random() * 10);
+    const interval = assistantInterval + Math.floor(Math.random() * 20);
     const timer = new IntervalController(() => {
       assistantLoop();
     }, interval);

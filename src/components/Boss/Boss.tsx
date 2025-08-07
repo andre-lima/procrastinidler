@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useTransition } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useBossStore } from '../../store/bossStore';
@@ -6,7 +6,6 @@ import { TaskState } from '../../types';
 import { IntervalController } from '../../helpers/interval-controller';
 
 export const Boss = () => {
-  const [, startTransition] = useTransition();
   const bossInterval = useUpgradesStore(
     (state) => state.upgrades.bossInterval.currentValue
   );
@@ -23,9 +22,7 @@ export const Boss = () => {
 
     if (assignedTasks?.length) {
       assignedTasks.forEach((task) => {
-        startTransition(() => {
-          useTasksStore.getState().makeProgress(task, 'boss');
-        });
+        useTasksStore.getState().makeProgress(task, 'boss');
       });
     }
     if ((assignedTasks?.length || 0) < numOfTasksAssignable) {

@@ -7,7 +7,15 @@ export const generateRandomTask = () => {
   const adjective = faker.word.adjective();
   const random = faker.helpers.arrayElement([
     '',
+    '',
+    '',
     'the',
+    'to the',
+    'on the',
+    'at the',
+    'in the',
+    'of the',
+    'above',
     'a',
     preposition,
     conjunction,
