@@ -1,19 +1,15 @@
 .deadlineCountdown {
-  height: 80%;
-  transform: translateX(-50%);
-
-  svg:not(.clockIcon) {
-    filter: drop-shadow(0 0 1px var(--gray-12));
-  }
+  // height: 80%;
+  // transform: translateX(-50%);
 }
 .deadlineClock {
   height: 100%;
   position: relative;
 }
 .clockIcon {
-  z-index: 1;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  // z-index: 1;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
 }

@@ -38,7 +38,7 @@ export const useTasksStore = create<TasksState>()(
       getTasksArray: () => Object.values(get().tasks),
       newTask: (task?: Task) => {
         const deadline =
-          useUpgradesStore.getState().upgrades.hasDeadline.owned === 1
+          useUpgradesStore.getState().upgrades.hasDeadline?.owned === 1
             ? useUpgradesStore.getState().upgrades.negotiateDeadline
                 .currentValue
             : undefined;

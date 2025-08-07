@@ -1,9 +1,18 @@
 import React from 'react';
-import Countdown from 'react-countdown';
-import { PieChart } from 'react-minimal-pie-chart';
+import Countdown, { type CountdownRenderProps } from 'react-countdown';
 import './styles.scss';
 import { LuClock3 } from 'react-icons/lu';
-import { config } from '../../game/config';
+import { Flex, Text } from '@radix-ui/themes';
+import { humanNumber } from '../../helpers/human-number';
+
+const timerRenderer = (props: CountdownRenderProps) => {
+  return (
+    <Flex align="center" gap="2">
+      <LuClock3 color="gray" />
+      <Text color="gray">{humanNumber(props.total / 1000)}</Text>
+    </Flex>
+  );
+};
 
 export const DeadlineCountdown = React.memo(
   ({
@@ -17,50 +26,12 @@ export const DeadlineCountdown = React.memo(
       <div className="deadlineCountdown">
         <Countdown
           date={Date.now() + seconds * 1000}
-          intervalDelay={100}
-          precision={3}
-          renderer={(props) => <Clock time={props.total} />}
+          intervalDelay={1000}
+          precision={0}
+          renderer={timerRenderer}
           onComplete={completionCallback}
         />
       </div>
     );
   }
 );
-
-const Clock = ({ time }: { time: number }) => {
-  const getDeadlineColor = () => {
-    if (!time) {
-      return 'gray';
-    }
-
-    if (time < config.maxDeadline / 5) {
-      return 'var(--red-8)';
-    }
-
-    if (time < config.maxDeadline / 4) {
-      return 'var(--yellow-8)';
-    }
-
-    return 'var(--green-8)';
-  };
-
-  return (
-    <div className="deadlineClock">
-      <LuClock3
-        color={time === 0 ? 'var(--red-8)' : 'gray'}
-        size="20px"
-        className="clockIcon"
-      />
-      <PieChart
-        data={[
-          { title: 'One', value: time, color: getDeadlineColor() },
-          {
-            title: 'One',
-            value: config.maxDeadline - time,
-            color: 'transparent',
-          },
-        ]}
-      />
-    </div>
-  );
-};

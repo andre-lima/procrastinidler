@@ -4,6 +4,7 @@ Balancing
 
 ---
 
+User terms like: Return to office, circle back, work from home, layoffs, agile, etc
 
 Number go up with money amount
 

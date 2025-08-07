@@ -33,7 +33,8 @@ function App() {
         </Box>
 
         <Flex gridArea="filters" align="center" justify="between" width="100%">
-          <TasksFilter />
+          {/* <TasksFilter /> */}
+          <div></div>
           <Settings />
         </Flex>
 

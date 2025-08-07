@@ -23,8 +23,8 @@ export const MoneyDisplay = () => {
   const moneyPerTask =
     personalMoneyPerTask.currentValue *
     increaseDifficulty.currentValue *
-    (hasDeadline.owned === 1 ? 3 : 1) *
-    (requiresReview.owned === 1 ? 3 : 1);
+    (hasDeadline?.owned === 1 ? 3 : 1) *
+    (requiresReview?.owned === 1 ? 3 : 1);
 
   useEffect(() => {
     setShaking(true);
