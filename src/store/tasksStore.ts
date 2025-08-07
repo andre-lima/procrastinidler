@@ -139,7 +139,7 @@ export const useTasksStore = create<TasksState>()(
                 .currentValue;
             break;
           case 'boss':
-            progressEfficiency = 200;
+            progressEfficiency = 300;
             break;
           default:
             progressEfficiency =
@@ -158,21 +158,9 @@ export const useTasksStore = create<TasksState>()(
           if (task.progress >= 100) {
             setTimeout(() => {
               get().completeTask(id);
-            }, 200);
+            }, 300);
           }
         }
-
-        // console.log(
-        //   task?.progress === 100,
-        //   Date.now() - window.performance.timeOrigin
-        // );
-        // if (
-        //   task?.progress === 100 &&
-        //   Date.now() - window.performance.timeOrigin < 2000
-        // ) {
-        //   console.log('Bug fix???');
-        //   get().completeTask(id);
-        // }
 
         set((state: TasksState) =>
           task ? { tasks: { ...state.tasks, [id]: task } } : state

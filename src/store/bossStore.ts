@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { type BossState } from '../types';
 import { persist } from 'zustand/middleware';
+import { config } from '../game/config';
 
 export const useBossStore = create<BossState>()(
   persist(
     (set, get) => ({
       boss: null,
-      bossInterval: 1000,
+      bossInterval: config.tickLength,
       assignTaskToBoss: (todoId: string) => {
         const boss = get().boss;
 

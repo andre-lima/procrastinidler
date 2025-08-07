@@ -6,6 +6,7 @@ import type { TasksState } from '../../types';
 import { useGameStore } from '../../store/gameStore';
 import { config } from '../../game/config';
 import { LuEllipsisVertical } from 'react-icons/lu';
+import { humanNumber } from '../../helpers/human-number';
 
 export const TasksList = ({
   title,
@@ -27,7 +28,7 @@ export const TasksList = ({
       }}
     >
       <Heading size="4" as="h2" mb="4">
-        {title} ({itemIds.length})
+        {title} ({humanNumber(itemIds.length)})
       </Heading>
 
       <ScrollArea

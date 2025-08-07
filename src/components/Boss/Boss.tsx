@@ -3,6 +3,7 @@ import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useBossStore } from '../../store/bossStore';
 import { TaskState } from '../../types';
+import { config } from '../../game/config';
 
 let loopId: number;
 
@@ -43,7 +44,7 @@ export const Boss = () => {
   };
 
   useEffect(() => {
-    loopId = setInterval(bossLoop, 1000);
+    loopId = setInterval(bossLoop, config.tickLength);
 
     return () => clearInterval(loopId);
   }, []);

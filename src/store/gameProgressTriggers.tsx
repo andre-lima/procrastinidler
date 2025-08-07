@@ -10,7 +10,6 @@ export const checkProgressTriggers = () => {
   const upgrades = useUpgradesStore.getState().upgrades;
   const boss = useBossStore.getState().boss;
   const assistants = Object.keys(useAssistantStore.getState().assistants);
-  console.log(assistants);
 
   const {
     canPurchaseAssistantUpgrades,

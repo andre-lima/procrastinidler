@@ -65,6 +65,6 @@
   },
   "bossInterval": {
     "title": "Moar!",
-    "description": "Increase Boss tasks generation speed by 5%."
+    "description": "Increase Boss tasks generation and reviews speed by 5%."
   }
 }

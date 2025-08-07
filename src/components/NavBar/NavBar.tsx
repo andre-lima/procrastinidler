@@ -10,11 +10,10 @@ import { NavDialogButton } from './NavDialogButton';
 import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
-import { humanNumber } from '../../helpers/human-number';
 import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
 
 export const NavBar = () => {
-  const money = useGameStore((state) => humanNumber(state.money));
+  const money = useGameStore((state) => state.money);
   const assistants = useAssistantStore((state) => state.assistants);
   const boss = useBossStore((state) => state.boss);
   const { t } = useTranslation('common');

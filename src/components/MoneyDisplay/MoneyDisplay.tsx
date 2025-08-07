@@ -3,8 +3,9 @@ import { LuCoins } from 'react-icons/lu';
 import { useEffect, useState } from 'react';
 import './styles.scss';
 import { useRef } from 'react';
+import { humanNumber } from '../../helpers/human-number';
 
-export const MoneyDisplay = ({ money }: { money: string }) => {
+export const MoneyDisplay = ({ money }: { money: number }) => {
   const [shaking, setShaking] = useState(false);
 
   const audio = useRef<HTMLAudioElement>(new Audio('./sfx/money.ogg'));
@@ -34,7 +35,7 @@ export const MoneyDisplay = ({ money }: { money: string }) => {
     >
       <Flex align="center" gap="2">
         <LuCoins />
-        <Text>{money}$</Text>
+        <Text>{humanNumber(money)}$</Text>
       </Flex>
     </Badge>
   );
