@@ -8,6 +8,7 @@ import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';
 // import { TasksFilter } from './components/TasksFilter/TasksFilter';
 import { Settings } from './components/Settings/Settings';
+import { config } from './game/config';
 
 function App() {
   const showReviewsColumn = useUpgradesStore(
@@ -51,6 +52,7 @@ function App() {
         >
           <TasksList
             title="To Do"
+            maxNumOfTasks={config.maxTodoTasks}
             tasksSelector={(state: TasksState) =>
               Object.keys(state.tasks).filter(
                 (task) => state.tasks[task]?.state === TaskState.Todo

@@ -247,7 +247,7 @@ export const useTasksStore = create<TasksState>()(
             .getTasksArray()
             .filter((task) => task?.state === TaskState.Completed).length;
 
-          if (completedTasksLength > 51) {
+          if (completedTasksLength > config.maxCardsPerColumn + 1) {
             completedTask = undefined;
           }
         }
@@ -266,31 +266,31 @@ export const useTasksStore = create<TasksState>()(
 );
 
 // DEBUG: Add tons of tasks
-// setTimeout(() => {
-//   for (let i = 0; i < 1000; i++) {
-//     const randomNum = Math.random() * 100;
-//     let randomState = TaskState.Todo;
+setTimeout(() => {
+  for (let i = 0; i < 1000; i++) {
+    const randomNum = Math.random() * 100;
+    let randomState = TaskState.Todo;
 
-//     if (randomNum > 25) {
-//       randomState = TaskState.InReview;
-//     }
+    if (randomNum > 25) {
+      randomState = TaskState.InReview;
+    }
 
-//     if (randomNum > 60) {
-//       randomState = TaskState.Completed;
-//     }
+    if (randomNum > 60) {
+      randomState = TaskState.Completed;
+    }
 
-//     useTasksStore.getState().newTask({
-//       id: uuid(),
-//       title: generateRandomTask(),
-//       category: getRandomCategory(),
-//       assignedTo: [],
-//       difficulty: 10,
-//       requiresReview: true,
-//       state: randomState,
-//       progress: 0,
-//     });
-//   }
-// }, 10);
+    useTasksStore.getState().newTask({
+      id: uuid(),
+      title: generateRandomTask(),
+      category: getRandomCategory(),
+      assignedTo: [],
+      difficulty: 10,
+      requiresReview: true,
+      state: randomState,
+      progress: 0,
+    });
+  }
+}, 10);
 
 // UGLY HACK: Fixes a bug where when progress is 100 but setTimeout
 // hasn't fired yet completing the task the tasks will stay stuck at 100%

@@ -19,7 +19,7 @@ import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 // import { DeadlineCountdown } from '../DeadlineCountdown/DeadlineCountdown';
 // import { useCallback } from 'react';
-import { LuCheck, LuX } from 'react-icons/lu';
+// import { LuCheck, LuX } from 'react-icons/lu';
 import { memo } from 'react';
 import { ProgressMeter } from './components/ProgressMeter';
 

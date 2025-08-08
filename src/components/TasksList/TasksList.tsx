@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, ScrollArea } from '@radix-ui/themes';
+import { Box, Flex, Heading, ScrollArea, Text } from '@radix-ui/themes';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
@@ -13,9 +13,11 @@ export const TasksList = memo(
   ({
     title,
     tasksSelector,
+    maxNumOfTasks,
   }: {
     title: string;
     tasksSelector: (state: TasksState) => string[];
+    maxNumOfTasks?: number;
   }) => {
     const itemIds = useTasksStore(useShallow(tasksSelector));
     const sortByNewer = useGameStore((state) => state.filters.newerTasksFirst);
@@ -29,9 +31,19 @@ export const TasksList = memo(
           borderRadius: 'var(--radius-3)',
         }}
       >
-        <Heading size="4" as="h2" mb="4">
-          {title} ({humanNumber(itemIds.length)})
-        </Heading>
+        <Flex align="end" gap="2">
+          <Heading size="4" as="h2" mb="4">
+            {title} ({humanNumber(itemIds.length)})
+          </Heading>
+
+          {maxNumOfTasks && (
+            <Text color="tomato" size="2" mb="3">
+              {maxNumOfTasks && maxNumOfTasks <= itemIds.length && (
+                <span>Max of {maxNumOfTasks} tasks reached</span>
+              )}
+            </Text>
+          )}
+        </Flex>
 
         <ScrollArea
           type="auto"
