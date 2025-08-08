@@ -4,5 +4,5 @@ export const config = {
   maxDeadline: 45 * 1000,
   maxCardsPerColumn: 30,
   maxTodoTasks: 50,
-  tickLength: 500,
+  tickLength: 650,
 };

@@ -10,6 +10,7 @@ export const resetAllStores = () => {
   useUpgradesStore.persist.clearStorage();
   useBossStore.persist.clearStorage();
   useAssistantStore.persist.clearStorage();
-
-  window.location.reload();
+  setTimeout(() => {
+    window.location.reload();
+  }, 0);
 };

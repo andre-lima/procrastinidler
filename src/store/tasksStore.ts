@@ -198,7 +198,7 @@ export const useTasksStore = create<TasksState>()(
         );
       },
       completeTask: (id: string) => {
-        let completedTask = get().tasks[id];
+        const completedTask = get().tasks[id];
 
         if (completedTask) {
           if (
@@ -241,24 +241,31 @@ export const useTasksStore = create<TasksState>()(
           }
         }
 
-        // Limits objects references to something that won't be used anymore.
-        if (completedTask?.state === TaskState.Completed) {
-          const completedTasksLength = get()
-            .getTasksArray()
-            .filter((task) => task?.state === TaskState.Completed).length;
+        set((state: TasksState) => {
+          // Limits objects references to something that won't be used anymore.
+          if (completedTask?.state === TaskState.Completed) {
+            const completedTasksLength = get()
+              .getTasksArray()
+              .filter((task) => task?.state === TaskState.Completed).length;
 
-          if (completedTasksLength > config.maxCardsPerColumn + 1) {
-            completedTask = undefined;
+            if (completedTasksLength > config.maxCardsPerColumn + 1) {
+              return completedTask
+                ? {
+                    tasks: {
+                      ...state.tasks,
+                      [id]: { state: TaskState.Completed } as Task,
+                    },
+                  }
+                : state;
+            }
           }
-        }
 
-        set((state: TasksState) =>
-          completedTask
+          return completedTask
             ? {
                 tasks: { ...state.tasks, [id]: completedTask },
               }
-            : state
-        );
+            : state;
+        });
       },
     }),
     { name: 'tasks-store' }
@@ -275,9 +282,9 @@ setTimeout(() => {
       randomState = TaskState.InReview;
     }
 
-    if (randomNum > 60) {
-      randomState = TaskState.Completed;
-    }
+    // if (randomNum > 60) {
+    //   randomState = TaskState.Completed;
+    // }
 
     useTasksStore.getState().newTask({
       id: uuid(),
