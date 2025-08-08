@@ -1,9 +1,15 @@
+import { useGameStore } from './gameStore';
+import { useTasksStore } from './tasksStore';
+import { useUpgradesStore } from './upgradesStore';
+import { useBossStore } from './bossStore';
+import { useAssistantStore } from './assistantStore';
+
 export const resetAllStores = () => {
-  localStorage.removeItem('game-store');
-  localStorage.removeItem('tasks-store');
-  localStorage.removeItem('upgrades-store');
-  localStorage.removeItem('boss-store');
-  localStorage.removeItem('assistant-store');
+  useGameStore.persist.clearStorage();
+  useTasksStore.persist.clearStorage();
+  useUpgradesStore.persist.clearStorage();
+  useBossStore.persist.clearStorage();
+  useAssistantStore.persist.clearStorage();
 
   window.location.reload();
 };

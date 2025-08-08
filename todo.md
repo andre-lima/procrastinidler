@@ -22,46 +22,8 @@ Reduce % of rejections on reviews (LGTM)
 
 ---
 
-Description:
+FUTURE:
 
-Be honest...
+Upgrades: Personal (certification?), Efficiency, Boss, Assistants, HR?
 
-Your life is a mess, and you’re in dire need of organization and self-improvement. Procrastination might as well be your middle name. But what should you do?
-
-Well, you can deal with all that later—for now, you should play Procrastinidler. Your problems will magically disappear anyway, so why worry?
-
-Play it at the office for all I care. The UI was designed to look like a real application, so your boss won’t suspect a thing.
-
-How to play: Pretend you have things to do. Create tasks and complete them. If it gets too hard, hire fake people to help you out.
-
-// Reddit - incremental
-
-New Short Incremental - Procrastinidler
-
-Hey folks,
-
-While I (im)patiently wait for the artist to finish some key art for my other incremental, I decided to play around with a parody of a Todo App and ended up creating something I think you'll like.
-
-It's called Procrastinidler and it's a parody Todo App where you complete fake tasks and hire assistants and a boss to help you, while getting paid for these tasks.
-
-Lots of upgrades are available to increase your speed, efficiency and the difficulty/reward of the tasks.
-
-You can play it here: https://andre-lima.itch.io/procrastinidler
-
-If you try it out, let me know if you had fun, how long it took for you to get bored and what other features you want in case I decide to turn this into a longer game.
-
-// Reddit - react
-
-New fake Todo App game - Procrastinidler
-
-Hey folks,
-
-To keep my React skills fresh I decided to play around and create a parody of a Todo App and ended up creating something I think is quite fun.
-
-It's called Procrastinidler and it's a parody Todo App where you complete fake tasks and hire assistants and a boss to help you, while getting paid for these tasks.
-
-Lots of upgrades are available to increase your speed, efficiency and the difficulty/reward of the tasks. Play time should be around xh until you can afford the FIRE upgrade.
-
-You can play it here: https://andre-lima.itch.io/procrastinidler
-
-If you try it out, let me know if you had fun!
+Deadline

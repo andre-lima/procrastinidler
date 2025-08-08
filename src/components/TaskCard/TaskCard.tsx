@@ -1,28 +1,29 @@
-import { Category, TaskState } from '../../types';
+import { TaskState } from '../../types';
 import {
   Badge,
   Box,
   Card,
   Flex,
   Grid,
-  Progress,
   Text,
   Theme,
   Tooltip,
 } from '@radix-ui/themes';
+import { getBadgeColor } from '../../helpers/get-badge-color';
 import { DifficultyMeter } from './components/DifficultyMeter';
 import { PiEyeBold } from 'react-icons/pi';
 import './styles.scss';
 // import { PieChart } from 'react-minimal-pie-chart';
-import { useShallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
-import { DeadlineCountdown } from '../DeadlineCountdown/DeadlineCountdown';
-import { useCallback } from 'react';
+// import { DeadlineCountdown } from '../DeadlineCountdown/DeadlineCountdown';
+// import { useCallback } from 'react';
 import { LuCheck, LuX } from 'react-icons/lu';
-import { humanNumber } from '../../helpers/human-number';
+import { memo } from 'react';
+import { ProgressMeter } from './components/ProgressMeter';
 
-export const TaskCard = ({ id }: { id: string }) => {
+export const TaskCard = memo(({ id }: { id: string }) => {
   const {
     title,
     category,
@@ -30,16 +31,15 @@ export const TaskCard = ({ id }: { id: string }) => {
     state,
     assignedTo,
     isSpecial,
-    deadline,
+    // deadline,
     requiresReview,
-    progress,
   } = useTasksStore(useShallow((state) => ({ ...state.tasks[id]! })));
   const canPair = useUpgradesStore(
     (state) => state.upgrades.taskPairing.owned > 0
   );
-  const onDeadlineFinished = useCallback(() => {
-    useTasksStore.getState().rejectTask(id);
-  }, [id]);
+  // const onDeadlineFinished = useCallback(() => {
+  //   useTasksStore.getState().rejectTask(id);
+  // }, [id]);
 
   if (!title) {
     return null;
@@ -54,38 +54,6 @@ export const TaskCard = ({ id }: { id: string }) => {
     if (canClick) {
       useTasksStore.getState().makeProgress(id, 'personal');
     }
-  };
-
-  const getBadgeColor = (category: Category) => {
-    if (category === Category.Metagame) {
-      return 'red';
-    }
-
-    if (category === Category.Personal) {
-      return 'green';
-    }
-
-    if (category === Category.Work) {
-      return 'blue';
-    }
-
-    if (category === Category.Education) {
-      return 'yellow';
-    }
-
-    if (category === Category.Health) {
-      return 'purple';
-    }
-
-    if (category === Category.Leisure) {
-      return 'orange';
-    }
-
-    if (category === Category.Other) {
-      return 'indigo';
-    }
-
-    return 'gray';
   };
 
   return (
@@ -120,12 +88,12 @@ export const TaskCard = ({ id }: { id: string }) => {
                     <PiEyeBold size="16px" color="crimson" />
                   </Tooltip>
                 )}
-                {state === TaskState.Completed && (
+                {/* {state === TaskState.Completed && (
                   <LuCheck size="22px" color="green" />
                 )}
                 {state === TaskState.Rejected && (
                   <LuX size="22px" color="red" />
-                )}
+                )} */}
               </Box>
             </Flex>
           </Box>
@@ -148,35 +116,21 @@ export const TaskCard = ({ id }: { id: string }) => {
             </Box>
           )}
           <Box gridArea="deadline">
-            {deadline && state === TaskState.Todo && (
+            {/* {deadline && state === TaskState.Todo && (
               <DeadlineCountdown
                 seconds={deadline}
                 completionCallback={onDeadlineFinished}
               />
-            )}
+            )} */}
           </Box>
           <Box gridArea="difficulty">
             <DifficultyMeter difficulty={difficulty} />
           </Box>
           <Box gridArea="progress">
-            <Flex>
-              <Box flexGrow="1">
-                <Text size="2" color="gray">
-                  {state === TaskState.InReview ? 'Review' : 'Progress'}
-                </Text>
-              </Box>
-              <Text size="2" color="gray">
-                {humanNumber(progress, 0)}%
-              </Text>
-            </Flex>
-            <Progress
-              color="green"
-              value={state === TaskState.Completed ? 100 : progress}
-              variant="soft"
-            />
+            <ProgressMeter id={id} />
           </Box>
         </Grid>
       </Card>
     </Theme>
   );
-};
+});

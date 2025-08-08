@@ -1,7 +1,7 @@
 import { Flex } from '@radix-ui/themes';
 import { UpgradeCard } from './UpgradeCard';
 import { useUpgradesStore } from '../../store/upgradesStore';
-import { useShallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 
 export const PurchaseUpgrades = ({
   id,
