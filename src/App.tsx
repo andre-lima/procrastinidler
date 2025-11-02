@@ -1,21 +1,22 @@
 import '@radix-ui/themes/styles.css';
 import './App.scss';
-import { Box, Flex, Grid, Heading, Theme } from '@radix-ui/themes';
+import { Box, Button, Flex, Grid, Heading, Link, Theme, Text } from '@radix-ui/themes';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './types';
 import { TasksList } from './components/TasksList/TasksList';
 import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';
-// import { TasksFilter } from './components/TasksFilter/TasksFilter';
 import { Settings } from './components/Settings/Settings';
 import { config } from './game/config';
+import { useTasksStore } from './store/tasksStore.ts';
+import { useShallow } from 'zustand/react/shallow';
 
 function App() {
-  const showReviewsColumn = useUpgradesStore(
-    (state) => state.upgrades.requiresReview.owned > 0
-  );
-  const showRejectedColumn = useGameStore(
-    (state) => state.filters.showRejectedTasks
+  const showReviewsColumn = useUpgradesStore((state) => state.upgrades.requiresReview.owned > 0);
+  const showRejectedColumn = useGameStore((state) => state.filters.showRejectedTasks);
+
+  const completedTasks = useTasksStore(
+    useShallow((state) => Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Completed)),
   );
   const isDarkMode = useGameStore((state) => state.filters.isDarkMode);
 
@@ -54,27 +55,21 @@ function App() {
             title="To Do"
             maxNumOfTasks={config.maxTodoTasks}
             tasksSelector={(state: TasksState) =>
-              Object.keys(state.tasks).filter(
-                (task) => state.tasks[task]?.state === TaskState.Todo
-              )
+              Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Todo)
             }
           />
           {showReviewsColumn && (
             <TasksList
               title="In Review"
               tasksSelector={(state: TasksState) =>
-                Object.keys(state.tasks).filter(
-                  (task) => state.tasks[task]?.state === TaskState.InReview
-                )
+                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.InReview)
               }
             />
           )}
           <TasksList
             title="Completed"
             tasksSelector={(state: TasksState) =>
-              Object.keys(state.tasks).filter(
-                (task) => state.tasks[task]?.state === TaskState.Completed
-              )
+              Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Completed)
             }
           />
 
@@ -82,16 +77,30 @@ function App() {
             <TasksList
               title="Expired"
               tasksSelector={(state: TasksState) =>
-                Object.keys(state.tasks).filter(
-                  (task) => state.tasks[task]?.state === TaskState.Rejected
-                )
+                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Rejected)
               }
             />
           )}
         </Grid>
 
         <Box gridArea="footer">
-          <Flex align="center" justify="end" width="auto" px="4" pb="4">
+          <Flex align="center" justify="between" width="auto" px="4" pb="4">
+            <Heading size="4" as="h1">
+              {completedTasks.length > 30 && (
+                <div>
+                  <small style={{ color: '#565656' }}>Play my other incremental game: </small>
+                  <Button className={'ntabd_button'}>
+                    <Link
+                      underline={'none'}
+                      target={'_blank'}
+                      href={'https://andre-lima.itch.io/now-thats-a-big-dragon'}
+                    >
+                      <Text style={{ color: 'white' }}> Now THAT's a Big Dragon! </Text>
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </Heading>
             <Heading size="4" as="h1">
               | procrastinidler. |
             </Heading>
