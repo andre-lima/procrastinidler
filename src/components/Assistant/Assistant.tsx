@@ -3,7 +3,7 @@ import { useAssistantStore } from '../../store/assistantStore';
 import { useTasksStore } from '../../store/tasksStore';
 import './styles.scss';
 import { useUpgradesStore } from '../../store/upgradesStore';
-import { TaskState, type Task } from '../../types';
+import { TaskState, type Task } from '../../store/tasksStore';
 import { IntervalController } from '../../helpers/interval-controller';
 
 export const Assistant = ({ id }: { id: string }) => {

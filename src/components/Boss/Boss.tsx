@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useBossStore } from '../../store/bossStore';
-import { TaskState } from '../../types';
+import { TaskState } from '../../store/tasksStore';
 import { IntervalController } from '../../helpers/interval-controller';
 
 export const Boss = () => {

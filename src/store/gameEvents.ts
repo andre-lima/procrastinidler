@@ -1,6 +1,6 @@
 import { humanNumber } from '../helpers/human-number';
-import { Category, TaskState } from '../types';
-import type { Upgrade } from '../types/assistant';
+import { Category, TaskState } from './tasksStore';
+import type { Upgrade } from './assistantsUpgradesStore';
 import { useAssistantStore } from './assistantStore';
 import { useBossStore } from './bossStore';
 import { useGameStore } from './gameStore';

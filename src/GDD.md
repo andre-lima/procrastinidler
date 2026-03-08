@@ -12,6 +12,8 @@ The game has a darker theme, with UI based on 386/DOS menus.
 
 Your work is to complete tasks that are create on a To-Do board. Every task completed gives the player money, which they can use to buy upgrades, hire assistants, etc, and make more money from each task completed and complete tasks faster.
 
+There's a FREEDOM button, teasing the player, but it costs 10M to purchase.
+
 The player risks burnouts, which will pause the game, and set them back for a while.
 
 The game will have different phases, where the player will climb the corporate ladder, the game play changes, adding more features.
@@ -65,6 +67,12 @@ They can be purchased, per skill type, and then upgraded to perform tasks faster
 
 ### Boss
 
+The boss will automatically create tasks for you in a certain interval.
+
+He'll also review tasks.
+
+Eventually, he'll turn out to be a monster
+
 ### Upgrades
 
 ### Rent Timer
@@ -85,11 +93,27 @@ Coffee/boost
 
 ## Main Game
 
-### First Phase
+### First Round
 
-Player can add tasks to the todo list. Then click them to complete them.
+Add tasks manually
+Click on tasks
+Use upgrades to increase money rewarded by tasks, speed of completion
 
-### Second Phase
+### Second Round
+
+After the first burnout the player can purchase an assistant. The assistant helps you complete tasks.
+
+### Third Round
+
+After the second burnout the player can purchase a boss or more assistants.
+
+The boss will create tasks automatically.
+
+### Following Rounds
+
+With upgrades to make the tasks more rewarding, now the game becomes a resource management game.
+
+Get more assistants and boss upgrades so you can get more money
 
 ...
 

@@ -1,5 +1,5 @@
 import { Flex, Grid } from '../shared';
-import { TaskState } from '../../types';
+import { TaskState } from '../../store/tasksStore';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
 import { useAssistantStore } from '../../store/assistantStore';

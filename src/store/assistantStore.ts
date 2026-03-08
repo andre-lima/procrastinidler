@@ -1,6 +1,11 @@
 import { createGameStore } from '../reactive-store/createGameStore';
-import type { Assistant } from '../types/assistant';
 import { localStorageSaveSystem } from './saveSystem';
+
+export interface Assistant {
+  id: string;
+  assignedTo: string[];
+  category?: string;
+}
 
 interface AssistantStoreState {
   assistants: Partial<Record<string, Assistant>>;

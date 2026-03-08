@@ -1,4 +1,4 @@
-import { TaskState } from '../../types';
+import { TaskState } from '../../store/tasksStore';
 import { Box, Flex, Grid, Text } from '../shared';
 import { Tooltip } from '@base-ui/react/tooltip';
 import { getBadgeColor } from '../../helpers/get-badge-color';

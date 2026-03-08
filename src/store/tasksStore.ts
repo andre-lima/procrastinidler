@@ -1,7 +1,37 @@
 import { createGameStore } from '../reactive-store/createGameStore';
 import { v4 as uuid } from 'uuid';
-import { Category, TaskState, type Task } from '../types';
 import { config } from '../game/config';
+
+export enum TaskState {
+  Todo = 'todo',
+  InProgress = 'inProgress',
+  InReview = 'inReview',
+  Completed = 'completed',
+  Rejected = 'rejected',
+}
+
+export enum Category {
+  Personal = 'Personal',
+  Health = 'Health',
+  Education = 'Education',
+  Leisure = 'Leisure',
+  Work = 'Work',
+  Metagame = 'Metagame',
+  Other = 'Other',
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  category: Category;
+  difficulty: number;
+  deadline?: number;
+  assignedTo: string[];
+  state: TaskState;
+  progress: number;
+  isSpecial?: boolean;
+  requiresReview?: boolean;
+}
 import { generateRandomTask } from '../helpers/generate-task';
 import { useGameStore } from './gameStore';
 import { useAssistantStore } from './assistantStore';
@@ -251,6 +281,8 @@ export const useTasksStore = createGameStore<
     },
   })
 );
+
+export type TasksState = ReturnType<typeof useTasksStore.getState>;
 
 // Fix stuck tasks where progress is 100 but completeTask hasn't run yet
 setTimeout(() => {

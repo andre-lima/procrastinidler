@@ -3,7 +3,7 @@ import { useTasksStore } from '../../../store/tasksStore';
 import { Flex, Box, Text } from '../../shared';
 import { Progress } from '@base-ui/react/progress';
 import { humanNumber } from '../../../helpers/human-number';
-import { TaskState } from '../../../types';
+import { TaskState } from '../../../store/tasksStore';
 
 export const ProgressMeter = ({ id }: { id: string }) => {
   const { progress, state } = useTasksStore(

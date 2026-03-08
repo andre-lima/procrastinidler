@@ -1,5 +1,5 @@
 import { Box, Flex, Grid, Text } from '../shared';
-import type { Upgrade } from '../../types/assistant';
+import type { Upgrade } from '../../store/upgradesStore';
 import './styles.scss';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useGameStore } from '../../store/gameStore';

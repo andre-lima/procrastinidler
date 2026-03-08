@@ -1,4 +1,4 @@
-import { Category } from '../types';
+import { Category } from '../store/tasksStore';
 
 export const getRandomCategory = () => {
   const categories = Object.values(Category).filter(

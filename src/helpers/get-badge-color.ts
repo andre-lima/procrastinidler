@@ -1,4 +1,4 @@
-import { Category } from '../types';
+import { Category } from '../store/tasksStore';
 
 /** Returns a 386 theme CSS variable for badge/category color */
 export const getBadgeColor = (category: Category): string => {

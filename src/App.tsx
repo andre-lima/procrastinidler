@@ -1,7 +1,7 @@
 import './App.scss';
 import { Box, Flex, Grid, Heading, Text } from './components/shared';
 import { NavBar } from './components/NavBar/NavBar';
-import { TaskState, type TasksState } from './types';
+import { TaskState, type TasksState } from './store/tasksStore';
 import { TasksList } from './components/TasksList/TasksList';
 import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';

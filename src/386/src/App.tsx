@@ -11,7 +11,7 @@
 // to one of: "cga386" | "amber" | "green" | "mono"
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Accordion } from "@base-ui/react/accordion";
 import { Dialog } from "@base-ui/react/dialog";
 import { Tabs } from "@base-ui/react/tabs";
@@ -31,6 +31,7 @@ import type { CSSProperties, ReactNode } from "react";
 import "./styles/theme.css";
 import "./styles/spacing.css";
 import "./styles/typography.css";
+import "./styles/index.css";
 import S from "./app.module.css";
 
 // ── Types ─────────────────────────────────────────────────────
@@ -184,10 +185,13 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>("buttons");
   const [selectVal, setSelectVal] = useState("ega");
 
-  // Swap theme by updating the data-theme attribute on <html>
+  // Apply theme to <html> on mount and when theme changes (so [data-theme="cga386"] selectors apply)
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
   function handleThemeChange(name: ThemeName) {
     setTheme(name);
-    document.documentElement.dataset.theme = name;
   }
 
   return (

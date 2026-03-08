@@ -2,7 +2,7 @@ import { Flex, Text } from '../shared';
 import { Switch } from '@base-ui/react/switch';
 import { useGameStore } from '../../store/gameStore';
 import { useTasksStore } from '../../store/tasksStore';
-import { TaskState } from '../../types';
+import { TaskState } from '../../store/tasksStore';
 
 export const TasksFilter = () => {
   const { showRejectedTasks } = useGameStore((state) => state.filters);

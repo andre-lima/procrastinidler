@@ -1,6 +1,10 @@
 import { createGameStore } from '../reactive-store/createGameStore';
-import type { Boss } from '../types/boss';
 import { config } from '../game/config';
+
+export interface Boss {
+  assignedTo: string[];
+}
+
 import { localStorageSaveSystem } from './saveSystem';
 
 interface BossStoreState {

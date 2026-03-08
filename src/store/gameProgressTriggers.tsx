@@ -1,4 +1,4 @@
-import { Category, TaskState } from '../types';
+import { Category, TaskState } from './tasksStore';
 import { useAssistantStore } from './assistantStore';
 import { useBossStore } from './bossStore';
 import { useGameStore } from './gameStore';

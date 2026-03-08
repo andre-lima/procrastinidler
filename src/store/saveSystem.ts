@@ -44,7 +44,9 @@ export const localStorageSaveSystem: SaveSystem & {
 /** Keys used for persistence; must match saveKey in each store when savePrefix is ''. */
 export const STORE_KEYS = [
   'game-store',
-  'upgrades-store',
+  'assistants-upgrades-store',
+  'boss-upgrades-store',
+  'personal-upgrades-store',
   'tasks-store',
   'boss-store',
   'assistant-store',

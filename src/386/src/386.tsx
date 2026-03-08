@@ -89,12 +89,12 @@ const S = {
   col3: { width: "25%", flexShrink: 0 } as CSSProperties,
   col9: { flex: 1 },
 
-  /* ── SIDEBAR ── */
+  /* ── SIDEBAR ── (ref: light gray bg, inset black border, black shadow, black text + red first letter) */
   sidebar: {
-    background: "#000055",
-    border: "1px solid #00aaaa",
+    background: "#d3d3d3",
     marginRight: "16px",
     padding: "4px 0",
+    boxShadow: "4px 4px 0 #000000, inset 0 0 0 3px #000000",
   },
   sidebarItemActive: {
     background: "#00aaaa",
@@ -105,12 +105,15 @@ const S = {
     fontSize: "13px",
   },
   sidebarItem: {
-    color: "#55ffff",
+    color: "#000000",
     padding: "2px 12px",
     display: "block",
     cursor: "pointer",
     fontSize: "13px",
     textDecoration: "none",
+  },
+  sidebarItemFirstLetter: {
+    color: "#ff0000",
   },
 
   /* ── SECTION HEADER ── */
@@ -726,7 +729,8 @@ export default function ExampleApp() {
             <div style={S.sidebar}>
               {SIDEBAR_ITEMS.map((item, i) => (
                 <span key={item} style={i === 0 ? S.sidebarItemActive : S.sidebarItem}>
-                  {item}
+                  <span style={S.sidebarItemFirstLetter}>{item.slice(0, 1)}</span>
+                  {item.slice(1)}
                 </span>
               ))}
             </div>

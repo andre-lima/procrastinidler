@@ -2,7 +2,7 @@ import { Box, Flex, Heading, ScrollArea, Text } from '../shared';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
-import type { TasksState } from '../../types';
+import type { TasksState } from '../../store/tasksStore';
 import { useGameStore } from '../../store/gameStore';
 import { config } from '../../game/config';
 import { humanNumber } from '../../helpers/human-number';
