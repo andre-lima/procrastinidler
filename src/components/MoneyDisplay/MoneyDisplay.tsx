@@ -1,5 +1,4 @@
-import { Badge, Flex, Text } from '@radix-ui/themes';
-import { LuCoins } from 'react-icons/lu';
+import { Flex, Text } from '../shared';
 import { useEffect, useState } from 'react';
 import './styles.scss';
 import { useRef } from 'react';
@@ -30,7 +29,7 @@ export const MoneyDisplay = () => {
 
   useEffect(() => {
     setShaking(true);
-    const timeout = setTimeout(() => setShaking(false), 400); // match CSS duration
+    const timeout = setTimeout(() => setShaking(false), 400);
 
     if (sfxOn) {
       audio.current?.play().catch((err) => {
@@ -42,26 +41,25 @@ export const MoneyDisplay = () => {
   }, [money]);
 
   return (
-    <Flex gap="3" align="end">
-      <Text size="2" color="gray">
+    <Flex gap={3} align="end">
+      <Text size="2" style={{ color: 'var(--color-fg-dim)' }}>
         +{moneyPerTask}$ per task
       </Text>
-      <Badge
+      <span
         className={shaking ? 'shake' : ''}
-        variant="solid"
         style={{
           padding: '2px 22px',
           fontSize: '1.6em',
-          border: '2px solid var(--yellow-10)',
+          border: '2px solid var(--color-warning)',
+          background: 'var(--color-bg-dark)',
+          color: 'var(--color-fg-text)',
+          fontFamily: 'var(--font-mono)',
         }}
-        color="yellow"
-        size="3"
       >
-        <Flex align="center" gap="2">
-          <LuCoins />
+        <Flex align="center" gap={2}>
           <Text>{humanNumber(money)}$</Text>
         </Flex>
-      </Badge>
+      </span>
     </Flex>
   );
 };

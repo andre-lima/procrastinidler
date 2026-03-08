@@ -23,5 +23,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "setup-vitest.ts"]
+  "include": ["src", "setup-vitest.ts"],
+  "exclude": ["src/reactive-store/examples", "src/reactive-store/game-setup.ts"]
 }

@@ -1,5 +1,4 @@
-import { Button, Flex, Grid } from '@radix-ui/themes';
-import { LuPlus } from 'react-icons/lu';
+import { Flex, Grid } from '../shared';
 import { TaskState } from '../../types';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
@@ -32,20 +31,16 @@ export const NavBar = () => {
   };
 
   return (
-    <Flex px="4" py="3" width="100%" height={'70px'}>
-      <Grid columns="1fr auto" gap="3" rows="1" width="100%" align="center">
-        <Flex gap="2" align="center">
-          <Button
-            style={{
-              backgroundColor: 'var(--gray-12)',
-              color: 'var(--gray-1)',
-            }}
-            variant="surface"
-            size="3"
+    <Flex style={{ padding: 'var(--space-4) var(--space-3)', height: '70px' }}>
+      <Grid columns="1fr auto" gap={3} rows="1" style={{ width: '100%' }} align="center">
+        <Flex gap={2} align="center">
+          <button
+            type="button"
+            className="btn btnPrimary"
             onClick={createNewTask}
           >
-            <LuPlus /> {t('menus.addTask')}
-          </Button>
+            {t('menus.addTask')}
+          </button>
 
           <NavDialogButton id="personal">
             <PurchaseUpgrades id="personal" />
@@ -66,7 +61,7 @@ export const NavBar = () => {
 
           {boss && <Boss />}
         </Flex>
-        <Flex justify="end" align="center" width="auto">
+        <Flex justify="end" align="center">
           <MoneyDisplay />
         </Flex>
       </Grid>

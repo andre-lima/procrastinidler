@@ -1,49 +1,52 @@
-import { create } from 'zustand';
-import { type BossState } from '../types';
-import { persist } from 'zustand/middleware';
+import { createGameStore } from '../reactive-store/createGameStore';
+import type { Boss } from '../types/boss';
 import { config } from '../game/config';
+import { localStorageSaveSystem } from './saveSystem';
 
-export const useBossStore = create<BossState>()(
-  persist(
-    (set, get) => ({
-      boss: null,
-      bossInterval: config.tickLength,
-      assignTaskToBoss: (todoId: string) => {
-        const boss = get().boss;
+interface BossStoreState {
+  boss: Boss | null;
+  bossInterval: number;
+}
 
-        boss?.assignedTo.push(todoId);
+const initialState: BossStoreState = {
+  boss: null,
+  bossInterval: config.tickLength,
+};
 
-        set(() => ({
-          boss,
-        }));
-      },
-      addBoss: () => {
-        const boss = get().boss;
-
-        if (boss) {
-          return;
-        }
-
-        set(() => ({
-          boss: {
-            assignedTo: [],
-          },
-        }));
-      },
-      unassignTask: (todoId: string) => {
-        const boss = get().boss;
-
-        if (boss) {
-          boss.assignedTo = boss?.assignedTo.filter(
-            (taskId) => taskId !== todoId
-          );
-        }
-
-        set(() => ({
-          boss,
-        }));
-      },
-    }),
-    { name: 'boss-store' }
-  )
+export const useBossStore = createGameStore<
+  BossStoreState,
+  {
+    assignTaskToBoss: (todoId: string) => void;
+    addBoss: () => void;
+    unassignTask: (todoId: string) => void;
+  }
+>(
+  {
+    saveKey: 'boss-store',
+    initialState,
+    savePrefix: '',
+    saveSystem: localStorageSaveSystem,
+  },
+  (set, get) => ({
+    assignTaskToBoss: (todoId: string) => {
+      const boss = get().boss;
+      boss?.assignedTo.push(todoId);
+      set({ boss: boss ?? null });
+    },
+    addBoss: () => {
+      if (get().boss) return;
+      set({
+        boss: {
+          assignedTo: [],
+        },
+      });
+    },
+    unassignTask: (todoId: string) => {
+      const boss = get().boss;
+      if (boss) {
+        boss.assignedTo = boss.assignedTo.filter((taskId) => taskId !== todoId);
+      }
+      set({ boss: boss ?? null });
+    },
+  })
 );

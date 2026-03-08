@@ -1,6 +1,5 @@
-import '@radix-ui/themes/styles.css';
 import './App.scss';
-import { Box, Button, Flex, Grid, Heading, Link, Theme, Text } from '@radix-ui/themes';
+import { Box, Flex, Grid, Heading, Text } from './components/shared';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './types';
 import { TasksList } from './components/TasksList/TasksList';
@@ -18,37 +17,33 @@ function App() {
   const completedTasks = useTasksStore(
     useShallow((state) => Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Completed)),
   );
-  const isDarkMode = useGameStore((state) => state.filters.isDarkMode);
 
   return (
-    <Theme appearance={isDarkMode ? 'dark' : 'light'} accentColor="violet">
+    <div className="page">
       <Grid
-        gap="1"
+        gap={1}
         columns="100%"
         rows="auto auto 1fr auto"
         areas="'header' 'filters' 'tasks' 'footer'"
         align="center"
         style={{ height: '100vh', overflow: 'hidden' }}
       >
-        <Box gridArea="header" width="100%">
+        <Box gridArea="header">
           <NavBar />
         </Box>
 
-        <Flex gridArea="filters" align="center" justify="between" width="100%">
-          {/* <TasksFilter /> */}
-          <div></div>
+        <Flex gridArea="filters" align="center" justify="between">
+          <div />
           <Settings />
         </Flex>
 
         <Grid
-          gap="4"
-          p="4"
-          width="auto"
+          gap={4}
           gridArea="tasks"
-          height={'100%'}
           style={{
             gridAutoColumns: '1fr',
             gridAutoFlow: 'column',
+            height: '100%',
           }}
         >
           <TasksList
@@ -84,20 +79,20 @@ function App() {
         </Grid>
 
         <Box gridArea="footer">
-          <Flex align="center" justify="between" width="auto" px="4" pb="4">
+          <Flex align="center" justify="between" style={{ padding: 'var(--space-4)' }}>
             <Heading size="4" as="h1">
               {completedTasks.length > 30 && (
                 <div>
-                  <small style={{ color: '#565656' }}>Play my other incremental game: </small>
-                  <Button className={'ntabd_button'}>
-                    <Link
-                      underline={'none'}
-                      target={'_blank'}
-                      href={'https://andre-lima.itch.io/now-thats-a-big-dragon'}
-                    >
-                      <Text style={{ color: 'white' }}> Now THAT's a Big Dragon! </Text>
-                    </Link>
-                  </Button>
+                  <small style={{ color: 'var(--color-fg-dim)' }}>Play my other incremental game: </small>
+                  <a
+                    className="btn btnPrimary ntabd_button"
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://andre-lima.itch.io/now-thats-a-big-dragon"
+                    style={{ color: 'var(--color-fg-text)', textDecoration: 'none' }}
+                  >
+                    <Text> Now THAT's a Big Dragon! </Text>
+                  </a>
                 </div>
               )}
             </Heading>
@@ -107,7 +102,7 @@ function App() {
           </Flex>
         </Box>
       </Grid>
-    </Theme>
+    </div>
   );
 }
 

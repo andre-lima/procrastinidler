@@ -1,0 +1,741 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   app.module.css
+   All component styles — references only var(--color-*), var(--space-*),
+   var(--component-*), var(--text-*), var(--font-*) tokens.
+   No raw hex values or magic numbers.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Page ─────────────────────────────────────────────────────── */
+.page {
+  background:  var(--color-bg-page);
+  color:       var(--color-fg-text);
+  font-family: var(--font-mono);
+  font-size:   var(--text-md);
+  min-height:  100vh;
+}
+
+/* ── Navbar ───────────────────────────────────────────────────── */
+.navbar {
+  background:    var(--color-nav-bg);
+  border-bottom: 1px solid var(--color-nav-border);
+  display:       flex;
+  align-items:   stretch;
+  height:        var(--layout-navbar-height);
+  padding:       0;
+}
+
+.navBrand {
+  color:           var(--color-fg-brand);
+  padding:         var(--component-nav-brand-padding);
+  font-weight:     var(--font-weight-bold);
+  text-decoration: none;
+  display:         flex;
+  align-items:     center;
+  border-right:    1px solid var(--color-nav-border);
+  font-size:       var(--text-base);
+  font-family:     var(--font-mono);
+}
+
+.navItem {
+  color:       var(--color-nav-text);
+  padding:     var(--component-nav-item-padding);
+  display:     flex;
+  align-items: center;
+  font-size:   var(--text-base);
+  cursor:      pointer;
+  border:      none;
+  background:  transparent;
+  font-family: var(--font-mono);
+}
+
+.navItem:hover {
+  background: color-mix(in srgb, var(--color-nav-active-bg) 15%, transparent);
+}
+
+.navItemActive {
+  background:  var(--color-nav-active-bg);
+  color:       var(--color-nav-active-text);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ── Breadcrumb ───────────────────────────────────────────────── */
+.breadcrumb {
+  background:    var(--color-nav-bg);
+  padding:       2px 16px;
+  font-size:     var(--text-sm);
+  color:         var(--color-fg-dim);
+  border-bottom: 1px solid var(--color-border-dim);
+}
+
+/* ── Layout ───────────────────────────────────────────────────── */
+.container {
+  max-width: var(--layout-container-max-width);
+  margin:    0 auto;
+  padding:   var(--layout-container-padding);
+}
+
+.row {
+  display: flex;
+  gap:     0;
+}
+
+.col3 {
+  width:      var(--layout-col3-width);
+  flex-shrink: 0;
+}
+
+.col9 {
+  flex: 1;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────── */
+.sidebar {
+  background:   var(--color-bg-dark);
+  border:       1px solid var(--color-border);
+  margin-right: var(--component-sidebar-margin-right);
+  padding:      4px 0;
+}
+
+.sidebarItem {
+  color:           var(--color-fg-link);
+  padding:         var(--component-sidebar-item-padding);
+  display:         block;
+  cursor:          pointer;
+  font-size:       var(--text-base);
+  text-decoration: none;
+}
+
+.sidebarItem:hover {
+  color: var(--color-accent-hi);
+}
+
+.sidebarItemActive {
+  background: var(--color-accent);
+  color:      var(--color-fg-text);
+  padding:    var(--component-sidebar-item-padding);
+  display:    block;
+  cursor:     pointer;
+  font-size:  var(--text-base);
+}
+
+/* ── Section header ───────────────────────────────────────────── */
+.sectionHeader {
+  background:     var(--color-accent);
+  color:          var(--color-fg-text);
+  padding:        var(--component-section-header-padding);
+  font-size:      var(--text-base);
+  font-weight:    var(--font-weight-bold);
+  margin-bottom:  0;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ── Panel ────────────────────────────────────────────────────── */
+.panel {
+  border:        1px solid var(--color-border);
+  margin-bottom: var(--component-panel-margin-bottom);
+  background:    var(--color-bg-panel);
+}
+
+.panelInner {
+  padding: var(--component-panel-padding);
+}
+
+.infoBox {
+  border:        1px solid var(--color-accent-hi);
+  padding:       8px 12px;
+  margin-bottom: 10px;
+  color:         var(--color-accent-hi);
+  font-size:     var(--text-base);
+  background:    var(--color-bg-dark);
+}
+
+/* ── Typography ───────────────────────────────────────────────── */
+.label {
+  color:         var(--color-fg-dim);
+  font-size:     var(--text-sm);
+  margin-bottom: 3px;
+  display:       block;
+}
+
+.bodyText {
+  color:       var(--color-fg-text);
+  font-size:   var(--text-base);
+  line-height: var(--leading-loose);
+}
+
+.finePrint {
+  color:      var(--color-fg-dim);
+  font-size:  var(--text-sm);
+  font-style: italic;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────── */
+.btn {
+  border-radius:   0;
+  padding:         var(--component-btn-padding-y) var(--component-btn-padding-x);
+  font-family:     var(--font-mono);
+  font-size:       var(--text-base);
+  cursor:          pointer;
+  margin-right:    var(--component-btn-margin-right);
+  margin-bottom:   var(--component-btn-margin-bottom);
+  display:         inline-block;
+  box-shadow:      var(--component-btn-shadow-size) var(--component-btn-shadow-size) 0 var(--color-btn-shadow);
+  outline:         none;
+  transition:      box-shadow 0.06s, transform 0.06s;
+}
+
+.btn:focus,
+.btn:focus-visible {
+  outline: none;
+}
+
+.btn:active {
+  transform:  translate(
+    var(--component-btn-translate-pressed),
+    var(--component-btn-translate-pressed)
+  );
+  box-shadow: var(--component-btn-shadow-size-pressed) var(--component-btn-shadow-size-pressed) 0 var(--color-btn-shadow);
+}
+
+/* Primary — filled */
+.btnPrimary {
+  border:      1px solid var(--color-btn-primary-border);
+  background:  var(--color-btn-primary-bg);
+  color:       var(--color-btn-primary-fg);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Secondary — outlined */
+.btnSecondary {
+  border:     1px solid var(--color-btn-secondary-border);
+  background: transparent;
+  color:      var(--color-btn-secondary-fg);
+}
+
+/* Size variants */
+.btnLg {
+  padding:   var(--component-btn-padding-y-lg) var(--component-btn-padding-x-lg);
+  font-size: var(--text-lg);
+}
+
+.btnSm {
+  padding:   var(--component-btn-padding-y-sm) var(--component-btn-padding-x-sm);
+  font-size: var(--text-xs);
+}
+
+/* Semantic color overrides — used via style prop for dynamic color */
+.btnSuccess  { --color-btn-primary-bg: var(--color-success);  --color-btn-primary-border: var(--color-success); }
+.btnWarning  { --color-btn-primary-bg: var(--color-warning);  --color-btn-primary-border: var(--color-warning); }
+.btnDanger   { --color-btn-primary-bg: var(--color-danger);   --color-btn-primary-border: var(--color-danger);  }
+.btnInfo     { --color-btn-primary-bg: var(--color-info);     --color-btn-primary-border: var(--color-info);    }
+
+/* ── Input ────────────────────────────────────────────────────── */
+.input {
+  background:    var(--color-bg-black);
+  border:        1px solid var(--color-border);
+  color:         var(--color-fg-link);
+  font-family:   var(--font-mono);
+  font-size:     var(--text-base);
+  padding:       var(--component-input-padding);
+  width:         100%;
+  outline:       none;
+  margin-bottom: var(--component-input-margin-bottom);
+}
+
+/* ── Checkbox ─────────────────────────────────────────────────── */
+.checkRoot {
+  width:           var(--component-check-size);
+  height:          var(--component-check-size);
+  border:          1px solid var(--color-border);
+  background:      var(--color-bg-black);
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  flex-shrink:     0;
+  vertical-align:  middle;
+  margin-right:    6px;
+}
+
+.checkIndicator {
+  color:       var(--color-fg-link);
+  font-size:   var(--text-xs);
+  line-height: 1;
+}
+
+.checkLabel {
+  display:     flex;
+  align-items: center;
+  margin-bottom: 6px;
+  cursor:      pointer;
+  font-size:   var(--text-base);
+  color:       var(--color-fg-text);
+}
+
+/* ── Switch ───────────────────────────────────────────────────── */
+.switchRoot {
+  display:        inline-flex;
+  border:         1px solid var(--color-border);
+  background:     var(--color-bg-black);
+  cursor:         pointer;
+  padding:        0;
+  width:          var(--component-switch-width);
+  height:         var(--component-switch-height);
+  position:       relative;
+  vertical-align: middle;
+  margin-right:   8px;
+}
+
+.switchRootOn {
+  border-color: var(--color-accent-hi);
+}
+
+.switchThumb {
+  display:     block;
+  width:       var(--component-switch-thumb-width);
+  height:      var(--component-switch-thumb-height);
+  background:  var(--color-border-dim);
+  margin:      1px;
+  transition:  transform 0.15s, background 0.15s;
+  font-size:   var(--text-xxs);
+  color:       var(--color-bg-black);
+  line-height: var(--component-switch-thumb-height);
+  text-align:  center;
+  font-family: var(--font-mono);
+}
+
+.switchThumbOn {
+  transform:  translateX(var(--component-switch-thumb-travel));
+  background: var(--color-accent-hi);
+}
+
+.switchLabel {
+  display:     flex;
+  align-items: center;
+  cursor:      pointer;
+  font-size:   var(--text-base);
+  color:       var(--color-fg-text);
+}
+
+/* ── Slider ───────────────────────────────────────────────────── */
+.sliderRoot {
+  width:       100%;
+  position:    relative;
+  height:      var(--component-slider-height);
+  display:     flex;
+  align-items: center;
+}
+
+.sliderControl {
+  width:       100%;
+  position:    relative;
+  height:      var(--component-slider-height);
+  display:     flex;
+  align-items: center;
+}
+
+.sliderTrack {
+  width:     100%;
+  height:    var(--component-slider-track-height);
+  background: var(--color-bg-black);
+  border:    1px solid var(--color-border);
+  position:  relative;
+}
+
+.sliderFill {
+  height:     100%;
+  background: var(--color-accent);
+}
+
+.sliderThumb {
+  width:      var(--component-slider-thumb-width);
+  height:     var(--component-slider-thumb-height);
+  background: var(--color-accent-hi);
+  border:     none;
+  position:   absolute;
+  top:        50%;
+  transform:  translate(-50%, -50%);
+  cursor:     pointer;
+  outline:    none;
+}
+
+/* ── Progress ─────────────────────────────────────────────────── */
+.progressTrack {
+  background: var(--color-bg-black);
+  border:     1px solid var(--color-border);
+  height:     var(--component-progress-height);
+  width:      100%;
+}
+
+.progressFill {
+  height:     100%;
+  background: var(--color-accent);
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────── */
+.tabList {
+  display:       flex;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 0;
+}
+
+.tab {
+  padding:       var(--component-tab-padding);
+  border:        1px solid transparent;
+  border-bottom: none;
+  background:    var(--color-bg-dark);
+  color:         var(--color-fg-dim);
+  font-family:   var(--font-mono);
+  font-size:     var(--text-base);
+  cursor:        pointer;
+  margin-bottom: -1px;
+  margin-right:  var(--component-tab-margin-right);
+  outline:       none;
+}
+
+.tabActive {
+  padding:       var(--component-tab-padding);
+  border:        1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-bg-panel);
+  background:    var(--color-bg-panel);
+  color:         var(--color-fg-link);
+  font-family:   var(--font-mono);
+  font-size:     var(--text-base);
+  cursor:        pointer;
+  margin-bottom: -1px;
+  margin-right:  var(--component-tab-margin-right);
+  outline:       none;
+  font-weight:   var(--font-weight-bold);
+}
+
+.tabPanel {
+  border:     1px solid var(--color-border);
+  border-top: none;
+  padding:    var(--component-panel-padding);
+  background: var(--color-bg-panel);
+  color:      var(--color-fg-text);
+  font-size:  var(--text-base);
+}
+
+/* ── Accordion ────────────────────────────────────────────────── */
+.accItem {
+  border:        1px solid var(--color-border);
+  margin-bottom: -1px;
+}
+
+.accTrigger {
+  width:           100%;
+  background:      var(--color-bg-dark);
+  color:           var(--color-fg-link);
+  border:          none;
+  border-bottom:   1px solid var(--color-border);
+  padding:         var(--component-acc-trigger-padding);
+  text-align:      left;
+  font-family:     var(--font-mono);
+  font-size:       var(--text-base);
+  cursor:          pointer;
+  display:         flex;
+  justify-content: space-between;
+}
+
+.accArrow {
+  color: var(--color-fg-dim);
+}
+
+.accPanel {
+  padding:       var(--component-acc-panel-padding);
+  color:         var(--color-fg-text);
+  font-size:     var(--text-base);
+  border-bottom: 1px solid var(--color-border);
+  background:    var(--color-bg-panel);
+}
+
+/* ── Select ───────────────────────────────────────────────────── */
+.selectTrigger {
+  background:      var(--color-bg-black);
+  border:          1px solid var(--color-border);
+  color:           var(--color-fg-link);
+  font-family:     var(--font-mono);
+  font-size:       var(--text-base);
+  padding:         var(--component-input-padding);
+  cursor:          pointer;
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  width:           100%;
+  outline:         none;
+}
+
+.selectPopup {
+  background: var(--color-bg-dark);
+  border:     1px solid var(--color-border);
+  z-index:    100;
+  min-width:  160px;
+}
+
+.selectOption {
+  padding:     var(--component-sidebar-item-padding);
+  color:       var(--color-fg-link);
+  font-size:   var(--text-base);
+  cursor:      pointer;
+  font-family: var(--font-mono);
+}
+
+.selectOption:hover {
+  background: var(--color-accent);
+  color:      var(--color-fg-text);
+}
+
+/* ── Tooltip ──────────────────────────────────────────────────── */
+.tooltipPopup {
+  background:  var(--color-accent);
+  color:       var(--color-bg-black);
+  padding:     3px 8px;
+  font-size:   var(--text-sm);
+  font-family: var(--font-mono);
+  border:      1px solid var(--color-accent-hi);
+}
+
+/* ── Dialog ───────────────────────────────────────────────────── */
+.dialogBackdrop {
+  position:        fixed;
+  inset:           0;
+  background:      var(--color-bg-overlay);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  z-index:         200;
+}
+
+.dialogPopup {
+  background: var(--color-bg-panel);
+  border:     2px solid var(--color-border);
+  width:      var(--component-dialog-width);
+  max-width:  90vw;
+  box-shadow: 4px 4px 0 var(--color-bg-black);
+}
+
+.dialogTitleBar {
+  background:      var(--color-accent);
+  color:           var(--color-fg-text);
+  padding:         var(--component-dialog-title-padding);
+  font-weight:     var(--font-weight-bold);
+  font-size:       var(--text-base);
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  font-family:     var(--font-mono);
+}
+
+.dialogCloseBtn {
+  background:    var(--color-bg-panel);
+  border:        1px solid var(--color-border-dim);
+  border-radius: 0;
+  color:         var(--color-fg-text);
+  cursor:        pointer;
+  padding:       0 6px;
+  font-family:   var(--font-mono);
+}
+
+.dialogBody {
+  padding:     var(--component-dialog-body-padding);
+  color:       var(--color-fg-text);
+  font-size:   var(--text-base);
+  line-height: var(--leading-loose);
+}
+
+.dialogTitle {
+  color:         var(--color-fg-link);
+  font-size:     var(--text-md);
+  margin-bottom: 8px;
+  font-weight:   var(--font-weight-bold);
+}
+
+.dialogDescription {
+  color:         var(--color-fg-dim);
+  font-size:     var(--text-sm);
+  margin-bottom: 12px;
+}
+
+.dialogFooter {
+  padding:         var(--component-dialog-footer-padding);
+  border-top:      1px solid var(--color-border);
+  display:         flex;
+  justify-content: flex-end;
+  gap:             8px;
+}
+
+/* ── Menu ─────────────────────────────────────────────────────── */
+.menuPopup {
+  background: var(--color-bg-dark);
+  border:     1px solid var(--color-border);
+  z-index:    100;
+  min-width:  140px;
+  box-shadow: 2px 2px 0 var(--color-bg-black);
+}
+
+.menuItem {
+  display:     block;
+  width:       100%;
+  padding:     3px 12px;
+  color:       var(--color-fg-link);
+  font-family: var(--font-mono);
+  font-size:   var(--text-base);
+  cursor:      pointer;
+  background:  transparent;
+  border:      none;
+  text-align:  left;
+  outline:     none;
+}
+
+.menuItem:hover {
+  background: var(--color-accent);
+  color:      var(--color-fg-text);
+}
+
+.menuItemDanger {
+  color: var(--color-danger);
+}
+
+.menuSep {
+  border-top: 1px solid var(--color-border);
+  margin:     3px 0;
+}
+
+/* ── Table ────────────────────────────────────────────────────── */
+.table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       var(--text-base);
+}
+
+.th {
+  background:     var(--color-accent);
+  color:          var(--color-fg-text);
+  padding:        var(--component-table-cell-padding);
+  text-align:     left;
+  font-weight:    var(--font-weight-normal);
+  letter-spacing: var(--tracking-wide);
+  border:         1px solid var(--color-accent-hi);
+}
+
+.td {
+  padding: var(--component-table-cell-padding);
+  border:  1px solid var(--color-bg-dark);
+  color:   var(--color-fg-text);
+}
+
+.trOdd      { background: var(--color-bg-panel); }
+.trEven     { background: var(--color-bg-dark);  }
+.trSelected { background: var(--color-accent); color: var(--color-bg-black); }
+
+.trOdd:hover,
+.trEven:hover {
+  background: color-mix(in srgb, var(--color-accent) 20%, var(--color-bg-panel));
+  cursor: pointer;
+}
+
+.trSelected td,
+.trSelected:hover {
+  color: var(--color-bg-black);
+}
+
+/* ── Number field ─────────────────────────────────────────────── */
+.numberRoot {
+  display: flex;
+  border:  1px solid var(--color-border);
+}
+
+.numberBtn {
+  background:   var(--color-bg-dark);
+  color:        var(--color-fg-link);
+  border:       none;
+  border-right: 1px solid var(--color-border);
+  padding:      2px 8px;
+  cursor:       pointer;
+  font-family:  var(--font-mono);
+  font-size:    var(--text-md);
+}
+
+.numberBtnRight {
+  border-left:  1px solid var(--color-border);
+  border-right: none;
+}
+
+.numberInput {
+  background:  var(--color-bg-black);
+  color:       var(--color-fg-link);
+  border:      none;
+  font-family: var(--font-mono);
+  font-size:   var(--text-base);
+  padding:     2px 8px;
+  width:       var(--component-number-input-width);
+  text-align:  center;
+  outline:     none;
+}
+
+/* ── Radio ────────────────────────────────────────────────────── */
+.radioRow {
+  display:       flex;
+  align-items:   center;
+  margin-bottom: 5px;
+  cursor:        pointer;
+}
+
+.radioCheck {
+  color:        var(--color-fg-dim);
+  margin-right: 6px;
+  font-size:    var(--text-base);
+  width:        1ch;
+}
+
+.radioCheckActive {
+  color: var(--color-fg-link);
+}
+
+.radioLabel {
+  color:     var(--color-fg-text);
+  font-size: var(--text-base);
+}
+
+.radioLabelActive {
+  color: var(--color-fg-link);
+}
+
+/* ── Separator ────────────────────────────────────────────────── */
+.separator {
+  border:     none;
+  border-top: 1px solid var(--color-border);
+  margin:     8px 0;
+}
+
+/* ── Code block ───────────────────────────────────────────────── */
+.codeBlock {
+  background:  var(--color-bg-black);
+  border:      1px solid var(--color-border);
+  color:       var(--color-fg-link);
+  padding:     10px 12px;
+  font-size:   var(--text-sm);
+  font-family: var(--font-code);
+  overflow-x:  auto;
+  line-height: var(--leading-base);
+}
+
+/* ── Heading scale (typography demo) ─────────────────────────── */
+.headingDemo {
+  background:     var(--color-accent);
+  color:          var(--color-fg-text);
+  padding:        2px 8px;
+  margin-bottom:  5px;
+  font-weight:    var(--font-weight-bold);
+}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+.footer {
+  background:    var(--color-nav-bg);
+  border-top:    1px solid var(--color-border-dim);
+  padding:       4px 16px;
+  font-size:     var(--text-xxs);
+  color:         var(--color-border-dim);
+  text-align:    center;
+}

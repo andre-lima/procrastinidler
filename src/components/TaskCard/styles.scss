@@ -7,15 +7,15 @@
   }
 
   &.special {
-    background-color: var(--blue-2);
+    background-color: var(--color-bg-dark);
   }
 
   .assignedAssistantImage {
     border-radius: 50%;
     width: 40px;
     overflow: hidden;
-    border: 3px solid white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--color-fg-text);
+    box-shadow: 0 0 10px var(--color-bg-overlay);
   }
 
   &.rejected .taskTitle {

@@ -1,15 +1,13 @@
-import { Flex, Separator, Switch, Text } from '@radix-ui/themes';
-import { TbFilterCog } from 'react-icons/tb';
+import { Flex, Text } from '../shared';
+import { Switch } from '@base-ui/react/switch';
 import { useGameStore } from '../../store/gameStore';
 import { useTasksStore } from '../../store/tasksStore';
 import { TaskState } from '../../types';
 
 export const TasksFilter = () => {
-  const { /*newerTasksFirst,*/ showRejectedTasks } = useGameStore(
-    (state) => state.filters
-  );
+  const { showRejectedTasks } = useGameStore((state) => state.filters);
 
-  const rejetedTasksLength = useTasksStore(
+  const rejectedTasksLength = useTasksStore(
     (state) =>
       state.getTasksArray().filter((task) => task?.state === TaskState.Rejected)
         .length
@@ -17,46 +15,28 @@ export const TasksFilter = () => {
 
   const { unlockedDeadline } = useGameStore((state) => state.gameProgress);
 
-  // const onChangeDateFilter = (value: boolean) => {
-  //   useGameStore.getState().setTaskSorting(value);
-  // };
-
   const onChangeExpiredFilter = (value: boolean) => {
     useGameStore.getState().setShowingRejected(value);
   };
 
   return (
-    <Flex px="4" align="center" gap="4">
+    <Flex align="center" gap={4} style={{ paddingLeft: 'var(--space-4)' }}>
       {unlockedDeadline && (
         <>
-          <TbFilterCog color="gray" size="20px" />
-          {/* <Separator orientation="vertical" />
-          <Text as="label" size="1">
-            <Flex gap="2">
-              Show newer first
-              <Switch
-                checked={newerTasksFirst}
-                size="1"
-                onCheckedChange={(value) => onChangeDateFilter(value)}
-                variant="surface"
-              />
-            </Flex>
-          </Text> */}
-          <Separator orientation="vertical" />
-          <>
-            <Text as="label" size="1">
-              <Flex gap="2">
-                Show expired ({rejetedTasksLength})
-                <Switch
-                  checked={showRejectedTasks}
-                  size="1"
-                  onCheckedChange={(value) => onChangeExpiredFilter(value)}
-                  variant="surface"
-                />
-              </Flex>
+          <div className="separator" style={{ width: 1, height: '1em', margin: '0 var(--space-2)', borderLeft: '1px solid var(--color-border)' }} />
+          <label className="switchLabel">
+            <Switch.Root
+              checked={showRejectedTasks}
+              onCheckedChange={onChangeExpiredFilter}
+              className={showRejectedTasks ? 'switchRoot switchRootOn' : 'switchRoot'}
+            >
+              <Switch.Thumb className={showRejectedTasks ? 'switchThumb switchThumbOn' : 'switchThumb'} />
+            </Switch.Root>
+            <Text as="span" size="1">
+              Show expired ({rejectedTasksLength})
             </Text>
-            <Separator orientation="vertical" />
-          </>
+          </label>
+          <div className="separator" style={{ width: 1, height: '1em', margin: '0 var(--space-2)', borderLeft: '1px solid var(--color-border)' }} />
         </>
       )}
     </Flex>

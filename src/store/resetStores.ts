@@ -1,15 +1,7 @@
-import { useGameStore } from './gameStore';
-import { useTasksStore } from './tasksStore';
-import { useUpgradesStore } from './upgradesStore';
-import { useBossStore } from './bossStore';
-import { useAssistantStore } from './assistantStore';
+import { localStorageSaveSystem } from './saveSystem';
 
 export const resetAllStores = () => {
-  useGameStore.persist.clearStorage();
-  useTasksStore.persist.clearStorage();
-  useUpgradesStore.persist.clearStorage();
-  useBossStore.persist.clearStorage();
-  useAssistantStore.persist.clearStorage();
+  localStorageSaveSystem.clearAll();
   setTimeout(() => {
     window.location.reload();
   }, 0);

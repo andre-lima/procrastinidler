@@ -1,103 +1,72 @@
-import { Button, Flex, Text } from '@radix-ui/themes';
+import { Flex, Text } from '../shared';
 import { useState } from 'react';
-import { LuMoon, LuSaveOff, LuSun, LuVolume2, LuVolumeX } from 'react-icons/lu';
+import { Switch } from '@base-ui/react/switch';
 import { resetAllStores } from '../../store/resetStores';
 import { useGameStore } from '../../store/gameStore';
 
 export const Settings = () => {
   const [confirmClear, setConfirmClear] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [sfxOn, setSfxOn] = useState(false);
+  const sfxOn = useGameStore((state) => state.filters.sfxOn);
 
   const clearSave = () => {
     resetAllStores();
   };
 
-  const toggleDarkMode = () => {
-    useGameStore.getState().setDarkMode(!isDarkMode);
-    setIsDarkMode(!isDarkMode);
-  };
-
-  const toggleSFX = () => {
-    useGameStore.getState().setSfxOn(!sfxOn);
-    setSfxOn(!sfxOn);
-  };
 
   return (
-    <Flex px="4" gap="2" align="center">
+    <Flex gap={2} align="center" style={{ paddingLeft: 'var(--space-4)' }}>
       {confirmClear && (
         <>
           <Flex direction="column" style={{ position: 'relative' }}>
             <Text>Are you sure you want to clear your save file?</Text>
             <Text
-              style={{ position: 'absolute', bottom: '-12px' }}
-              className="subWarning"
-              size="1"
-              color="crimson"
+              style={{
+                position: 'absolute',
+                bottom: '-12px',
+                color: 'var(--color-danger)',
+                fontSize: 'var(--text-xs)',
+              }}
             >
               This action cannot be reverted.
             </Text>
           </Flex>
-          <Button
-            color="crimson"
-            variant="surface"
-            size="1"
+          <button
+            type="button"
+            className="btn btnPrimary btnDanger"
             onClick={clearSave}
           >
             Yes
-          </Button>
-          <Button
-            variant="surface"
-            size="1"
+          </button>
+          <button
+            type="button"
+            className="btn btnSecondary"
             onClick={() => setConfirmClear(false)}
           >
             No
-          </Button>
+          </button>
         </>
       )}
-      <LuSaveOff
-        cursor="pointer"
-        size="24px"
-        color="gray"
-        role="button"
+      <button
+        type="button"
+        className="btn btnSecondary btnSm"
         onClick={() => setConfirmClear(true)}
-      />
+        style={{ marginBottom: 0 }}
+      >
+        Clear save
+      </button>
 
-      {sfxOn ? (
-        <LuVolume2
-          role="button"
-          size="22px"
-          color="gray"
-          cursor="pointer"
-          onClick={toggleSFX}
-        />
-      ) : (
-        <LuVolumeX
-          role="button"
-          size="22px"
-          color="gray"
-          cursor="pointer"
-          onClick={toggleSFX}
-        />
-      )}
-
-      {isDarkMode ? (
-        <LuSun
-          role="button"
-          size="22px"
-          color="gray"
-          cursor="pointer"
-          onClick={toggleDarkMode}
-        />
-      ) : (
-        <LuMoon
-          role="button"
-          size="22px"
-          color="gray"
-          cursor="pointer"
-          onClick={toggleDarkMode}
-        />
-      )}
+      <label className="switchLabel">
+        <Switch.Root
+          checked={sfxOn}
+          onCheckedChange={(v) => useGameStore.getState().setSfxOn(v)}
+          className={sfxOn ? 'switchRoot switchRootOn' : 'switchRoot'}
+        >
+          <Switch.Thumb className={sfxOn ? 'switchThumb switchThumbOn' : 'switchThumb'}>
+            {sfxOn ? 'ON' : 'OFF'}
+          </Switch.Thumb>
+        </Switch.Root>
+        Sound
+      </label>
     </Flex>
   );
 };

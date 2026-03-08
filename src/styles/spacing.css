@@ -1,0 +1,99 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   spacing.css
+   Size, spacing, and layout design tokens.
+
+   Scale uses a 4px base unit — consistent with an 80-column character grid.
+   Components reference var(--space-*) and var(--component-*) only.
+───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Base scale ─────────────────────────────────────────────
+     --space-1 =  4px
+     --space-2 =  8px
+     --space-3 = 12px   etc.
+  ──────────────────────────────────────────────────────────── */
+  --space-px:  1px;
+  --space-0:   0px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+
+  /* ── Layout ─────────────────────────────────────────────────  */
+  --layout-container-max-width: 960px;
+  --layout-container-padding:   12px 16px;
+  --layout-col3-width:          25%;
+  --layout-navbar-height:       28px;
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  --component-btn-padding-y:          5px;
+  --component-btn-padding-x:          18px;
+  --component-btn-padding-y-lg:       8px;
+  --component-btn-padding-x-lg:       28px;
+  --component-btn-padding-y-sm:       2px;
+  --component-btn-padding-x-sm:       10px;
+  --component-btn-margin-right:       var(--space-2);
+  --component-btn-margin-bottom:      var(--space-2);
+  --component-btn-shadow-size:        4px;
+  --component-btn-shadow-size-pressed:1px;
+  --component-btn-translate-pressed:  3px;
+
+  /* ── Inputs ─────────────────────────────────────────────── */
+  --component-input-padding:          3px 8px;
+  --component-input-margin-bottom:    var(--space-2);
+
+  /* ── Panels ─────────────────────────────────────────────── */
+  --component-panel-padding:          10px 12px;
+  --component-panel-margin-bottom:    12px;
+
+  /* ── Navbar ─────────────────────────────────────────────── */
+  --component-nav-item-padding:       4px 10px;
+  --component-nav-brand-padding:      4px 12px;
+
+  /* ── Sidebar ────────────────────────────────────────────── */
+  --component-sidebar-item-padding:   2px 12px;
+  --component-sidebar-margin-right:   var(--space-4);
+
+  /* ── Section header ─────────────────────────────────────── */
+  --component-section-header-padding: 3px 12px;
+
+  /* ── Accordion ──────────────────────────────────────────── */
+  --component-acc-trigger-padding:    4px 12px;
+  --component-acc-panel-padding:      8px 12px;
+
+  /* ── Tabs ───────────────────────────────────────────────── */
+  --component-tab-padding:            3px 14px;
+  --component-tab-margin-right:       2px;
+
+  /* ── Dialog ─────────────────────────────────────────────── */
+  --component-dialog-width:           420px;
+  --component-dialog-title-padding:   3px 10px;
+  --component-dialog-body-padding:    14px 16px;
+  --component-dialog-footer-padding:  8px 16px;
+
+  /* ── Table ──────────────────────────────────────────────── */
+  --component-table-cell-padding:     2px 10px;
+
+  /* ── Checkbox / Switch ──────────────────────────────────── */
+  --component-check-size:             14px;
+  --component-switch-width:           44px;
+  --component-switch-height:          16px;
+  --component-switch-thumb-width:     18px;
+  --component-switch-thumb-height:     14px;
+  --component-switch-thumb-travel:    26px;
+
+  /* ── Slider / Progress ──────────────────────────────────── */
+  --component-slider-height:          20px;
+  --component-slider-track-height:    8px;
+  --component-slider-thumb-width:     12px;
+  --component-slider-thumb-height:    18px;
+  --component-progress-height:        14px;
+
+  /* ── Number field ───────────────────────────────────────── */
+  --component-number-input-width:     60px;
+}

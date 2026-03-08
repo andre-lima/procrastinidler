@@ -1,25 +1,25 @@
-body {
-  .rt-BaseDialogOverlay::before {
-    // background-color: transparent;
-  }
+/* Stacking: app root below so dialog portals (in body) render on top */
+#root {
+  position: relative;
+  z-index: 0;
+}
 
+/* Base UI portal container — must sit above #root and contain the overlay layer */
+body > div[data-base-ui-portal] {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+}
+
+body > div[data-base-ui-portal] > * {
+  pointer-events: auto;
+}
+
+body {
   * {
     user-select: none;
   }
-}
-
-.radix-themes {
-  // --default-font-family: 'Nata Sans', sans-serif;
-  // --heading-font-family: var(--default-font-family);
-  // --code-font-family: var(--default-font-family);
-  // --strong-font-family: var(--default-font-family);
-  // --em-font-family: var(--default-font-family);
-  // --quote-font-family: var(--default-font-family);
-
-  // --font-weight-light: 200;
-  // --font-weight-regular: 300;
-  // --font-weight-medium: 600;
-  // --font-weight-bold: 800;
 }
 
 .ntabd_button {

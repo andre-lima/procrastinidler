@@ -1,15 +1,15 @@
 import React from 'react';
 import Countdown, { type CountdownRenderProps } from 'react-countdown';
 import './styles.scss';
-import { LuClock3 } from 'react-icons/lu';
-import { Flex, Text } from '@radix-ui/themes';
+import { Flex, Text } from '../shared';
 import { humanNumber } from '../../helpers/human-number';
 
 const timerRenderer = (props: CountdownRenderProps) => {
   return (
-    <Flex align="center" gap="2">
-      <LuClock3 color="gray" />
-      <Text color="gray">{humanNumber(props.total / 1000)}</Text>
+    <Flex align="center" gap={2}>
+      <Text style={{ color: 'var(--color-fg-dim)' }}>
+        Time: {humanNumber(props.total / 1000)}s
+      </Text>
     </Flex>
   );
 };

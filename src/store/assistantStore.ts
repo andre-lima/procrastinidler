@@ -1,49 +1,66 @@
-import { create } from 'zustand';
-import { type AssistantsState } from '../types';
-import { persist } from 'zustand/middleware';
+import { createGameStore } from '../reactive-store/createGameStore';
+import type { Assistant } from '../types/assistant';
+import { localStorageSaveSystem } from './saveSystem';
 
-export const useAssistantStore = create<AssistantsState>()(
-  persist(
-    (set, get) => ({
-      assistants: {},
-      addAssistant: () => {
-        const newAssistant =
-          'assistant_' + (Object.keys(get().assistants).length + 1);
+interface AssistantStoreState {
+  assistants: Partial<Record<string, Assistant>>;
+}
 
-        set((state: AssistantsState) => ({
-          assistants: {
-            ...state.assistants,
-            [newAssistant]: { id: newAssistant, assignedTo: [] },
-          },
-        }));
-      },
-      assignTaskToAssistant: (todoId: string, assistantId: string) => {
-        const assistant = get().assistants[assistantId];
+const initialState: AssistantStoreState = {
+  assistants: {},
+};
 
-        assistant?.assignedTo.push(todoId);
+export const useAssistantStore = createGameStore<
+  AssistantStoreState,
+  {
+    addAssistant: () => void;
+    assignTaskToAssistant: (taskId: string, assistantId: string) => void;
+    unassignTask: (taskId: string, assistantId: string) => void;
+  }
+>(
+  {
+    saveKey: 'assistant-store',
+    initialState,
+    savePrefix: '',
+    saveSystem: localStorageSaveSystem,
+  },
+  (set, get) => ({
+    addAssistant: () => {
+      const newAssistant =
+        'assistant_' + (Object.keys(get().assistants).length + 1);
 
-        set((state: AssistantsState) =>
-          assistant
-            ? { assistants: { ...state.assistants, [assistant.id]: assistant } }
-            : state
+      set({
+        assistants: {
+          ...get().assistants,
+          [newAssistant]: { id: newAssistant, assignedTo: [] },
+        },
+      });
+    },
+    assignTaskToAssistant: (todoId: string, assistantId: string) => {
+      const assistant = get().assistants[assistantId];
+
+      assistant?.assignedTo.push(todoId);
+
+      set(
+        assistant
+          ? { assistants: { ...get().assistants, [assistant.id]: assistant } }
+          : {}
+      );
+    },
+    unassignTask: (todoId: string, assistantId: string) => {
+      const assistant = get().assistants[assistantId];
+
+      if (assistant) {
+        assistant.assignedTo = assistant?.assignedTo.filter(
+          (taskId) => taskId !== todoId
         );
-      },
-      unassignTask: (todoId: string, assistantId: string) => {
-        const assistant = get().assistants[assistantId];
+      }
 
-        if (assistant) {
-          assistant.assignedTo = assistant?.assignedTo.filter(
-            (taskId) => taskId !== todoId
-          );
-        }
-
-        set((state: AssistantsState) =>
-          assistant
-            ? { assistants: { ...state.assistants, [assistant.id]: assistant } }
-            : state
-        );
-      },
-    }),
-    { name: 'assistant-store' }
-  )
+      set(
+        assistant
+          ? { assistants: { ...get().assistants, [assistant.id]: assistant } }
+          : {}
+      );
+    },
+  })
 );
