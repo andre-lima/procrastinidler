@@ -47,7 +47,7 @@
   --color-btn-secondary-fg:     #55ffff;
 
   /* Button shadow */
-  --color-btn-shadow: #111111;
+  --color-btn-shadow: #333333;
 
   /* Borders */
   --color-border:     #00aaaa;
@@ -59,6 +59,22 @@
   --color-nav-text:        #ffffff;
   --color-nav-active-text: #000000;
   --color-nav-active-bg:   #ffffff;
+
+  /* Sidebar — cga386 uses light gray, inset border, red first letter */
+  --color-sidebar-bg:                  #d3d3d3;
+  --sidebar-border:                    none;
+  --sidebar-box-shadow:                4px 4px 0 #000000, inset 0 0 0 3px #000000;
+  --color-sidebar-item-text:           #000000;
+  --color-sidebar-item-hover:          #000000;
+  --color-sidebar-item-first-letter:   #ff0000;
+  --color-sidebar-item-active-bg:      var(--color-accent);
+  --color-sidebar-item-active-text:    var(--color-fg-text);
+  --color-sidebar-item-active-first-letter: #ff0000;
+
+  /* Table rows */
+  --color-table-row-even:    #00004a;
+  --color-table-row-odd:    #000066;
+  --color-table-cell-border: var(--color-bg-dark);
 }
 
 /* ── Amber phosphor ──────────────────────────────────────────── */
@@ -99,6 +115,20 @@
   --color-nav-text:        #ffcc44;
   --color-nav-active-text: #000000;
   --color-nav-active-bg:   #ffb000;
+
+  --color-sidebar-bg:                  var(--color-bg-dark);
+  --sidebar-border:                   1px solid var(--color-border);
+  --sidebar-box-shadow:                none;
+  --color-sidebar-item-text:          var(--color-fg-link);
+  --color-sidebar-item-hover:         var(--color-accent-hi);
+  --color-sidebar-item-first-letter:  var(--color-fg-link);
+  --color-sidebar-item-active-bg:    var(--color-accent);
+  --color-sidebar-item-active-text:  var(--color-fg-text);
+  --color-sidebar-item-active-first-letter: var(--color-fg-text);
+
+  --color-table-row-even:    var(--color-bg-dark);
+  --color-table-row-odd:    var(--color-bg-panel);
+  --color-table-cell-border: var(--color-bg-dark);
 }
 
 /* ── Green phosphor ──────────────────────────────────────────── */
@@ -139,6 +169,20 @@
   --color-nav-text:        #55ff55;
   --color-nav-active-text: #000000;
   --color-nav-active-bg:   #55ff55;
+
+  --color-sidebar-bg:                  var(--color-bg-dark);
+  --sidebar-border:                   1px solid var(--color-border);
+  --sidebar-box-shadow:                none;
+  --color-sidebar-item-text:          var(--color-fg-link);
+  --color-sidebar-item-hover:         var(--color-accent-hi);
+  --color-sidebar-item-first-letter:  var(--color-fg-link);
+  --color-sidebar-item-active-bg:    var(--color-accent);
+  --color-sidebar-item-active-text:  var(--color-fg-text);
+  --color-sidebar-item-active-first-letter: var(--color-fg-text);
+
+  --color-table-row-even:    var(--color-bg-dark);
+  --color-table-row-odd:    var(--color-bg-panel);
+  --color-table-cell-border: var(--color-bg-dark);
 }
 
 /* ── Monochrome ──────────────────────────────────────────────── */
@@ -179,4 +223,18 @@
   --color-nav-text:        #ffffff;
   --color-nav-active-text: #000000;
   --color-nav-active-bg:   #ffffff;
+
+  --color-sidebar-bg:                  var(--color-bg-dark);
+  --sidebar-border:                   1px solid var(--color-border);
+  --sidebar-box-shadow:                none;
+  --color-sidebar-item-text:          var(--color-fg-link);
+  --color-sidebar-item-hover:         var(--color-accent-hi);
+  --color-sidebar-item-first-letter:  var(--color-fg-link);
+  --color-sidebar-item-active-bg:    var(--color-accent);
+  --color-sidebar-item-active-text:  var(--color-fg-text);
+  --color-sidebar-item-active-first-letter: var(--color-fg-text);
+
+  --color-table-row-even:    var(--color-bg-dark);
+  --color-table-row-odd:    var(--color-bg-panel);
+  --color-table-cell-border: var(--color-bg-dark);
 }

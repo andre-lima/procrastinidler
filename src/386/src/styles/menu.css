@@ -1,0 +1,35 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — menu (dropdown)
+   Uses var(--color-*) from theme.css.
+───────────────────────────────────────────────────────────────────────────── */
+
+.menuPopup {
+  background:   var(--color-bg-dark);
+  border:       1px solid var(--color-border);
+  z-index:      100;
+  min-width:    140px;
+  box-shadow:  2px 2px 0 var(--color-bg-black);
+}
+
+.menuItem {
+  display:       block;
+  width:         100%;
+  padding:       3px 12px;
+  color:         var(--color-fg-link);
+  font-family:   var(--font-mono);
+  font-size:     var(--text-base);
+  cursor:        pointer;
+  background:    transparent;
+  border:        none;
+  text-align:    left;
+  outline:       none;
+}
+
+.menuSep {
+  border-top: 1px solid var(--color-border);
+  margin:     3px 0;
+}
+
+.menuItemDanger {
+  color: var(--color-danger);
+}

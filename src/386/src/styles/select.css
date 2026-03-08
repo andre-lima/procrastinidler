@@ -1,0 +1,39 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — select
+   Uses var(--color-*) from theme.css.
+───────────────────────────────────────────────────────────────────────────── */
+
+.selectTrigger {
+  background:      var(--color-bg-black);
+  border:          1px solid var(--color-border);
+  color:           var(--color-fg-link);
+  font-family:     var(--font-mono);
+  font-size:       var(--text-base);
+  padding:         var(--component-input-padding);
+  cursor:          pointer;
+  display:         flex;
+  justify-content:  space-between;
+  align-items:     center;
+  width:           100%;
+  outline:         none;
+}
+
+.selectPopup {
+  background:  var(--color-bg-dark);
+  border:      1px solid var(--color-border);
+  z-index:     100;
+  min-width:   160px;
+}
+
+.selectOption {
+  padding:     var(--component-sidebar-item-padding);
+  color:       var(--color-fg-link);
+  font-size:   var(--text-base);
+  cursor:      pointer;
+  font-family: var(--font-mono);
+}
+
+.selectOption:hover {
+  background: var(--color-accent);
+  color:      var(--color-fg-text);
+}

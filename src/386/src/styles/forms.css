@@ -1,0 +1,154 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — forms: input, checkbox, switch, slider, progress, number
+   Uses var(--color-*) from theme.css.
+───────────────────────────────────────────────────────────────────────────── */
+
+.input {
+  background:    var(--color-bg-black);
+  border:        1px solid var(--color-border);
+  color:         var(--color-fg-link);
+  font-family:   var(--font-mono);
+  font-size:     var(--text-base);
+  padding:       var(--component-input-padding);
+  width:         100%;
+  outline:       none;
+  margin-bottom: var(--component-input-margin-bottom);
+}
+
+.checkRoot {
+  width:           var(--component-check-size);
+  height:          var(--component-check-size);
+  border:          1px solid var(--color-border);
+  background:      var(--color-bg-black);
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  flex-shrink:     0;
+  vertical-align:  middle;
+  margin-right:    6px;
+}
+
+.checkIndicator {
+  color:      var(--color-fg-link);
+  font-size:  var(--text-xs);
+  line-height: 1;
+}
+
+.checkLabel {
+  display:     flex;
+  align-items: center;
+  margin-bottom: 6px;
+  cursor:      pointer;
+  font-size:   var(--text-base);
+  color:       var(--color-fg-text);
+}
+
+.switchRoot {
+  border:         1px solid var(--color-border);
+  background:     var(--color-bg-black);
+  width:          var(--component-switch-width);
+  height:         var(--component-switch-height);
+}
+
+.switchRootOn {
+  border-color: var(--color-accent-hi);
+}
+
+.switchThumb {
+  background:  var(--color-border-dim);
+  font-size:   var(--text-xxs);
+  color:       var(--color-bg-black);
+}
+
+.switchThumbOn {
+  background: var(--color-accent-hi);
+}
+
+.switchLabel {
+  color: var(--color-fg-text);
+}
+
+.sliderTrack {
+  height:    var(--component-slider-track-height);
+  background: var(--color-bg-black);
+  border:    1px solid var(--color-border);
+}
+
+.sliderFill {
+  background: var(--color-accent);
+}
+
+.sliderThumb {
+  width:     var(--component-slider-thumb-width);
+  height:    var(--component-slider-thumb-height);
+  background: var(--color-accent-hi);
+}
+
+.progressTrack {
+  background: var(--color-bg-black);
+  border:     1px solid var(--color-border);
+  height:     var(--component-progress-height);
+}
+
+.progressFill {
+  background: var(--color-accent);
+}
+
+.numberRoot {
+  border: 1px solid var(--color-border);
+}
+
+.numberBtn {
+  background:    var(--color-bg-dark);
+  color:         var(--color-fg-link);
+  border:        none;
+  border-right:  1px solid var(--color-border);
+  padding:       2px 8px;
+  font-family:   var(--font-mono);
+  font-size:     var(--text-md);
+}
+
+.numberBtnRight {
+  border-left:  1px solid var(--color-border);
+  border-right: none;
+}
+
+.numberInput {
+  background:   var(--color-bg-black);
+  color:        var(--color-fg-link);
+  border:       none;
+  font-family:  var(--font-mono);
+  font-size:    var(--text-base);
+  padding:      2px 8px;
+  width:        var(--component-number-input-width);
+  text-align:   center;
+  outline:      none;
+}
+
+.radioRow {
+  display:       flex;
+  align-items:   center;
+  margin-bottom: 5px;
+  cursor:        pointer;
+}
+
+.radioCheck {
+  color:        var(--color-fg-dim);
+  margin-right: 6px;
+  font-size:    var(--text-base);
+  width:        1ch;
+}
+
+.radioCheckActive {
+  color: var(--color-fg-link);
+}
+
+.radioLabel {
+  color:     var(--color-fg-text);
+  font-size: var(--text-base);
+}
+
+.radioLabelActive {
+  color: var(--color-fg-link);
+}

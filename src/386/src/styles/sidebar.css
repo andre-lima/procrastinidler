@@ -1,0 +1,43 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — sidebar
+   Uses var(--color-*) from theme.css. cga386: light gray bg, inset border,
+   red first letter — set via theme variables.
+───────────────────────────────────────────────────────────────────────────── */
+
+.sidebar {
+  background:   var(--color-sidebar-bg, var(--color-bg-dark));
+  border:       var(--sidebar-border, 1px solid var(--color-border));
+  box-shadow:   var(--sidebar-box-shadow, none);
+  margin-right: var(--component-sidebar-margin-right);
+  padding:      4px 0;
+}
+
+.sidebarItem {
+  color:           var(--color-sidebar-item-text, var(--color-fg-link));
+  padding:         var(--component-sidebar-item-padding);
+  display:         block;
+  cursor:          pointer;
+  font-size:       var(--text-base);
+  text-decoration: none;
+}
+
+.sidebarItem::first-letter {
+  color: var(--color-sidebar-item-first-letter, inherit);
+}
+
+.sidebarItem:hover {
+  color: var(--color-sidebar-item-hover, var(--color-accent-hi));
+}
+
+.sidebarItemActive {
+  background: var(--color-sidebar-item-active-bg, var(--color-accent));
+  color:      var(--color-sidebar-item-active-text, var(--color-fg-text));
+  padding:    var(--component-sidebar-item-padding);
+  display:    block;
+  cursor:     pointer;
+  font-size:  var(--text-base);
+}
+
+.sidebarItemActive::first-letter {
+  color: var(--color-sidebar-item-active-first-letter, inherit);
+}

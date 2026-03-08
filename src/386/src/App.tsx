@@ -5,34 +5,82 @@
 //   theme.css      — color custom properties  (swap via data-theme attr)
 //   spacing.css    — space / component-size custom properties
 //   typography.css — font / text custom properties
-//   app.module.css — scoped component class names
+//   styles/index.css — component styles (shared, navbar, sidebar, buttons, etc.)
+//   components/    — themed Base UI wrapper components
 //
 // To switch theme at runtime, set document.documentElement.dataset.theme
 // to one of: "cga386" | "amber" | "green" | "mono"
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState, useEffect } from "react";
-import { Accordion } from "@base-ui/react/accordion";
-import { Dialog } from "@base-ui/react/dialog";
-import { Tabs } from "@base-ui/react/tabs";
-import { Tooltip } from "@base-ui/react/tooltip";
-import { Checkbox } from "@base-ui/react/checkbox";
-import { Switch } from "@base-ui/react/switch";
-import { Select } from "@base-ui/react/select";
-import { Slider } from "@base-ui/react/slider";
-import { Progress } from "@base-ui/react/progress";
-import { Menu } from "@base-ui/react/menu";
-import { RadioGroup } from "@base-ui/react/radio-group";
-import { Radio } from "@base-ui/react/radio";
-import { Separator } from "@base-ui/react/separator";
-import { NumberField } from "@base-ui/react/number-field";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
+
+import {
+  AccordionRoot,
+  AccordionItem,
+  AccordionHeader,
+  AccordionTrigger,
+  AccordionPanel,
+  DialogRoot,
+  DialogTrigger,
+  DialogPortal,
+  DialogBackdrop,
+  DialogPopup,
+  DialogTitleBar,
+  DialogClose,
+  DialogBody,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  TabsRoot,
+  TabsList,
+  TabsTab,
+  TabsPanel,
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipPopup,
+  Checkbox,
+  Switch,
+  SelectRoot,
+  SelectTrigger,
+  SelectValue,
+  SelectPortal,
+  SelectPositioner,
+  SelectPopup,
+  SelectList,
+  SelectItem,
+  SliderRoot,
+  SliderControl,
+  SliderTrack,
+  SliderIndicator,
+  SliderThumb,
+  ProgressRoot,
+  ProgressTrack,
+  ProgressIndicator,
+  MenuRoot,
+  MenuTrigger,
+  MenuPortal,
+  MenuPositioner,
+  MenuPopup,
+  MenuItem,
+  RadioGroupRoot,
+  RadioRoot,
+  Separator,
+  NumberFieldRoot,
+  NumberFieldGroup,
+  NumberFieldDecrement,
+  NumberFieldInput,
+  NumberFieldIncrement,
+  Button,
+} from "./components";
 
 import "./styles/theme.css";
 import "./styles/spacing.css";
 import "./styles/typography.css";
 import "./styles/index.css";
-import S from "./app.module.css";
 
 // ── Types ─────────────────────────────────────────────────────
 type ThemeName = "cga386" | "amber" | "green" | "mono";
@@ -118,54 +166,11 @@ const STATUS_VAR: Record<TableRow["status"], string> = {
 function Sect({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div style={{ marginBottom: "16px" }}>
-      <div className={S.sectionHeader}>{title}</div>
-      <div className={S.panel}>
-        <div className={S.panelInner}>{children}</div>
+      <div className="sectionHeader">{title}</div>
+      <div className="panel">
+        <div className="panelInner">{children}</div>
       </div>
     </div>
-  );
-}
-
-// Primary button — filled
-function BtnPrimary({
-  children, onClick, className = "", style,
-}: { children: ReactNode; onClick?: () => void; className?: string; style?: CSSProperties }) {
-  return (
-    <button
-      className={`${S.btn} ${S.btnPrimary} ${className}`}
-      style={style}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
-
-// Secondary button — outlined
-function BtnSecondary({
-  children, onClick, className = "", style,
-}: { children: ReactNode; onClick?: () => void; className?: string; style?: CSSProperties }) {
-  return (
-    <button
-      className={`${S.btn} ${S.btnSecondary} ${className}`}
-      style={style}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
-
-function CheckboxRow({
-  label, checked, onChange,
-}: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
-  return (
-    <label className={S.checkLabel}>
-      <Checkbox.Root checked={checked} onCheckedChange={onChange} className={S.checkRoot}>
-        <Checkbox.Indicator className={S.checkIndicator}>X</Checkbox.Indicator>
-      </Checkbox.Root>
-      {label}
-    </label>
   );
 }
 
@@ -185,7 +190,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>("buttons");
   const [selectVal, setSelectVal] = useState("ega");
 
-  // Apply theme to <html> on mount and when theme changes (so [data-theme="cga386"] selectors apply)
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
@@ -195,26 +199,25 @@ export default function App() {
   }
 
   return (
-    <div className={S.page}>
+    <div className="page">
 
       {/* ── NAVBAR ── */}
-      <nav className={S.navbar}>
-        <span className={S.navBrand}>Bootstrap</span>
+      <nav className="navbar">
+        <span className="navBrand">Bootstrap</span>
         {NAV_LINKS.map((link) => (
           <button
             key={link}
-            className={`${S.navItem} ${activeNav === link ? S.navItemActive : ""}`}
+            className={`navItem ${activeNav === link ? "navItemActive" : ""}`}
             onClick={() => setActiveNav(link)}
           >
             {link}
           </button>
         ))}
-        {/* Theme switcher */}
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "stretch" }}>
           {THEME_NAMES.map((name) => (
             <button
               key={name}
-              className={`${S.navItem} ${theme === name ? S.navItemActive : ""}`}
+              className={`navItem ${theme === name ? "navItemActive" : ""}`}
               onClick={() => handleThemeChange(name)}
               style={{ fontSize: "11px", padding: "4px 8px" }}
             >
@@ -225,21 +228,21 @@ export default function App() {
       </nav>
 
       {/* ── BREADCRUMB ── */}
-      <div className={S.breadcrumb}>
+      <div className="breadcrumb">
         Overview of the project, its contents, and how to get started.
       </div>
 
       {/* ── BODY ── */}
-      <div className={S.container}>
-        <div className={S.row}>
+      <div className="container">
+        <div className="row">
 
           {/* ── SIDEBAR ── */}
-          <div className={S.col3}>
-            <div className={S.sidebar}>
+          <div className="col3">
+            <div className="sidebar">
               {SIDEBAR_ITEMS.map((item, i) => (
                 <span
                   key={item}
-                  className={i === 0 ? S.sidebarItemActive : S.sidebarItem}
+                  className={i === 0 ? "sidebarItemActive" : "sidebarItem"}
                 >
                   {item}
                 </span>
@@ -248,248 +251,218 @@ export default function App() {
           </div>
 
           {/* ── CONTENT ── */}
-          <div className={S.col9}>
-            <Tabs.Root value={activeTab} onValueChange={(v) => setActiveTab(v as TabId)}>
+          <div className="col9">
+            <TabsRoot value={activeTab} onValueChange={(v) => setActiveTab(v as TabId)}>
 
-              <Tabs.List className={S.tabList}>
+              <TabsList>
                 {TABS.map(({ val, label }) => (
-                  <Tabs.Tab
-                    key={val}
-                    value={val}
-                    className={activeTab === val ? S.tabActive : S.tab}
-                  >
+                  <TabsTab key={val} value={val} active={activeTab === val}>
                     {label}
-                  </Tabs.Tab>
+                  </TabsTab>
                 ))}
-              </Tabs.List>
+              </TabsList>
 
               {/* ════ BUTTONS ════ */}
-              <Tabs.Panel value="buttons" className={S.tabPanel}>
+              <TabsPanel value="buttons" className="tabPanel">
                 <Sect title="1. BUTTONS">
                   <div style={{ marginBottom: "10px" }}>
-                    <div className={S.label} style={{ marginBottom: "6px" }}>Primary (filled):</div>
-                    <BtnPrimary>Default</BtnPrimary>
-                    <BtnPrimary className={S.btnSuccess} style={{ color: "var(--color-bg-black)" }}>Success</BtnPrimary>
-                    <BtnPrimary className={S.btnWarning} style={{ color: "var(--color-bg-black)" }}>Warning</BtnPrimary>
-                    <BtnPrimary className={S.btnDanger} style={{ color: "var(--color-bg-black)" }}>Danger</BtnPrimary>
-                    <BtnPrimary className={S.btnInfo} style={{ color: "var(--color-bg-black)" }}>Info</BtnPrimary>
+                    <div className="label" style={{ marginBottom: "6px" }}>Primary (filled):</div>
+                    <Button variant="primary">Default</Button>
+                    <Button variant="success" style={{ color: "var(--color-bg-black)" }}>Success</Button>
+                    <Button variant="warning" style={{ color: "var(--color-bg-black)" }}>Warning</Button>
+                    <Button variant="danger" style={{ color: "var(--color-bg-black)" }}>Danger</Button>
+                    <Button variant="info" style={{ color: "var(--color-bg-black)" }}>Info</Button>
                   </div>
                   <div style={{ marginBottom: "10px" }}>
-                    <div className={S.label} style={{ marginBottom: "6px" }}>Secondary (outlined):</div>
-                    <BtnSecondary>Default</BtnSecondary>
-                    <BtnSecondary style={{ borderColor: "var(--color-success)", color: "var(--color-success)" }}>Success</BtnSecondary>
-                    <BtnSecondary style={{ borderColor: "var(--color-warning)", color: "var(--color-warning)" }}>Warning</BtnSecondary>
-                    <BtnSecondary style={{ borderColor: "var(--color-danger)", color: "var(--color-danger)" }}>Danger</BtnSecondary>
-                    <BtnSecondary style={{ borderColor: "var(--color-info)", color: "var(--color-info)" }}>Info</BtnSecondary>
+                    <div className="label" style={{ marginBottom: "6px" }}>Secondary (outlined):</div>
+                    <Button variant="secondary">Default</Button>
+                    <Button variant="secondary" style={{ borderColor: "var(--color-success)", color: "var(--color-success)" }}>Success</Button>
+                    <Button variant="secondary" style={{ borderColor: "var(--color-warning)", color: "var(--color-warning)" }}>Warning</Button>
+                    <Button variant="secondary" style={{ borderColor: "var(--color-danger)", color: "var(--color-danger)" }}>Danger</Button>
+                    <Button variant="secondary" style={{ borderColor: "var(--color-info)", color: "var(--color-info)" }}>Info</Button>
                   </div>
                   <div>
-                    <div className={S.label} style={{ marginBottom: "6px" }}>Sizes:</div>
-                    <BtnPrimary className={S.btnLg}>Large</BtnPrimary>
-                    <BtnPrimary>Default</BtnPrimary>
-                    <BtnPrimary className={S.btnSm}>&lt;Small&gt;</BtnPrimary>
+                    <div className="label" style={{ marginBottom: "6px" }}>Sizes:</div>
+                    <Button variant="primary" size="lg">Large</Button>
+                    <Button variant="primary">Default</Button>
+                    <Button variant="primary" size="sm">&lt;Small&gt;</Button>
                   </div>
                 </Sect>
 
                 <Sect title="2. TOOLTIPS">
                   <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
-                    <Tooltip.Provider>
+                    <TooltipProvider>
                       {(["top", "bottom", "left", "right"] as const).map((pos) => (
-                        <Tooltip.Root key={pos}>
-                          <Tooltip.Trigger render={
-                            <button className={`${S.btn} ${S.btnSecondary}`}>
+                        <TooltipRoot key={pos}>
+                          <TooltipTrigger render={
+                            <Button variant="secondary">
                               {pos.charAt(0).toUpperCase() + pos.slice(1)}
-                            </button>
+                            </Button>
                           } />
-                          <Tooltip.Portal>
-                            <Tooltip.Positioner side={pos}>
-                              <Tooltip.Popup className={S.tooltipPopup}>Tooltip on {pos}</Tooltip.Popup>
-                            </Tooltip.Positioner>
-                          </Tooltip.Portal>
-                        </Tooltip.Root>
+                          <TooltipPortal>
+                            <TooltipPositioner side={pos}>
+                              <TooltipPopup>Tooltip on {pos}</TooltipPopup>
+                            </TooltipPositioner>
+                          </TooltipPortal>
+                        </TooltipRoot>
                       ))}
-                    </Tooltip.Provider>
+                    </TooltipProvider>
                   </div>
                 </Sect>
-              </Tabs.Panel>
+              </TabsPanel>
 
               {/* ════ FORMS ════ */}
-              <Tabs.Panel value="forms" className={S.tabPanel}>
+              <TabsPanel value="forms" className="tabPanel">
                 <Sect title="3. FORM CONTROLS">
                   <div style={{ display: "flex", gap: "16px" }}>
                     <div style={{ flex: 1 }}>
-                      <span className={S.label}>Username:</span>
-                      <input className={S.input} defaultValue="DOS_USER" />
-                      <span className={S.label}>Password:</span>
-                      <input className={S.input} type="password" defaultValue="*****" />
-                      <span className={S.label}>Number field:</span>
-                      <NumberField.Root value={numVal} onValueChange={(v) => setNumVal(v ?? 0)} style={{ marginBottom: "8px" }}>
-                        <NumberField.Group className={S.numberRoot}>
-                          <NumberField.Decrement className={S.numberBtn}>-</NumberField.Decrement>
-                          <NumberField.Input className={S.numberInput} />
-                          <NumberField.Increment className={`${S.numberBtn} ${S.numberBtnRight}`}>+</NumberField.Increment>
-                        </NumberField.Group>
-                      </NumberField.Root>
+                      <span className="label">Username:</span>
+                      <input className="input" defaultValue="DOS_USER" />
+                      <span className="label">Password:</span>
+                      <input className="input" type="password" defaultValue="*****" />
+                      <span className="label">Number field:</span>
+                      <NumberFieldRoot value={numVal} onValueChange={(v) => setNumVal(v ?? 0)} style={{ marginBottom: "8px" }}>
+                        <NumberFieldGroup>
+                          <NumberFieldDecrement>-</NumberFieldDecrement>
+                          <NumberFieldInput />
+                          <NumberFieldIncrement>+</NumberFieldIncrement>
+                        </NumberFieldGroup>
+                      </NumberFieldRoot>
                     </div>
 
                     <div style={{ flex: 1 }}>
-                      <span className={S.label}>Graphics adapter:</span>
-                      <Select.Root value={selectVal} onValueChange={(v) => setSelectVal(v ?? "")}>
-                        <Select.Trigger className={S.selectTrigger}>
-                          <Select.Value />
+                      <span className="label">Graphics adapter:</span>
+                      <SelectRoot value={selectVal} onValueChange={(v) => setSelectVal(String(v ?? ""))}>
+                        <SelectTrigger>
+                          <SelectValue />
                           <span>▾</span>
-                        </Select.Trigger>
-                        <Select.Portal>
-                          <Select.Positioner>
-                            <Select.Popup className={S.selectPopup}>
-                              <Select.List>
+                        </SelectTrigger>
+                        <SelectPortal>
+                          <SelectPositioner>
+                            <SelectPopup>
+                              <SelectList>
                                 {SELECT_OPTIONS.map(({ v, l }) => (
-                                  <Select.Item key={v} value={v} className={S.selectOption}>
+                                  <SelectItem key={v} value={v}>
                                     {selectVal === v ? "√ " : "  "}{l}
-                                  </Select.Item>
+                                  </SelectItem>
                                 ))}
-                              </Select.List>
-                            </Select.Popup>
-                          </Select.Positioner>
-                        </Select.Portal>
-                      </Select.Root>
+                              </SelectList>
+                            </SelectPopup>
+                          </SelectPositioner>
+                        </SelectPortal>
+                      </SelectRoot>
 
                       <div style={{ marginTop: "12px" }}>
-                        <span className={S.label}>Checkboxes:</span>
-                        <CheckboxRow label=" Save credentials" checked={checked1} onChange={setChecked1} />
-                        <CheckboxRow label=" Verbose logging" checked={checked2} onChange={setChecked2} />
+                        <span className="label">Checkboxes:</span>
+                        <Checkbox label=" Save credentials" checked={checked1} onCheckedChange={setChecked1} />
+                        <Checkbox label=" Verbose logging" checked={checked2} onCheckedChange={setChecked2} />
                       </div>
 
                       <div style={{ marginTop: "8px" }}>
-                        <span className={S.label}>Toggle switch:</span>
-                        <label className={S.switchLabel}>
-                          <Switch.Root
-                            checked={switched}
-                            onCheckedChange={setSwitched}
-                            className={`${S.switchRoot} ${switched ? S.switchRootOn : ""}`}
-                          >
-                            <Switch.Thumb className={`${S.switchThumb} ${switched ? S.switchThumbOn : ""}`}>
-                              {switched ? "ON" : ""}
-                            </Switch.Thumb>
-                          </Switch.Root>
-                          {switched ? "Enabled" : "Disabled"}
-                        </label>
+                        <span className="label">Toggle switch:</span>
+                        <Switch label={switched ? "Enabled" : "Disabled"} checked={switched} onCheckedChange={setSwitched} />
                       </div>
                     </div>
                   </div>
                 </Sect>
 
                 <Sect title="4. RADIO GROUP">
-                  <div className={S.infoBox}>Select a graphics adapter from the choices below</div>
-                  <RadioGroup value={radioVal} onValueChange={setRadioVal}>
+                  <div className="infoBox">Select a graphics adapter from the choices below</div>
+                  <RadioGroupRoot value={radioVal} onValueChange={(v) => setRadioVal(String(v ?? ""))}>
                     {RADIO_OPTIONS.map(({ v, l }) => (
-                      <Radio.Root key={v} value={v} className={S.radioRow}>
-                        <span className={`${S.radioCheck} ${radioVal === v ? S.radioCheckActive : ""}`}>
-                          {radioVal === v ? "√" : " "}
-                        </span>
-                        <Radio.Indicator keepMounted style={{ display: "none" }} />
-                        <span className={`${S.radioLabel} ${radioVal === v ? S.radioLabelActive : ""}`}>{l}</span>
-                      </Radio.Root>
+                      <RadioRoot key={v} value={v} selected={radioVal === v}>
+                        {l}
+                      </RadioRoot>
                     ))}
-                  </RadioGroup>
-                  <div style={{ marginTop: "8px" }} className={S.label}>
+                  </RadioGroupRoot>
+                  <div style={{ marginTop: "8px" }} className="label">
                     √ = supported by your system &nbsp;|&nbsp; Use ↑,↓ and ENTER. ESC to go back. F1 for help.
                   </div>
                 </Sect>
 
                 <Sect title="5. SLIDER + PROGRESS">
-                  <span className={S.label}>CPU Clock: {sliderVal[0]} MHz</span>
-                  <Slider.Root
+                  <span className="label">CPU Clock: {sliderVal[0]} MHz</span>
+                  <SliderRoot
                     value={sliderVal}
-                    onValueChange={setSliderVal}
+                    onValueChange={(v) => setSliderVal(Array.isArray(v) ? [...v] : [v])}
                     min={4}
                     max={40}
-                    className={S.sliderRoot}
                     style={{ marginBottom: "12px" }}
                   >
-                    <Slider.Control className={S.sliderControl}>
-                      <Slider.Track className={S.sliderTrack}>
-                        <Slider.Indicator className={S.sliderFill} />
-                        <Slider.Thumb className={S.sliderThumb} />
-                      </Slider.Track>
-                    </Slider.Control>
-                  </Slider.Root>
+                    <SliderControl>
+                      <SliderTrack>
+                        <SliderIndicator />
+                        <SliderThumb />
+                      </SliderTrack>
+                    </SliderControl>
+                  </SliderRoot>
 
-                  <span className={S.label}>Memory: {progVal}% used</span>
-                  <Progress.Root value={progVal} style={{ marginBottom: "8px" }}>
-                    <Progress.Track className={S.progressTrack}>
-                      <Progress.Indicator
-                        className={S.progressFill}
-                        style={{ width: `${progVal}%` }}
-                      />
-                    </Progress.Track>
-                  </Progress.Root>
+                  <span className="label">Memory: {progVal}% used</span>
+                  <ProgressRoot value={progVal} style={{ marginBottom: "8px" }}>
+                    <ProgressTrack>
+                      <ProgressIndicator style={{ width: `${progVal}%` }} />
+                    </ProgressTrack>
+                  </ProgressRoot>
                 </Sect>
-              </Tabs.Panel>
+              </TabsPanel>
 
               {/* ════ ACCORDION ════ */}
-              <Tabs.Panel value="accordion" className={S.tabPanel}>
+              <TabsPanel value="accordion" className="tabPanel">
                 <Sect title="6. ACCORDION">
-                  <Accordion.Root defaultValue={["system"]}>
+                  <AccordionRoot defaultValue={["system"]}>
                     {ACCORDION_ITEMS.map(({ v, title, body }) => (
-                      <Accordion.Item key={v} value={v} className={S.accItem}>
-                        <Accordion.Header>
-                          <Accordion.Trigger className={S.accTrigger}>
-                            <span>{title}</span>
-                            <span className={S.accArrow}>▾</span>
-                          </Accordion.Trigger>
-                        </Accordion.Header>
-                        <Accordion.Panel className={S.accPanel}>{body}</Accordion.Panel>
-                      </Accordion.Item>
+                      <AccordionItem key={v} value={v}>
+                        <AccordionHeader>
+                          <AccordionTrigger>{title}</AccordionTrigger>
+                        </AccordionHeader>
+                        <AccordionPanel>{body}</AccordionPanel>
+                      </AccordionItem>
                     ))}
-                  </Accordion.Root>
+                  </AccordionRoot>
                 </Sect>
-              </Tabs.Panel>
+              </TabsPanel>
 
               {/* ════ DIALOG ════ */}
-              <Tabs.Panel value="dialog" className={S.tabPanel}>
+              <TabsPanel value="dialog" className="tabPanel">
                 <Sect title="7. DIALOG / MODAL">
-                  <div className={S.infoBox}>
+                  <div className="infoBox">
                     Dialogs are windowed overlays. Click the button below to open one.
                   </div>
-                  <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <Dialog.Trigger render={
-                      <button className={`${S.btn} ${S.btnSecondary}`}>Open Dialog</button>
-                    } />
-                    <Dialog.Portal>
-                      <Dialog.Backdrop className={S.dialogBackdrop} />
-                      <Dialog.Popup className={S.dialogPopup}>
-                        <div className={S.dialogTitleBar}>
+                  <DialogRoot open={dialogOpen} onOpenChange={setDialogOpen}>
+                    <DialogTrigger render={<Button variant="secondary">Open Dialog</Button>} />
+                    <DialogPortal>
+                      <DialogBackdrop />
+                      <DialogPopup>
+                        <DialogTitleBar>
                           <span>■ SIERRA ON-LINE — SETUP.EXE</span>
-                          <Dialog.Close render={<button className={S.dialogCloseBtn}>✕</button>} />
-                        </div>
-                        <div className={S.dialogBody}>
-                          <Dialog.Title className={S.dialogTitle}>
+                          <DialogClose render={<button className="dialogCloseBtn">✕</button>} />
+                        </DialogTitleBar>
+                        <DialogBody>
+                          <DialogTitle className="dialogTitle">
                             Select Configuration
-                          </Dialog.Title>
-                          <Dialog.Description className={S.dialogDescription}>
+                          </DialogTitle>
+                          <DialogDescription className="dialogDescription">
                             Use ↑ ↓ and ENTER to select. ESC to go back.
-                          </Dialog.Description>
-                          <div className={S.infoBox}>
+                          </DialogDescription>
+                          <div className="infoBox">
                             Copyright 1991-92<br />Sierra On-Line, Inc.<br />All rights reserved.
                           </div>
-                        </div>
-                        <div className={S.dialogFooter}>
-                          <Dialog.Close render={
-                            <button className={`${S.btn} ${S.btnSecondary}`}
-                              style={{ borderColor: "var(--color-fg-dim)", color: "var(--color-fg-dim)" }}>
+                        </DialogBody>
+                        <DialogFooter>
+                          <DialogClose render={
+                            <Button variant="secondary" style={{ borderColor: "var(--color-fg-dim)", color: "var(--color-fg-dim)" }}>
                               Cancel
-                            </button>
+                            </Button>
                           } />
-                          <Dialog.Close render={
-                            <button className={`${S.btn} ${S.btnPrimary}`}
-                              style={{ background: "var(--color-accent-hi)", borderColor: "var(--color-accent-hi)", color: "var(--color-bg-black)" }}>
+                          <DialogClose render={
+                            <Button variant="primary" style={{ background: "var(--color-accent-hi)", borderColor: "var(--color-accent-hi)", color: "var(--color-bg-black)" }}>
                               OK
-                            </button>
+                            </Button>
                           } />
-                        </div>
-                      </Dialog.Popup>
-                    </Dialog.Portal>
-                  </Dialog.Root>
+                        </DialogFooter>
+                      </DialogPopup>
+                    </DialogPortal>
+                  </DialogRoot>
                 </Sect>
 
                 <Sect title="8. DROPDOWN MENUS">
@@ -498,43 +471,40 @@ export default function App() {
                     { label: "Edit ▾", colorVar: "--color-fg-dim", items: ["Cut", "Copy", "Paste", "Select All"] },
                     { label: "Themes ▾", colorVar: "--color-warning", items: ["Cerulean", "Default", "Slate", "Cyborg"] },
                   ].map(({ label, colorVar, items, danger }) => (
-                    <Menu.Root key={label}>
-                      <Menu.Trigger render={
-                        <button
-                          className={`${S.btn} ${S.btnSecondary}`}
-                          style={{ borderColor: `var(${colorVar})`, color: `var(${colorVar})` }}
-                        >
+                    <MenuRoot key={label}>
+                      <MenuTrigger render={
+                        <Button variant="secondary" style={{ borderColor: `var(${colorVar})`, color: `var(${colorVar})` }}>
                           {label}
-                        </button>
+                        </Button>
                       } />
-                      <Menu.Portal>
-                        <Menu.Positioner>
-                          <Menu.Popup className={S.menuPopup}>
+                      <MenuPortal>
+                        <MenuPositioner>
+                          <MenuPopup>
                             {items.map((item) => (
-                              <Menu.Item key={item} className={S.menuItem}>{item}</Menu.Item>
+                              <MenuItem key={item}>{item}</MenuItem>
                             ))}
                             {danger && (
                               <>
-                                <Separator className={S.menuSep} />
-                                <Menu.Item className={`${S.menuItem} ${S.menuItemDanger}`}>{danger}</Menu.Item>
+                                <Separator />
+                                <MenuItem danger>{danger}</MenuItem>
                               </>
                             )}
-                          </Menu.Popup>
-                        </Menu.Positioner>
-                      </Menu.Portal>
-                    </Menu.Root>
+                          </MenuPopup>
+                        </MenuPositioner>
+                      </MenuPortal>
+                    </MenuRoot>
                   ))}
                 </Sect>
-              </Tabs.Panel>
+              </TabsPanel>
 
               {/* ════ TABLE ════ */}
-              <Tabs.Panel value="table" className={S.tabPanel}>
+              <TabsPanel value="table" className="tabPanel">
                 <Sect title="9. DATA TABLE — DIR C:\COMPONENTS\*.*">
-                  <table className={S.table}>
+                  <table className="table">
                     <thead>
                       <tr>
                         {(["NAME", "TYPE", "SIZE", "STATUS"] as const).map((h) => (
-                          <th key={h} className={S.th}>{h}</th>
+                          <th key={h} className="th">{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -542,40 +512,40 @@ export default function App() {
                       {TABLE_DATA.map((row, i) => {
                         const sel = selectedRow === i;
                         const rowClass = sel
-                          ? S.trSelected
-                          : i % 2 === 0 ? S.trOdd : S.trEven;
+                          ? "trSelected"
+                          : i % 2 === 0 ? "trOdd" : "trEven";
                         return (
                           <tr key={row.name} className={rowClass} onClick={() => setSelectedRow(i)}>
-                            <td className={S.td} style={{ color: sel ? "var(--color-bg-black)" : "var(--color-fg-link)" }}>{row.name}</td>
-                            <td className={S.td} style={{ color: sel ? "var(--color-bg-black)" : "var(--color-fg-text)" }}>{row.type}</td>
-                            <td className={S.td} style={{ color: sel ? "var(--color-bg-black)" : "var(--color-fg-text)" }}>{row.size}</td>
-                            <td className={S.td} style={{ color: sel ? "var(--color-bg-black)" : STATUS_VAR[row.status] }}>{row.status}</td>
+                            <td className="td" style={{ color: sel ? "var(--color-bg-black)" : "var(--color-fg-link)" }}>{row.name}</td>
+                            <td className="td" style={{ color: sel ? "var(--color-bg-black)" : "var(--color-fg-text)" }}>{row.type}</td>
+                            <td className="td" style={{ color: sel ? "var(--color-bg-black)" : "var(--color-fg-text)" }}>{row.size}</td>
+                            <td className="td" style={{ color: sel ? "var(--color-bg-black)" : STATUS_VAR[row.status] }}>{row.status}</td>
                           </tr>
                         );
                       })}
                     </tbody>
                   </table>
                 </Sect>
-              </Tabs.Panel>
+              </TabsPanel>
 
               {/* ════ MISC ════ */}
-              <Tabs.Panel value="misc" className={S.tabPanel}>
+              <TabsPanel value="misc" className="tabPanel">
                 <Sect title="10. TYPOGRAPHY">
                   <div style={{ display: "flex", gap: "16px" }}>
                     <div style={{ flex: 1 }}>
                       {HEADING_SIZES.map(({ tag, size }) => (
-                        <div key={tag} className={S.headingDemo} style={{ fontSize: size }}>
+                        <div key={tag} className="headingDemo" style={{ fontSize: size }}>
                           {tag.toUpperCase()}
                         </div>
                       ))}
                     </div>
                     <div style={{ flex: 2 }}>
-                      <div className={S.infoBox}>Example body text</div>
-                      <p className={S.bodyText}>
+                      <div className="infoBox">Example body text</div>
+                      <p className="bodyText">
                         Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque
                         penatibus et magnis dis parturient montes, nascetur ridiculus mus.
                       </p>
-                      <p className={S.finePrint} style={{ marginTop: "8px" }}>
+                      <p className="finePrint" style={{ marginTop: "8px" }}>
                         This line of text is meant to be treated as fine print.
                       </p>
                     </div>
@@ -583,25 +553,25 @@ export default function App() {
                 </Sect>
 
                 <Sect title="11. SEPARATORS">
-                  <p className={S.bodyText} style={{ marginBottom: "8px" }}>Above the separator line.</p>
-                  <Separator className={S.separator} />
-                  <p className={S.finePrint}>Below the separator line.</p>
+                  <p className="bodyText" style={{ marginBottom: "8px" }}>Above the separator line.</p>
+                  <Separator />
+                  <p className="finePrint">Below the separator line.</p>
                 </Sect>
 
                 <Sect title="12. CODE BLOCK">
-                  <pre className={S.codeBlock}>
+                  <pre className="codeBlock">
                     {`C:\\BASE-UI> npm install @base-ui/react\n\nadded 1 package in 0.386s\n\nC:\\BASE-UI> type README.TXT\n\nINSTALLATION COMPLETE.\nPress any key to continue_`}
                   </pre>
                 </Sect>
-              </Tabs.Panel>
+              </TabsPanel>
 
-            </Tabs.Root>
+            </TabsRoot>
           </div>
         </div>
       </div>
 
       {/* ── FOOTER ── */}
-      <div className={S.footer}>
+      <div className="footer">
         BASE UI / BOOTSTRA.386 &nbsp;|&nbsp; Press F1 for help &nbsp;|&nbsp; ALT+F4 to quit &nbsp;|&nbsp; C:\BASE-UI&gt;_
       </div>
     </div>

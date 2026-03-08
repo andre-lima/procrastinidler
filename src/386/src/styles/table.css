@@ -1,0 +1,51 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — table
+   Uses var(--color-*) from theme.css.
+───────────────────────────────────────────────────────────────────────────── */
+
+.table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:      var(--text-base);
+}
+
+.th {
+  background:     var(--color-accent);
+  color:          var(--color-fg-text);
+  padding:        var(--component-table-cell-padding);
+  text-align:     left;
+  font-weight:    var(--font-weight-normal);
+  letter-spacing: var(--tracking-wide);
+  border:         1px solid var(--color-accent-hi);
+}
+
+.td,
+[class*="td"] {
+  padding: var(--component-table-cell-padding);
+  border:  1px solid var(--color-table-cell-border, var(--color-bg-dark));
+  color:   var(--color-fg-text);
+}
+
+.trEven {
+  background: var(--color-table-row-even, var(--color-bg-dark));
+}
+
+.trOdd {
+  background: var(--color-table-row-odd, var(--color-bg-panel));
+}
+
+.trSelected {
+  background: var(--color-accent);
+  color:      var(--color-bg-black);
+}
+
+.trOdd:hover,
+.trEven:hover {
+  background: color-mix(in srgb, var(--color-accent) 20%, var(--color-bg-panel));
+  cursor: pointer;
+}
+
+.trSelected td,
+.trSelected:hover {
+  color: var(--color-bg-black);
+}

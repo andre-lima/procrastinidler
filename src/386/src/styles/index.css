@@ -1,0 +1,18 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — BOOTSTRA.386
+   Import with theme.css, spacing.css, typography.css. Set data-theme on <html>
+   to switch themes. All colors use var(--color-*) from theme.css.
+───────────────────────────────────────────────────────────────────────────── */
+
+@import "./shared.css";
+@import "./navbar.css";
+@import "./sidebar.css";
+@import "./buttons.css";
+@import "./forms.css";
+@import "./tabs.css";
+@import "./accordion.css";
+@import "./select.css";
+@import "./tooltip.css";
+@import "./dialog.css";
+@import "./menu.css";
+@import "./table.css";
