@@ -1,6 +1,18 @@
-import { Dialog } from '@base-ui/react/dialog';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  DialogRoot,
+  DialogTrigger,
+  DialogPortal,
+  DialogBackdrop,
+  DialogPopup,
+  DialogTitleBar,
+  DialogClose,
+  DialogBody,
+  DialogTitle,
+  DialogDescription,
+} from '../ui';
 import './styles.scss';
 
 export const NavDialogButton = ({
@@ -13,36 +25,36 @@ export const NavDialogButton = ({
   const { t } = useTranslation('common');
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger
+    <DialogRoot>
+      <DialogTrigger
         render={
-          <button type="button" className="btn btnSecondary navButton">
+          <Button variant="secondary" className="navButton">
             {t('menus.' + id + '.navButton')}
-          </button>
+          </Button>
         }
       />
-      <Dialog.Portal container={typeof document !== 'undefined' ? document.body : undefined}>
-        <Dialog.Backdrop className="dialogBackdrop" />
-        <Dialog.Popup className="dialogPopup" style={{ maxWidth: '450px' }}>
-          <div className="dialogTitleBar">
+      <DialogPortal container={typeof document !== 'undefined' ? document.body : undefined}>
+        <DialogBackdrop />
+        <DialogPopup style={{ maxWidth: '450px' }}>
+          <DialogTitleBar>
             <span>{t('menus.' + id + '.dialog.title')}</span>
-            <Dialog.Close
+            <DialogClose
               render={
                 <button type="button" className="dialogCloseBtn">
                   ×
                 </button>
               }
             />
-          </div>
-          <div className="dialogBody">
-            <Dialog.Title className="dialogTitle" />
-            <Dialog.Description className="dialogDescription" hidden>
+          </DialogTitleBar>
+          <DialogBody>
+            <DialogTitle className="dialogTitle" />
+            <DialogDescription className="dialogDescription" hidden>
               {id} upgrades
-            </Dialog.Description>
+            </DialogDescription>
             {children}
-          </div>
-        </Dialog.Popup>
-      </Dialog.Portal>
-    </Dialog.Root>
+          </DialogBody>
+        </DialogPopup>
+      </DialogPortal>
+    </DialogRoot>
   );
 };

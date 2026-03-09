@@ -1,6 +1,13 @@
 import { TaskState } from '../../store/tasksStore';
 import { Box, Flex, Grid, Text } from '../shared';
-import { Tooltip } from '@base-ui/react/tooltip';
+import {
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipPopup,
+} from '../ui';
 import { getBadgeColor } from '../../helpers/get-badge-color';
 import { DifficultyMeter } from './components/DifficultyMeter';
 import './styles.scss';
@@ -64,14 +71,20 @@ export const TaskCard = memo(({ id }: { id: string }) => {
             <Text className="taskTitle">{title}</Text>
             <Box flexShrink={0} style={{ paddingTop: 'var(--space-1)' }}>
               {requiresReview && state !== TaskState.Completed && (
-                <Tooltip.Root>
-                  <Tooltip.Trigger>
-                    <span style={{ color: 'var(--color-danger)', fontSize: 'var(--text-sm)' }}>!</span>
-                  </Tooltip.Trigger>
-                  <Tooltip.Popup className="tooltipPopup">
-                    This task requires review after completion
-                  </Tooltip.Popup>
-                </Tooltip.Root>
+                <TooltipProvider>
+                  <TooltipRoot>
+                    <TooltipTrigger render={
+                      <span style={{ color: 'var(--color-danger)', fontSize: 'var(--text-sm)' }}>!</span>
+                    } />
+                    <TooltipPortal>
+                      <TooltipPositioner>
+                        <TooltipPopup>
+                          This task requires review after completion
+                        </TooltipPopup>
+                      </TooltipPositioner>
+                    </TooltipPortal>
+                  </TooltipRoot>
+                </TooltipProvider>
               )}
             </Box>
           </Flex>

@@ -1,6 +1,6 @@
 import { Flex, Text } from '../shared';
 import { useState } from 'react';
-import { Switch } from '@base-ui/react/switch';
+import { Button, Switch } from '../ui';
 import { resetAllStores } from '../../store/resetStores';
 import { useGameStore } from '../../store/gameStore';
 
@@ -30,43 +30,30 @@ export const Settings = () => {
               This action cannot be reverted.
             </Text>
           </Flex>
-          <button
-            type="button"
-            className="btn btnPrimary btnDanger"
-            onClick={clearSave}
-          >
+          <Button variant="danger" onClick={clearSave}>
             Yes
-          </button>
-          <button
-            type="button"
-            className="btn btnSecondary"
-            onClick={() => setConfirmClear(false)}
-          >
+          </Button>
+          <Button variant="secondary" onClick={() => setConfirmClear(false)}>
             No
-          </button>
+          </Button>
         </>
       )}
-      <button
-        type="button"
-        className="btn btnSecondary btnSm"
+      <Button
+        variant="secondary"
+        size="sm"
         onClick={() => setConfirmClear(true)}
         style={{ marginBottom: 0 }}
       >
         Clear save
-      </button>
+      </Button>
 
-      <label className="switchLabel">
-        <Switch.Root
-          checked={sfxOn}
-          onCheckedChange={(v) => useGameStore.getState().setSfxOn(v)}
-          className={sfxOn ? 'switchRoot switchRootOn' : 'switchRoot'}
-        >
-          <Switch.Thumb className={sfxOn ? 'switchThumb switchThumbOn' : 'switchThumb'}>
-            {sfxOn ? 'ON' : 'OFF'}
-          </Switch.Thumb>
-        </Switch.Root>
-        Sound
-      </label>
+      <Switch
+        label="Sound"
+        checked={sfxOn}
+        onCheckedChange={(v) => useGameStore.getState().setSfxOn(v)}
+        onLabel="ON"
+        offLabel="OFF"
+      />
     </Flex>
   );
 };

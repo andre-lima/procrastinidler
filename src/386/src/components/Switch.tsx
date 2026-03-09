@@ -42,15 +42,19 @@ export function Switch({
   label,
   checked,
   onCheckedChange,
+  onLabel = "ON",
+  offLabel = "",
 }: {
   label: string;
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
+  onLabel?: string;
+  offLabel?: string;
 }) {
   return (
     <label className={classes.switchLabel}>
       <SwitchRoot checked={checked} onCheckedChange={onCheckedChange}>
-        <SwitchThumb checked={checked}>{checked ? "ON" : ""}</SwitchThumb>
+        <SwitchThumb checked={checked}>{checked ? onLabel : offLabel}</SwitchThumb>
       </SwitchRoot>
       {label}
     </label>

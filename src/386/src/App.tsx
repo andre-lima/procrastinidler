@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
 import {
+  Sidebar,
   AccordionRoot,
   AccordionItem,
   AccordionHeader,
@@ -75,6 +76,7 @@ import {
   NumberFieldInput,
   NumberFieldIncrement,
   Button,
+  AsciiProgressBar,
 } from "./components";
 
 import "./styles/theme.css";
@@ -238,16 +240,7 @@ export default function App() {
 
           {/* ── SIDEBAR ── */}
           <div className="col3">
-            <div className="sidebar">
-              {SIDEBAR_ITEMS.map((item, i) => (
-                <span
-                  key={item}
-                  className={i === 0 ? "sidebarItemActive" : "sidebarItem"}
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+            <Sidebar items={SIDEBAR_ITEMS} />
           </div>
 
           {/* ── CONTENT ── */}
@@ -562,6 +555,15 @@ export default function App() {
                   <pre className="codeBlock">
                     {`C:\\BASE-UI> npm install @base-ui/react\n\nadded 1 package in 0.386s\n\nC:\\BASE-UI> type README.TXT\n\nINSTALLATION COMPLETE.\nPress any key to continue_`}
                   </pre>
+                </Sect>
+
+                <Sect title="13. ASCII PROGRESS BAR">
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <AsciiProgressBar title="Rent" value={50} />
+                    <AsciiProgressBar title="Health" value={100} />
+                    <AsciiProgressBar title="Mana" value={25} />
+                    <AsciiProgressBar title="XP" value={progVal} />
+                  </div>
                 </Sect>
               </TabsPanel>
 

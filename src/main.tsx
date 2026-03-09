@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import './i18n';
-import './styles/theme.css';
+import './386/src/styles/theme.css';
 import './styles/spacing.css';
 import './styles/typography.css';
 import './styles/components.css';

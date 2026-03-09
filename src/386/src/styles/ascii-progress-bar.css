@@ -1,0 +1,39 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — AsciiProgressBar
+   Title + ASCII-style bar: Rent [|||||      ]
+   Brackets red, pipes white, background black.
+───────────────────────────────────────────────────────────────────────────── */
+
+.asciiProgressBar {
+  font-family:   var(--font-mono);
+  font-size:     var(--text-base);
+  background:    var(--color-bg-black);
+  color:         var(--color-fg-text);
+  padding:       4px 8px;
+  display:       inline-block;
+}
+
+.asciiProgressBar_title {
+  color: var(--color-fg-dim);
+}
+
+.asciiProgressBar_bar {
+  letter-spacing: -2px;
+}
+
+.asciiProgressBar_bracket {
+  color: var(--color-danger);
+}
+
+.asciiProgressBar_fill {
+  color: var(--color-fg-text);
+}
+
+.asciiProgressBar_empty {
+  color: transparent;
+}
+
+.asciiProgressBar_percent {
+  margin-left: 8px;
+  color: var(--color-fg-dim);
+}

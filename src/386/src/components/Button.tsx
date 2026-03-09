@@ -33,12 +33,12 @@ export function Button({
       : variant === "secondary"
         ? classes.btnSecondary
         : variant === "success"
-          ? classes.btnSuccess
+          ? `${classes.btnPrimary} ${classes.btnSuccess}`
           : variant === "warning"
-            ? classes.btnWarning
+            ? `${classes.btnPrimary} ${classes.btnWarning}`
             : variant === "danger"
-              ? classes.btnDanger
-              : classes.btnInfo;
+              ? `${classes.btnPrimary} ${classes.btnDanger}`
+              : `${classes.btnPrimary} ${classes.btnInfo}`;
 
   const sizeClass = size === "lg" ? classes.btnLg : size === "sm" ? classes.btnSm : "";
 

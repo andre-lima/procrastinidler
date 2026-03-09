@@ -5,7 +5,7 @@
 ───────────────────────────────────────────────────────────────────────────── */
 
 .page {
-  background:  var(--color-bg-page);
+  background:  var(--color-bg-black);
   color:       var(--color-fg-text);
   font-family: var(--font-mono);
   font-size:   var(--text-md);

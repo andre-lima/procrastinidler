@@ -38,9 +38,10 @@
   --color-info:        #55ffff;
 
   /* Buttons — primary (filled) */
-  --color-btn-primary-bg:     #555555;
+  --color-btn-primary-bg: #bbbbbb;
+  --color-btn-primary-bg-hover: #555555;
   --color-btn-primary-border: #777777;
-  --color-btn-primary-fg:     #ffffff;
+  --color-btn-primary-fg:     #000000;
 
   /* Buttons — secondary (outlined) */
   --color-btn-secondary-border: #55ffff;
@@ -50,7 +51,8 @@
   --color-btn-shadow: #333333;
 
   /* Borders */
-  --color-border:     #00aaaa;
+  /* --color-border:     #00aaaa; */
+  --color-border:     #000000;
   --color-border-dim: #555555;
 
   /* Navbar */
@@ -63,7 +65,7 @@
   /* Sidebar — cga386 uses light gray, inset border, red first letter */
   --color-sidebar-bg:                  #d3d3d3;
   --sidebar-border:                    none;
-  --sidebar-box-shadow:                4px 4px 0 #000000, inset 0 0 0 3px #000000;
+  --sidebar-box-shadow:                4px 4px 0 #000000;
   --color-sidebar-item-text:           #000000;
   --color-sidebar-item-hover:          #000000;
   --color-sidebar-item-first-letter:   #ff0000;

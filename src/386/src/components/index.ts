@@ -82,3 +82,7 @@ export {
 } from "./NumberField";
 
 export { Button } from "./Button";
+
+export { Sidebar } from "./Sidebar";
+
+export { AsciiProgressBar } from "./AsciiProgressBar";

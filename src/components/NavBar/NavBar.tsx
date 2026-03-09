@@ -1,4 +1,5 @@
 import { Flex, Grid } from '../shared';
+import { Button } from '../ui';
 import { TaskState } from '../../store/tasksStore';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
@@ -34,13 +35,9 @@ export const NavBar = () => {
     <Flex style={{ padding: 'var(--space-4) var(--space-3)', height: '70px' }}>
       <Grid columns="1fr auto" gap={3} rows="1" style={{ width: '100%' }} align="center">
         <Flex gap={2} align="center">
-          <button
-            type="button"
-            className="btn btnPrimary"
-            onClick={createNewTask}
-          >
+          <Button variant="primary" onClick={createNewTask}>
             {t('menus.addTask')}
-          </button>
+          </Button>
 
           <NavDialogButton id="personal">
             <PurchaseUpgrades id="personal" />

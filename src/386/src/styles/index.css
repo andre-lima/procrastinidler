@@ -5,6 +5,7 @@
 ───────────────────────────────────────────────────────────────────────────── */
 
 @import "./shared.css";
+@import "./ascii-progress-bar.css";
 @import "./navbar.css";
 @import "./sidebar.css";
 @import "./buttons.css";

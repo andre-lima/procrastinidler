@@ -58,6 +58,7 @@
   /* ── Sidebar ────────────────────────────────────────────── */
   --component-sidebar-item-padding:   2px 12px;
   --component-sidebar-margin-right:   var(--space-4);
+  --component-sidebar-padding:       4px;
 
   /* ── Section header ─────────────────────────────────────── */
   --component-section-header-padding: 3px 12px;

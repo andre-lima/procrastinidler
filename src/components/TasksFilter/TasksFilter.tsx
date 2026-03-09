@@ -1,5 +1,5 @@
-import { Flex, Text } from '../shared';
-import { Switch } from '@base-ui/react/switch';
+import { Flex } from '../shared';
+import { Switch } from '../ui';
 import { useGameStore } from '../../store/gameStore';
 import { useTasksStore } from '../../store/tasksStore';
 import { TaskState } from '../../store/tasksStore';
@@ -24,18 +24,11 @@ export const TasksFilter = () => {
       {unlockedDeadline && (
         <>
           <div className="separator" style={{ width: 1, height: '1em', margin: '0 var(--space-2)', borderLeft: '1px solid var(--color-border)' }} />
-          <label className="switchLabel">
-            <Switch.Root
-              checked={showRejectedTasks}
-              onCheckedChange={onChangeExpiredFilter}
-              className={showRejectedTasks ? 'switchRoot switchRootOn' : 'switchRoot'}
-            >
-              <Switch.Thumb className={showRejectedTasks ? 'switchThumb switchThumbOn' : 'switchThumb'} />
-            </Switch.Root>
-            <Text as="span" size="1">
-              Show expired ({rejectedTasksLength})
-            </Text>
-          </label>
+          <Switch
+            label={`Show expired (${rejectedTasksLength})`}
+            checked={showRejectedTasks}
+            onCheckedChange={onChangeExpiredFilter}
+          />
           <div className="separator" style={{ width: 1, height: '1em', margin: '0 var(--space-2)', borderLeft: '1px solid var(--color-border)' }} />
         </>
       )}

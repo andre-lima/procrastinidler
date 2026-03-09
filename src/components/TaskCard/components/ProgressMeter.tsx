@@ -1,7 +1,7 @@
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../../store/tasksStore';
 import { Flex, Box, Text } from '../../shared';
-import { Progress } from '@base-ui/react/progress';
+import { ProgressRoot, ProgressTrack, ProgressIndicator } from '../../ui';
 import { humanNumber } from '../../../helpers/human-number';
 import { TaskState } from '../../../store/tasksStore';
 
@@ -24,14 +24,11 @@ export const ProgressMeter = ({ id }: { id: string }) => {
           {humanNumber(value, 0)}%
         </Text>
       </Flex>
-      <Progress.Root value={value} style={{ marginBottom: 'var(--space-2)' }}>
-        <Progress.Track className="progressTrack">
-          <Progress.Indicator
-            className="progressFill"
-            style={{ width: `${value}%` }}
-          />
-        </Progress.Track>
-      </Progress.Root>
+      <ProgressRoot value={value} style={{ marginBottom: 'var(--space-2)' }}>
+        <ProgressTrack>
+          <ProgressIndicator style={{ width: `${value}%` }} />
+        </ProgressTrack>
+      </ProgressRoot>
     </>
   );
 };

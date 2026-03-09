@@ -1,4 +1,5 @@
 import { Box, Flex, Grid, Text } from '../shared';
+import { Button } from '../ui';
 import type { Upgrade } from '../../store/upgradesStore';
 import './styles.scss';
 import { useUpgradesStore } from '../../store/upgradesStore';
@@ -41,9 +42,9 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
         </Flex>
 
         <Box style={{ marginLeft: 'auto' }} gridArea="button">
-          <button
-            type="button"
-            className="btn btnPrimary purchaseUpgradeButton"
+          <Button
+            variant="primary"
+            className="purchaseUpgradeButton"
             onClick={() =>
               useUpgradesStore.getState().purchaseUpgrade(upgrade.id)
             }
@@ -52,7 +53,7 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
             }
           >
             Purchase
-          </button>
+          </Button>
         </Box>
       </Grid>
     </div>
