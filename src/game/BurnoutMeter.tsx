@@ -3,6 +3,9 @@ import { AsciiProgressBar } from '../components/ui';
 import { useGameStore } from '../store/gameStore';
 import { config } from './config';
 import { IntervalController } from '../helpers/interval-controller';
+import { Flex, Text } from '../components/shared';
+
+const rentAmount = config.rentAmount ?? 100;
 
 export const BurnoutMeter = () => {
   const burnout = useGameStore((state) => state.burnout);
@@ -11,7 +14,7 @@ export const BurnoutMeter = () => {
   const tick = useCallback(() => {
     const { money, burnout: currentBurnout } = useGameStore.getState();
 
-    if (money <= 0) {
+    if (money < rentAmount) {
       const newBurnout = currentBurnout + config.burnoutGrowthPerTick;
       setBurnout(newBurnout);
 
@@ -19,8 +22,6 @@ export const BurnoutMeter = () => {
         console.log('Burnout triggered!');
         setBurnout(0);
       }
-    } else {
-      setBurnout(0);
     }
   }, [setBurnout]);
 
@@ -30,5 +31,12 @@ export const BurnoutMeter = () => {
     return () => timer.stop();
   }, [tick]);
 
-  return <AsciiProgressBar title="burnout" value={burnout} />;
+  return (
+    <Flex gap={3} align="center">
+      <AsciiProgressBar title="burnout" value={burnout} />
+      <Text size="2" style={{ color: 'var(--color-fg-dim)', whiteSpace: 'nowrap' }}>
+        Rent ${rentAmount}
+      </Text>
+    </Flex>
+  );
 };

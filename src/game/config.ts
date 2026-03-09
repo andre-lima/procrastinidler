@@ -6,6 +6,8 @@ export const config = {
   maxTodoTasks: 50,
   tickLength: 1000,
   burnoutGrowthPerTick: 2,
+  /** Rent amount; burnout increases when money is below this */
+  rentAmount: 100,
   /** Seconds to fill task progress from 0% to 100% when holding (scaled by difficulty) */
   fillSpeedSeconds: 1.8,
   /** Seconds for an assistant to fill 0→100% (scaled by difficulty); higher = slower */
