@@ -5,4 +5,5 @@ export const config = {
   maxCardsPerColumn: 30,
   maxTodoTasks: 50,
   tickLength: 650,
+  burnoutGrowthPerTick: 2,
 };

@@ -5,6 +5,7 @@ import { localStorageSaveSystem } from './saveSystem';
 
 interface GameStoreState {
   money: number;
+  burnout: number;
   gameProgress: {
     startedAt: number;
     canPurchasePersonalUpgrades: boolean;
@@ -22,6 +23,7 @@ interface GameStoreState {
 
 const initialState: GameStoreState = {
   money: 0,
+  burnout: 0,
   gameProgress: {
     startedAt: Date.now(),
     canPurchasePersonalUpgrades: false,
@@ -42,6 +44,7 @@ const useGameStore = createGameStore<
   {
     addMoney: (amount: number) => void;
     spendMoney: (amount: number) => void;
+    setBurnout: (value: number) => void;
     setTaskSorting: (sortByNewer: boolean) => void;
     setShowingRejected: (showRejected: boolean) => void;
     setSfxOn: (sfxOn: boolean) => void;
@@ -65,6 +68,9 @@ const useGameStore = createGameStore<
     },
     spendMoney: (amount: number) => {
       set({ money: get().money - amount });
+    },
+    setBurnout: (value: number) => {
+      set({ burnout: Math.max(0, Math.min(100, value)) });
     },
     setTaskSorting: (sortByNewer: boolean) => {
       set((state) => ({

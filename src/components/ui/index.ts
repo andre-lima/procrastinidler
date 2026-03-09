@@ -29,3 +29,4 @@ export {
   ProgressTrack,
   ProgressIndicator,
 } from '../../386/src/components/Progress';
+export { AsciiProgressBar } from '../../386/src/components/AsciiProgressBar';
