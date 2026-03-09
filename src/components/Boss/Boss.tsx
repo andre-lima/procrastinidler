@@ -14,30 +14,21 @@ export const Boss = () => {
   const bossLoop = useCallback(() => {
     useTasksStore.getState().newTask();
 
-    // TODO: Deal with boss reviews
-    const assignedTasks = useBossStore.getState().boss?.assignedTo;
-
+    const assignedTasks = useBossStore.getState().boss?.assignedTo ?? [];
     const numOfTasksAssignable =
       useUpgradesStore.getState().upgrades.bossMultitasking.currentValue;
 
-    if (assignedTasks?.length) {
-      assignedTasks.forEach((task) => {
-        useTasksStore.getState().makeProgress(task, 'boss');
-      });
-    }
-    if ((assignedTasks?.length || 0) < numOfTasksAssignable) {
-      const numToAssign = numOfTasksAssignable - (assignedTasks?.length || 0);
+    if (assignedTasks.length < numOfTasksAssignable) {
+      const numToAssign = numOfTasksAssignable - assignedTasks.length;
       const tasks = useTasksStore
         .getState()
         .getNextUnassignedTask(numToAssign, [TaskState.InReview]);
-      if (tasks.length) {
-        tasks.forEach((task) => {
-          if (task) {
-            useTasksStore.getState().assignBossToTask(task);
-            useBossStore.getState().assignTaskToBoss(task.id);
-          }
-        });
-      }
+      tasks.forEach((task) => {
+        if (task) {
+          useTasksStore.getState().assignBossToTask(task);
+          useBossStore.getState().assignTaskToBoss(task.id);
+        }
+      });
     }
   }, []);
 

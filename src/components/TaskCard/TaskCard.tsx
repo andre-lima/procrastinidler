@@ -213,7 +213,13 @@ export const TaskCard = memo(({ id }: { id: string }) => {
           <ProgressMeter
             id={id}
             overrideProgress={
-              isHolding ? displayProgress : localProgress !== null ? localProgress : undefined
+              isHolding
+                ? displayProgress
+                : isLocked
+                  ? progress
+                  : localProgress !== null
+                    ? localProgress
+                    : undefined
             }
             liveFillRef={isHolding ? liveFillRef : undefined}
           />

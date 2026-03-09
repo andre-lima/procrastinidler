@@ -22,7 +22,7 @@ interface GameStoreState {
 }
 
 const initialState: GameStoreState = {
-  money: 0,
+  money: 100000,
   burnout: 0,
   gameProgress: {
     startedAt: Date.now(),
@@ -62,7 +62,7 @@ const useGameStore = createGameStore<
       const money =
         get().money +
         amount *
-          useUpgradesStore.getState().upgrades.personalMoneyPerTask.currentValue;
+        useUpgradesStore.getState().upgrades.personalMoneyPerTask.currentValue;
       set({ money });
       checkProgressTriggers();
     },

@@ -79,10 +79,14 @@ export const useTasksStore = createGameStore<
       taskStates?: TaskState[]
     ) => (Task | undefined)[];
     newTask: (task?: Task) => void;
+    tryAssignAssistantToTask: (task: Task) => void;
+    tryAssignBossToTask: (task: Task) => void;
+    tryAssignBossToNextReviewTasks: () => void;
     recoverTasks: () => void;
     assignAssistantToTask: (assistantId: string, task: Task) => void;
     assignBossToTask: (task: Task) => void;
     makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => void;
+    tickWorkerProgress: (deltaTimeSeconds: number) => void;
     rejectTask: (id: string) => void;
     completeTask: (id: string) => void;
   }
@@ -129,6 +133,56 @@ export const useTasksStore = createGameStore<
 
       set({
         tasks: { ...get().tasks, [newTaskObj.id]: newTaskObj },
+      });
+
+      if (!newTaskObj.isSpecial && newTaskObj.assignedTo.length === 0) {
+        get().tryAssignAssistantToTask(newTaskObj);
+      }
+    },
+    tryAssignAssistantToTask: (task: Task) => {
+      if (task.assignedTo.length > 0) return;
+      if (task.state === TaskState.InReview) {
+        if (useUpgradesStore.getState().upgrades.bossAssistant?.owned !== 1) return;
+      } else if (task.state !== TaskState.Todo) return;
+
+      const assistants = useAssistantStore.getState().assistants;
+      const numCapacity =
+        useUpgradesStore.getState().upgrades.assistantsMultitasking
+          ?.currentValue ?? 1;
+      for (const assistantId of Object.keys(assistants)) {
+        const a = assistants[assistantId];
+        if (!a) continue;
+        if (a.assignedTo.length < numCapacity) {
+          get().assignAssistantToTask(assistantId, task);
+          useAssistantStore.getState().assignTaskToAssistant(task.id, assistantId);
+          return;
+        }
+      }
+    },
+    tryAssignBossToTask: (task: Task) => {
+      if (task.state !== TaskState.InReview) return;
+      if ((task.assignedTo ?? []).length > 0) return;
+      const boss = useBossStore.getState().boss;
+      if (!boss) return;
+      const capacity =
+        useUpgradesStore.getState().upgrades.bossMultitasking?.currentValue ?? 1;
+      if (boss.assignedTo.length >= capacity) return;
+      get().assignBossToTask(task);
+      useBossStore.getState().assignTaskToBoss(task.id);
+    },
+    tryAssignBossToNextReviewTasks: () => {
+      const boss = useBossStore.getState().boss;
+      if (!boss) return;
+      const capacity =
+        useUpgradesStore.getState().upgrades.bossMultitasking?.currentValue ?? 1;
+      const slots = capacity - boss.assignedTo.length;
+      if (slots <= 0) return;
+      const tasks = get().getNextUnassignedTask(slots, [TaskState.InReview]);
+      tasks.forEach((task) => {
+        if (task) {
+          get().assignBossToTask(task);
+          useBossStore.getState().assignTaskToBoss(task.id);
+        }
       });
     },
     recoverTasks: () => {
@@ -209,6 +263,46 @@ export const useTasksStore = createGameStore<
         set({ tasks: { ...get().tasks, [id]: task } });
       }
     },
+    tickWorkerProgress: (deltaTimeSeconds: number) => {
+      const currentTasks = get().tasks;
+      const assistantIntervalUpgrade = useUpgradesStore.getState().upgrades.assistantInterval;
+      const assistantSpeed =
+        (assistantIntervalUpgrade?.owned ?? 0) > 0
+          ? (assistantIntervalUpgrade.currentValue as number) / 1000
+          : (config.assistantFillSpeedSeconds ?? 4);
+      const bossIntervalUpgrade = useUpgradesStore.getState().upgrades.bossInterval;
+      const bossSpeed =
+        (bossIntervalUpgrade?.owned ?? 0) > 0
+          ? (bossIntervalUpgrade.currentValue as number) / 1000
+          : (config.bossFillSpeedSeconds ?? 2);
+      const toComplete: string[] = [];
+      const nextTasks = { ...currentTasks };
+      let updated = false;
+
+      for (const task of Object.values(currentTasks)) {
+        if (!task || task.progress >= 100) continue;
+        const assignedTo = task.assignedTo ?? [];
+        if (assignedTo.length !== 1) continue;
+        if (task.state !== TaskState.Todo && task.state !== TaskState.InReview)
+          continue;
+
+        const worker = assignedTo[0];
+        const fillTimeSeconds =
+          worker === 'boss'
+            ? bossSpeed * (task.difficulty || 1)
+            : assistantSpeed * (task.difficulty || 1);
+
+        const deltaPercent = (deltaTimeSeconds / fillTimeSeconds) * 100;
+        const newProgress = Math.min(task.progress + deltaPercent, 100);
+        nextTasks[task.id] = { ...task, progress: newProgress };
+        updated = true;
+
+        if (newProgress >= 100) toComplete.push(task.id);
+      }
+
+      if (updated) set({ tasks: nextTasks });
+      toComplete.forEach((id) => get().completeTask(id));
+    },
     rejectTask: (id: string) => {
       const rejectedTask = get().tasks[id];
       if (rejectedTask) {
@@ -224,9 +318,12 @@ export const useTasksStore = createGameStore<
     completeTask: (id: string) => {
       const completedTask = get().tasks[id];
       if (completedTask) {
+        const wasInReview = completedTask.state === TaskState.InReview;
+        const requiresReviewUpgradePurchased =
+          (useUpgradesStore.getState().upgrades.requiresReview?.owned ?? 0) > 0;
         if (
           completedTask.state === TaskState.Todo &&
-          completedTask.requiresReview
+          requiresReviewUpgradePurchased
         ) {
           completedTask.state = TaskState.InReview;
           completedTask.progress = 0;
@@ -235,7 +332,7 @@ export const useTasksStore = createGameStore<
           completedTask.progress = 100;
         }
 
-        completedTask.assignedTo.forEach((assistantId) =>
+        (completedTask.assignedTo ?? []).forEach((assistantId) =>
           useAssistantStore
             .getState()
             .unassignTask(completedTask.id, assistantId)
@@ -277,6 +374,17 @@ export const useTasksStore = createGameStore<
             tasks: { ...state.tasks, [id]: completedTask },
           };
         });
+
+        if (completedTask.state === TaskState.InReview) {
+          const taskInStore = get().tasks[id];
+          if (taskInStore) {
+            get().tryAssignBossToTask(taskInStore);
+            get().tryAssignAssistantToTask(taskInStore);
+          }
+        }
+        if (wasInReview) {
+          get().tryAssignBossToNextReviewTasks();
+        }
       }
     },
   })

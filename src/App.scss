@@ -5,11 +5,11 @@
 .gameLayout {
   display: grid;
   grid-template-areas:
-    'header header'
-    'tasks  player'
-    'tasks  events'
-    'footer footer';
-  grid-template-columns: 60% 1fr;
+    'header  header     header'
+    'tasks   completed  player'
+    'tasks   boost      events'
+    'footer  footer     footer';
+  grid-template-columns: 60% 1fr 1fr;
   grid-template-rows: auto 1fr 1fr auto;
   min-height: 100vh;
   overflow: hidden;
@@ -39,6 +39,26 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
+}
+
+.gameCompleted {
+  grid-area: completed;
+  padding: var(--space-4);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-fg-dim);
+  font-size: var(--text-sm);
+}
+
+.gameBoost {
+  grid-area: boost;
+  padding: var(--space-4);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-fg-dim);
+  font-size: var(--text-sm);
 }
 
 .gamePlayer {
@@ -92,7 +112,7 @@
 
   &:hover {
     background: var(--color-bg-black);
-    color:      var(--color-fg-text);
+    color: var(--color-fg-text);
 
     .footerNavItemText::first-letter {
       color: var(--color-fg-text);

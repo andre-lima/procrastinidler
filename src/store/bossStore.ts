@@ -14,7 +14,7 @@ interface BossStoreState {
 
 const initialState: BossStoreState = {
   boss: null,
-  bossInterval: config.tickLength,
+  bossInterval: config.tickLength * 2,
 };
 
 export const useBossStore = createGameStore<

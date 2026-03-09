@@ -60,13 +60,13 @@ const initialState: AssistantsUpgradesStoreState = {
   assistantInterval: {
     id: 'assistantInterval',
     type: 'assistants',
-    currentValue: config.tickLength,
-    baseValue: config.tickLength,
+    currentValue: config.assistantFillSpeedSeconds * 1000,
+    baseValue: config.assistantFillSpeedSeconds * 1000,
     cost: 250,
     rate: 1.5,
     owned: 0,
     ownedLimit: 10,
-    deltaPerOwned: -config.tickLength / 20,
+    deltaPerOwned: -(config.assistantFillSpeedSeconds * 1000) / 10,
   },
   bossAssistant: {
     id: 'bossAssistant',

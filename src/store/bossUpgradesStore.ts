@@ -40,13 +40,13 @@ const initialState: BossUpgradesStoreState = {
   bossInterval: {
     id: 'bossInterval',
     type: 'boss',
-    currentValue: config.tickLength,
-    baseValue: config.tickLength,
+    currentValue: config.bossFillSpeedSeconds * 1000,
+    baseValue: config.bossFillSpeedSeconds * 1000,
     cost: 500,
     rate: 1.4,
     owned: 0,
     ownedLimit: 10,
-    deltaPerOwned: -config.tickLength / 20,
+    deltaPerOwned: -(config.bossFillSpeedSeconds * 1000) / 10,
   },
   requiresReview: {
     id: 'requiresReview',
