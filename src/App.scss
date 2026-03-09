@@ -1,3 +1,117 @@
+/* ── Game layout (grid) ───────────────────────────────────────
+   Header: navigation | currency
+   Body:   tasks (60%) | player + events (40%, stacked)
+───────────────────────────────────────────────────────────── */
+.gameLayout {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'tasks  player'
+    'tasks  events'
+    'footer footer';
+  grid-template-columns: 60% 1fr;
+  grid-template-rows: auto 1fr 1fr auto;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.gameHeader {
+  grid-area: header;
+  display: grid;
+  grid-template-areas: 'navigation currency';
+  grid-template-columns: auto 1fr;
+  background: var(--color-nav-bg);
+}
+
+.gameHeaderNav {
+  grid-area: navigation;
+  background: var(--color-bg-dark);
+  margin: var(--space-3);
+  box-shadow: 4px 4px 0 var(--color-bg-black);
+}
+
+.gameHeaderCurrency {
+  grid-area: currency;
+}
+
+.gameTasks {
+  grid-area: tasks;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.gamePlayer {
+  grid-area: player;
+  padding: var(--space-4);
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fg-dim);
+  font-size: var(--text-sm);
+}
+
+.gameEvents {
+  grid-area: events;
+  padding: var(--space-4);
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fg-dim);
+  font-size: var(--text-sm);
+}
+
+.gameFooter {
+  grid-area: footer;
+  background: var(--color-sidebar-bg, var(--color-bg-dark));
+  border-top: 1px solid var(--color-border-dim);
+  color: var(--color-sidebar-item-text, var(--color-fg-text));
+  font-family: var(--font-mono);
+
+  > * {
+    padding: 0 var(--space-3) 0 0 !important;
+  }
+}
+
+.footerBrand {
+  color: var(--color-sidebar-item-text, var(--color-fg-text));
+}
+
+.footerNavItem {
+  padding: var(--component-nav-item-padding);
+  display: flex;
+  align-items: center;
+  font-size: var(--text-base);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  color: var(--color-sidebar-item-text, var(--color-fg-text));
+
+  &:hover {
+    background: var(--color-bg-black);
+    color:      var(--color-fg-text);
+
+    .footerNavItemText::first-letter {
+      color: var(--color-fg-text);
+    }
+  }
+}
+
+.footerNavItemText {
+  display: inline-block;
+
+  &::first-letter {
+    color: var(--color-sidebar-item-first-letter, var(--color-fg-brand));
+  }
+}
+
+.tasksListPanel {
+  box-shadow: var(--space-2) var(--space-2) 0 var(--color-bg-black);
+}
+
 /* Stacking: app root below so dialog portals (in body) render on top */
 #root {
   position: relative;

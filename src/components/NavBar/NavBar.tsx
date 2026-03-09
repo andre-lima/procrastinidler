@@ -1,4 +1,3 @@
-import { Flex, Grid } from '../shared';
 import { Button } from '../ui';
 import { TaskState } from '../../store/tasksStore';
 import { useTasksStore } from '../../store/tasksStore';
@@ -32,36 +31,34 @@ export const NavBar = () => {
   };
 
   return (
-    <Flex style={{ padding: 'var(--space-4) var(--space-3)', height: '70px' }}>
-      <Grid columns="1fr auto" gap={3} rows="1" style={{ width: '100%' }} align="center">
-        <Flex gap={2} align="center">
-          <Button variant="primary" onClick={createNewTask}>
-            {t('menus.addTask')}
-          </Button>
+    <>
+      <div className="gameHeaderNav" style={{ padding: 'var(--space-3) var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+        <Button variant="primary" onClick={createNewTask}>
+          {t('menus.addTask')}
+        </Button>
 
-          <NavDialogButton id="personal">
-            <PurchaseUpgrades id="personal" />
-          </NavDialogButton>
+        <NavDialogButton id="personal">
+          <PurchaseUpgrades id="personal" />
+        </NavDialogButton>
 
-          <NavDialogButton id="boss">
-            <PurchaseUpgrades id="boss" />
-          </NavDialogButton>
+        <NavDialogButton id="boss">
+          <PurchaseUpgrades id="boss" />
+        </NavDialogButton>
 
-          <NavDialogButton id="assistants">
-            <PurchaseUpgrades id="assistants" />
-          </NavDialogButton>
+        <NavDialogButton id="assistants">
+          <PurchaseUpgrades id="assistants" />
+        </NavDialogButton>
 
-          {Object.values(assistants).map(
-            (assistant) =>
-              assistant && <Assistant key={assistant.id} id={assistant.id} />
-          )}
+        {Object.values(assistants).map(
+          (assistant) =>
+            assistant && <Assistant key={assistant.id} id={assistant.id} />
+        )}
 
-          {boss && <Boss />}
-        </Flex>
-        <Flex justify="end" align="center">
-          <MoneyDisplay />
-        </Flex>
-      </Grid>
-    </Flex>
+        {boss && <Boss />}
+      </div>
+      <div className="gameHeaderCurrency" style={{ padding: 'var(--space-4) var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <MoneyDisplay />
+      </div>
+    </>
   );
 };

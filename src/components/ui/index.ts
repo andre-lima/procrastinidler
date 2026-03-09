@@ -15,6 +15,7 @@ export {
   DialogDescription,
   DialogFooter,
 } from '../../386/src/components/Dialog';
+export { TabsRoot, TabsList, TabsTab, TabsPanel } from '../../386/src/components/Tabs';
 export {
   TooltipProvider,
   TooltipRoot,

@@ -19,89 +19,82 @@ function App() {
   );
 
   return (
-    <div className="page">
-      <Grid
-        gap={1}
-        columns="100%"
-        rows="auto auto 1fr auto"
-        areas="'header' 'filters' 'tasks' 'footer'"
-        align="center"
-        style={{ height: '100vh', overflow: 'hidden' }}
-      >
-        <Box gridArea="header">
-          <NavBar />
-        </Box>
+    <div className="page gameLayout">
+      <header className="gameHeader">
+        <NavBar />
+      </header>
 
-        <Flex gridArea="filters" align="center" justify="between">
-          <div />
-          <Settings />
-        </Flex>
-
-        <Grid
-          gap={4}
-          gridArea="tasks"
-          style={{
-            gridAutoColumns: '1fr',
-            gridAutoFlow: 'column',
-            height: '100%',
-          }}
-        >
-          <TasksList
-            title="To Do"
-            maxNumOfTasks={config.maxTodoTasks}
-            tasksSelector={(state: TasksState) =>
-              Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Todo)
-            }
-          />
-          {showReviewsColumn && (
+      <div className="gameTasks">
+          <Grid
+            gap={4}
+            style={{
+              gridAutoColumns: '1fr',
+              gridAutoFlow: 'column',
+              flex: 1,
+              minHeight: 0,
+              padding: 'var(--space-4)',
+            }}
+          >
             <TasksList
-              title="In Review"
+              title="To Do"
+              maxNumOfTasks={config.maxTodoTasks}
               tasksSelector={(state: TasksState) =>
-                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.InReview)
+                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Todo)
               }
             />
-          )}
-          <TasksList
-            title="Completed"
-            tasksSelector={(state: TasksState) =>
-              Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Completed)
-            }
-          />
-
-          {showRejectedColumn && (
+            {showReviewsColumn && (
+              <TasksList
+                title="In Review"
+                tasksSelector={(state: TasksState) =>
+                  Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.InReview)
+                }
+              />
+            )}
             <TasksList
-              title="Expired"
+              title="Completed"
               tasksSelector={(state: TasksState) =>
-                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Rejected)
+                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Completed)
               }
             />
-          )}
-        </Grid>
 
-        <Box gridArea="footer">
-          <Flex align="center" justify="between" style={{ padding: 'var(--space-4)' }}>
-            <Heading size="4" as="h1">
-              {completedTasks.length > 30 && (
-                <div>
-                  <small style={{ color: 'var(--color-fg-dim)' }}>Play my other incremental game: </small>
-                  <a
-                    className="btn btnPrimary ntabd_button"
-                    target="_blank"
-                    rel="noreferrer"
-                    href="https://andre-lima.itch.io/now-thats-a-big-dragon"
-                    style={{ color: 'var(--color-fg-text)', textDecoration: 'none' }}
-                  >
-                    <Text> Now THAT's a Big Dragon! </Text>
-                  </a>
-                </div>
-              )}
-            </Heading>
-            <Heading size="4" as="h1">
-              | procrastinidler. |
-            </Heading>
+            {showRejectedColumn && (
+              <TasksList
+                title="Expired"
+                tasksSelector={(state: TasksState) =>
+                  Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Rejected)
+                }
+              />
+            )}
+          </Grid>
+      </div>
+
+      <div className="gamePlayer">Player</div>
+      <div className="gameEvents">Events</div>
+
+      <Box className="gameFooter">
+        <Flex align="center" justify="between" style={{ padding: 'var(--space-2) var(--space-3)' }}>
+          <Flex align="center" gap={2}>
+            <Settings />
+            {completedTasks.length > 30 && (
+              <Heading size="4" as="h1">
+                <small style={{ color: 'var(--color-sidebar-item-text)' }}>Play my other incremental game: </small>
+                <a
+                  className="btn btnPrimary ntabd_button"
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://andre-lima.itch.io/now-thats-a-big-dragon"
+                  style={{ color: 'var(--color-sidebar-item-text)', textDecoration: 'none' }}
+                >
+                  <Text> Now THAT's a Big Dragon! </Text>
+                </a>
+              </Heading>
+            )}
           </Flex>
-        </Box>
-      </Grid>
+          <span className="footerBrand" style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-bold)' }}>
+            Procrastinidler
+          </span>
+        </Flex>
+      </Box>
     </div>
   );
 }

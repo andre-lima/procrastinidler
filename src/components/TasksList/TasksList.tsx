@@ -23,11 +23,11 @@ export const TasksList = memo(
 
     return (
       <Box
+        className="tasksListPanel"
         style={{
           padding: 'var(--space-4)',
           paddingRight: 'var(--space-2)',
           background: 'var(--color-bg-panel)',
-          border: '1px solid var(--color-border)',
         }}
       >
         <Flex align="end" gap={2}>

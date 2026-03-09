@@ -25,7 +25,7 @@
 }
 
 .navItem {
-  color:       var(--color-nav-text);
+  color:       var(--color-sidebar-item-text, var(--color-bg-black));
   padding:     var(--component-nav-item-padding);
   display:     flex;
   align-items: center;
@@ -36,8 +36,17 @@
   font-family: var(--font-mono);
 }
 
+.navItem::first-letter {
+  color: var(--color-sidebar-item-first-letter, var(--color-danger));
+}
+
 .navItem:hover {
-  background: color-mix(in srgb, var(--color-nav-active-bg) 15%, transparent);
+  background: var(--color-bg-black);
+  color:      var(--color-fg-text);
+}
+
+.navItem:hover::first-letter {
+  color: var(--color-fg-text);
 }
 
 .navItemActive {
