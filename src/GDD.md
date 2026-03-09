@@ -87,6 +87,8 @@ When at 100%, the player loses and has to touch grass or play a minigame to reco
 
 Burning out works as a prestige. Next run, the player can purchase resiliency with the special currency.
 
+An upgrade can make the burnout slowly reduce, but initially it never goes down.
+
 ### Boosts/Events
 
 Coffee/boost

@@ -1,49 +1,55 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { TaskCard } from './TaskCard';
-import { config } from '../../game/config';
 import { useTasksStore } from '../../store/tasksStore';
 
-const MOCK_TASK = {
-  id: '1',
-  title: 'Test Task',
-  difficulty: 1,
-  inProgress: false,
-  completed: false,
+const renderComponent = (id: string = 'initial') => {
+  return render(<TaskCard id={id} />);
 };
-
-const renderComponent = () => {
-  return render(<TaskCard {...MOCK_TASK} />);
-};
-
-const completeTaskSpy = vi.spyOn(useTasksStore.getState(), 'completeTask');
 
 describe('TaskCard component', () => {
-  beforeEach(() => {});
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
   it('should render component', () => {
     renderComponent();
 
-    expect(screen.getByText('Test Task')).toBeInTheDocument();
+    expect(
+      screen.getByText('Click white cards to complete them and earn money $')
+    ).toBeInTheDocument();
   });
 
-  it('should complete when clicked enough times', async () => {
+  it('should keep progress locally when releasing hold before 100%', async () => {
+    const completeTaskSpy = vi.spyOn(
+      useTasksStore.getState(),
+      'completeTask'
+    );
     renderComponent();
 
     const card = screen.getByRole('button');
+    fireEvent.mouseDown(card);
+    await new Promise((r) => requestAnimationFrame(r));
+    fireEvent.mouseUp(card);
 
-    for (
-      let i = 0;
-      i < config.clicksPerDifficultyLevel * MOCK_TASK.difficulty;
-      i++
-    ) {
-      await userEvent.click(card);
+    expect(completeTaskSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not allow hold when task is assigned', () => {
+    const initialTask = useTasksStore.getState().tasks.initial;
+    if (initialTask) {
+      useTasksStore
+        .getState()
+        .assignAssistantToTask('some-assistant', { ...initialTask });
     }
-
-    expect(completeTaskSpy).toHaveBeenCalledWith(MOCK_TASK.id);
-
-    // Todo: Change to check progress value
-    expect(screen.getByText('5')).toBeInTheDocument();
+    renderComponent();
+    const completeTaskSpy = vi.spyOn(
+      useTasksStore.getState(),
+      'completeTask'
+    );
+    const card = screen.getByRole('button');
+    fireEvent.mouseDown(card);
+    fireEvent.mouseUp(card);
+    expect(completeTaskSpy).not.toHaveBeenCalled();
   });
 });

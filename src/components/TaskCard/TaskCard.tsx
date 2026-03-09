@@ -14,8 +14,9 @@ import './styles.scss';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
-import { memo } from 'react';
+import { memo, useState, useRef, useEffect, useCallback } from 'react';
 import { ProgressMeter } from './components/ProgressMeter';
+import { config } from '../../game/config';
 
 export const TaskCard = memo(({ id }: { id: string }) => {
   const {
@@ -26,25 +27,93 @@ export const TaskCard = memo(({ id }: { id: string }) => {
     assignedTo,
     isSpecial,
     requiresReview,
+    progress,
   } = useTasksStore(useShallow((state) => ({ ...state.tasks[id]! })));
   const canPair = useUpgradesStore(
     (state) => state.upgrades.taskPairing.owned > 0
   );
 
+  const [isHolding, setIsHolding] = useState(false);
+  /** Local progress for unassigned Todo; avoids store writes until completion */
+  const [localProgress, setLocalProgress] = useState<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
+  const progressRef = useRef(0);
+  /** Ref for the progress bar fill; we update its width in RAF during hold to avoid re-renders */
+  const liveFillRef = useRef<HTMLDivElement | null>(null);
+
+  const isLocked =
+    isSpecial ||
+    assignedTo.length > 0 ||
+    state !== TaskState.Todo;
+  const canHold = !isLocked && (canPair || assignedTo.length === 0);
+
+  const fillSpeed =
+    (config.fillSpeedSeconds ?? 1.8) * (difficulty || 1);
+
+  const displayProgress = localProgress ?? progress;
+
+  const stopFilling = useCallback(() => {
+    setIsHolding(false);
+    if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    rafRef.current = null;
+    startTimeRef.current = null;
+    const final = progressRef.current;
+    if (final < 100) {
+      setLocalProgress(final);
+    }
+  }, []);
+
+  const startFilling = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      if (isLocked) return;
+      e.preventDefault();
+      setIsHolding(true);
+      const startProgress = state === TaskState.Todo ? displayProgress : 0;
+      progressRef.current = startProgress;
+      if (startProgress >= 100) return;
+
+      startTimeRef.current =
+        performance.now() - (startProgress / 100) * fillSpeed * 1000;
+
+      const tick = (timestamp: number) => {
+        const elapsed = (timestamp - (startTimeRef.current ?? 0)) / 1000;
+        const next = Math.min((elapsed / fillSpeed) * 100, 100);
+        progressRef.current = next;
+        if (liveFillRef.current) {
+          liveFillRef.current.style.width = `${next}%`;
+        }
+
+        if (next < 100) {
+          rafRef.current = requestAnimationFrame(tick);
+        } else {
+          setIsHolding(false);
+          setLocalProgress(null);
+          if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+          startTimeRef.current = null;
+          useTasksStore.getState().completeTask(id);
+        }
+      };
+      rafRef.current = requestAnimationFrame(tick);
+    },
+    [id, isLocked, state, displayProgress, fillSpeed]
+  );
+
+  useEffect(() => {
+    if (state !== TaskState.Todo) setLocalProgress(null);
+  }, [state]);
+
+  useEffect(
+    () => () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    },
+    []
+  );
+
   if (!title) {
     return null;
   }
-
-  const canClick =
-    !isSpecial &&
-    (canPair || assignedTo.length === 0) &&
-    state === TaskState.Todo;
-
-  const clicked = () => {
-    if (canClick) {
-      useTasksStore.getState().makeProgress(id, 'personal');
-    }
-  };
 
   return (
     <div
@@ -52,13 +121,33 @@ export const TaskCard = memo(({ id }: { id: string }) => {
         'panel panelInner taskCard' +
         (isSpecial ? ' special ' : ' ') +
         state +
-        (canClick ? ' canClick' : '')
+        (canHold ? ' canClick' : '')
       }
-      style={{ marginRight: 'var(--space-3)', cursor: canClick ? 'pointer' : 'default' }}
+      style={{
+        marginRight: 'var(--space-3)',
+        cursor: canHold ? 'pointer' : 'default',
+        opacity: isLocked && state !== TaskState.Completed ? 0.6 : 1,
+      }}
       role="button"
-      tabIndex={canClick ? 0 : undefined}
-      onClick={clicked}
-      onKeyDown={(e) => canClick && (e.key === 'Enter' || e.key === ' ') && clicked()}
+      tabIndex={canHold ? 0 : undefined}
+      onMouseDown={startFilling}
+      onMouseUp={stopFilling}
+      onMouseLeave={stopFilling}
+      onTouchStart={startFilling}
+      onTouchEnd={stopFilling}
+      onKeyDown={(e) => {
+        if (!canHold) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (e.type === 'keydown' && e.repeat) return;
+          startFilling(e as unknown as React.MouseEvent);
+          const onKeyUp = () => {
+            stopFilling();
+            window.removeEventListener('keyup', onKeyUp);
+          };
+          window.addEventListener('keyup', onKeyUp);
+        }
+      }}
     >
       <Grid
         gap={1}
@@ -121,7 +210,13 @@ export const TaskCard = memo(({ id }: { id: string }) => {
           <DifficultyMeter difficulty={difficulty} />
         </Box>
         <Box gridArea="progress">
-          <ProgressMeter id={id} />
+          <ProgressMeter
+            id={id}
+            overrideProgress={
+              isHolding ? displayProgress : localProgress !== null ? localProgress : undefined
+            }
+            liveFillRef={isHolding ? liveFillRef : undefined}
+          />
         </Box>
       </Grid>
     </div>

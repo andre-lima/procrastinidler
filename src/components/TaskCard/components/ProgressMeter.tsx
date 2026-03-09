@@ -1,3 +1,4 @@
+import type { RefObject } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../../store/tasksStore';
 import { Flex, Box, Text } from '../../shared';
@@ -5,12 +6,27 @@ import { ProgressRoot, ProgressTrack, ProgressIndicator } from '../../ui';
 import { humanNumber } from '../../../helpers/human-number';
 import { TaskState } from '../../../store/tasksStore';
 
-export const ProgressMeter = ({ id }: { id: string }) => {
+export const ProgressMeter = ({
+  id,
+  overrideProgress,
+  liveFillRef,
+}: {
+  id: string;
+  /** When provided (e.g. during hold-to-fill), use this instead of store progress for display */
+  overrideProgress?: number;
+  /** When provided, attach to fill element; parent updates width imperatively (no re-renders during hold) */
+  liveFillRef?: RefObject<HTMLDivElement | null>;
+}) => {
   const { progress, state } = useTasksStore(
     useShallow((state) => ({ ...state.tasks[id]! }))
   );
 
-  const value = state === TaskState.Completed ? 100 : progress;
+  const value =
+    overrideProgress !== undefined
+      ? overrideProgress
+      : state === TaskState.Completed
+        ? 100
+        : progress;
 
   return (
     <>
@@ -26,7 +42,10 @@ export const ProgressMeter = ({ id }: { id: string }) => {
       </Flex>
       <ProgressRoot value={value} style={{ marginBottom: 'var(--space-2)' }}>
         <ProgressTrack>
-          <ProgressIndicator style={{ width: `${value}%` }} />
+          <ProgressIndicator
+            ref={liveFillRef}
+            style={liveFillRef ? undefined : { width: `${value}%` }}
+          />
         </ProgressTrack>
       </ProgressRoot>
     </>
