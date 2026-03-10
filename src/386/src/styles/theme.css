@@ -65,7 +65,8 @@
   /* Sidebar — cga386 uses light gray, inset border, red first letter */
   --color-sidebar-bg:                  #d3d3d3;
   --sidebar-border:                    none;
-  --sidebar-box-shadow:                4px 4px 0 #000000;
+  --container-box-shadow:                8px 8px 0 #000000;
+  --container-box-shadow-secondary:                8px 8px 0 #888888;
   --color-sidebar-item-text:           #000000;
   --color-sidebar-item-hover:          #000000;
   --color-sidebar-item-first-letter:   #ff0000;
@@ -120,7 +121,7 @@
 
   --color-sidebar-bg:                  var(--color-bg-dark);
   --sidebar-border:                   1px solid var(--color-border);
-  --sidebar-box-shadow:                none;
+  --container-box-shadow:                none;
   --color-sidebar-item-text:          var(--color-fg-link);
   --color-sidebar-item-hover:         var(--color-accent-hi);
   --color-sidebar-item-first-letter:  var(--color-fg-link);
@@ -174,7 +175,7 @@
 
   --color-sidebar-bg:                  var(--color-bg-dark);
   --sidebar-border:                   1px solid var(--color-border);
-  --sidebar-box-shadow:                none;
+  --container-box-shadow:                none;
   --color-sidebar-item-text:          var(--color-fg-link);
   --color-sidebar-item-hover:         var(--color-accent-hi);
   --color-sidebar-item-first-letter:  var(--color-fg-link);
@@ -228,7 +229,7 @@
 
   --color-sidebar-bg:                  var(--color-bg-dark);
   --sidebar-border:                   1px solid var(--color-border);
-  --sidebar-box-shadow:                none;
+  --container-box-shadow:                none;
   --color-sidebar-item-text:          var(--color-fg-link);
   --color-sidebar-item-hover:         var(--color-accent-hi);
   --color-sidebar-item-first-letter:  var(--color-fg-link);

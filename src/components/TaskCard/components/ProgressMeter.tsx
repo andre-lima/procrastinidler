@@ -24,7 +24,7 @@ export const ProgressMeter = ({
   const value =
     overrideProgress !== undefined
       ? overrideProgress
-      : state === TaskState.Completed
+      : state === TaskState.Completed || state === TaskState.ToSubmit
         ? 100
         : progress;
 
@@ -33,7 +33,7 @@ export const ProgressMeter = ({
       <Flex gap={2}>
         <Box flexGrow={1}>
           <Text size="2" style={{ color: 'var(--color-fg-dim)' }}>
-            {state === TaskState.InReview ? 'Review' : 'Progress'}
+            {state === TaskState.InReview ? 'Review' : state === TaskState.ToSubmit ? 'Ready to submit' : 'Progress'}
           </Text>
         </Box>
         <Text size="2" style={{ color: 'var(--color-fg-dim)' }}>

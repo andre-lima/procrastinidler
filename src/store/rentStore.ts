@@ -1,7 +1,9 @@
 import { createGameStore } from '../reactive-store/createGameStore';
 import { config } from '../game/config';
 import { useGameStore } from './gameStore';
+import { useEventsStore } from './eventsStore';
 import { localStorageSaveSystem } from './saveSystem';
+import { humanNumber } from '../helpers/human-number';
 
 const rentIntervalMs = (config.rentIntervalSeconds ?? 120) * 1000;
 
@@ -33,7 +35,14 @@ export const useRentStore = createGameStore<
       const newRemaining = remainingMs - config.tickLength;
 
       if (newRemaining <= 0) {
+        const moneyBefore = useGameStore.getState().money;
         useGameStore.getState().spendMoney(rentAmount);
+        if (moneyBefore >= rentAmount) {
+          useEventsStore.getState().addEvent('rent_paid', { amount: humanNumber(rentAmount) });
+        } else {
+          const owedAmount = moneyBefore > 0 ? rentAmount - moneyBefore : rentAmount;
+          useEventsStore.getState().addEvent('rent_owed', { amount: humanNumber(owedAmount) });
+        }
         set({
           rentAmount: rentAmount * 2,
           remainingMs: rentIntervalMs,

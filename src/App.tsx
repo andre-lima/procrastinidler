@@ -1,18 +1,25 @@
 import './App.scss';
+import { useEffect } from 'react';
 import { Box, Flex, Grid } from './components/shared';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './store/tasksStore';
 import { TasksList } from './components/TasksList/TasksList';
 import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';
+import { useEventsStore } from './store/eventsStore';
 import { Settings } from './components/Settings/Settings';
 import { config } from './game/config';
 import { WorkerProgressLoop } from './components/WorkerProgressLoop/WorkerProgressLoop';
 import { CompletedCount } from './components/CompletedCount/CompletedCount';
+import { EventsLog } from './components/EventsLog/EventsLog';
 
 function App() {
   const showReviewsColumn = useUpgradesStore((state) => state.upgrades.requiresReview.owned > 0);
   const showRejectedColumn = useGameStore((state) => state.filters.showRejectedTasks);
+
+  useEffect(() => {
+    useEventsStore.getState().addEvent('metadata_event');
+  }, []);
 
   return (
     <div className="page gameLayout">
@@ -64,7 +71,9 @@ function App() {
       </div>
       <div className="gameBoost">Boost</div>
       <div className="gamePlayer">Player</div>
-      <div className="gameEvents">Events</div>
+      <div className="gameEvents">
+        <EventsLog />
+      </div>
 
       <Box className="gameFooter">
         <Flex align="center" justify="between" style={{ padding: 'var(--space-2) var(--space-3)' }}>

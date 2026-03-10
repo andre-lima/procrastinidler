@@ -6,6 +6,7 @@ export enum TaskState {
   Todo = 'todo',
   InProgress = 'inProgress',
   InReview = 'inReview',
+  ToSubmit = 'toSubmit',
   Completed = 'completed',
   Rejected = 'rejected',
 }
@@ -90,6 +91,7 @@ export const useTasksStore = createGameStore<
     tickWorkerProgress: (deltaTimeSeconds: number) => void;
     rejectTask: (id: string) => void;
     completeTask: (id: string) => void;
+    submitTasks: () => void;
   }
 >(
   {
@@ -342,14 +344,19 @@ export const useTasksStore = createGameStore<
         const wasInReview = completedTask.state === TaskState.InReview;
         const requiresReviewUpgradePurchased =
           (useUpgradesStore.getState().upgrades.requiresReview?.owned ?? 0) > 0;
-        if (
+        const isSpecial = completedTask.isSpecial === true;
+
+        if (isSpecial) {
+          completedTask.state = TaskState.Completed;
+          completedTask.progress = 100;
+        } else if (
           completedTask.state === TaskState.Todo &&
           requiresReviewUpgradePurchased
         ) {
           completedTask.state = TaskState.InReview;
           completedTask.progress = 0;
         } else {
-          completedTask.state = TaskState.Completed;
+          completedTask.state = TaskState.ToSubmit;
           completedTask.progress = 100;
         }
 
@@ -407,6 +414,31 @@ export const useTasksStore = createGameStore<
           get().tryAssignBossToNextReviewTasks();
         }
       }
+    },
+    submitTasks: () => {
+      const tasks = get().getTasksArray();
+      const toSubmit = tasks.filter((t) => t?.state === TaskState.ToSubmit);
+      if (toSubmit.length === 0) return;
+
+      const nextTasks = { ...get().tasks };
+      const promotionMoneyMultiplier =
+        useUpgradesStore.getState().upgrades.promotion?.currentValue ?? 1;
+
+      for (const task of toSubmit) {
+        if (!task) continue;
+        const deadlineMoneyMultiplier = task.deadline ? 3 : 1;
+        const requiresReviewMoneyMultiplier = task.requiresReview ? 3 : 1;
+        const updated = { ...task, state: TaskState.Completed, progress: 100 };
+        nextTasks[task.id] = updated;
+        useGameStore.getState().addMoney(
+          config.moneyPerTaskCompleted *
+            task.difficulty *
+            deadlineMoneyMultiplier *
+            requiresReviewMoneyMultiplier *
+            promotionMoneyMultiplier
+        );
+      }
+      set({ tasks: nextTasks });
     },
   })
 );

@@ -18,8 +18,8 @@
 .gameHeader {
   grid-area: header;
   display: grid;
-  grid-template-areas: 'navigation currency';
-  grid-template-columns: auto 1fr;
+  grid-template-areas: 'navigation meters currency';
+  grid-template-columns: auto 1fr auto;
   background: var(--color-nav-bg);
 }
 
@@ -28,6 +28,15 @@
   background: var(--color-bg-dark);
   margin: var(--space-3);
   box-shadow: 4px 4px 0 var(--color-bg-black);
+}
+
+.gameHeaderMeters {
+  grid-area: meters;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
 }
 
 .gameHeaderCurrency {
@@ -75,12 +84,16 @@
 .gameEvents {
   grid-area: events;
   padding: var(--space-4);
-  overflow: auto;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-fg-dim);
-  font-size: var(--text-sm);
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 0;
+
+  > * {
+    flex: 1;
+    min-height: 0;
+  }
 }
 
 .gameFooter {
@@ -126,10 +139,6 @@
   &::first-letter {
     color: var(--color-sidebar-item-first-letter, var(--color-fg-brand));
   }
-}
-
-.tasksListPanel {
-  box-shadow: var(--space-2) var(--space-2) 0 var(--color-bg-black);
 }
 
 /* Stacking: app root below so dialog portals (in body) render on top */

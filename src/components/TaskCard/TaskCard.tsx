@@ -126,7 +126,7 @@ export const TaskCard = memo(({ id }: { id: string }) => {
       style={{
         marginRight: 'var(--space-3)',
         cursor: canHold ? 'pointer' : 'default',
-        opacity: isLocked && state !== TaskState.Completed ? 0.6 : 1,
+        opacity: isLocked && state !== TaskState.Completed && state !== TaskState.ToSubmit ? 0.6 : 1,
       }}
       role="button"
       tabIndex={canHold ? 0 : undefined}
@@ -159,7 +159,7 @@ export const TaskCard = memo(({ id }: { id: string }) => {
           <Flex gap={2} align="start">
             <Text className="taskTitle">{title}</Text>
             <Box flexShrink={0} style={{ paddingTop: 'var(--space-1)' }}>
-              {requiresReview && state !== TaskState.Completed && (
+              {requiresReview && state !== TaskState.Completed && state !== TaskState.ToSubmit && (
                 <TooltipProvider>
                   <TooltipRoot>
                     <TooltipTrigger render={

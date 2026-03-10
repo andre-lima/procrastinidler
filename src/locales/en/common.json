@@ -5,7 +5,9 @@
     "title": "Tasks",
     "todo": "To Do",
     "inReview": "In Review",
-    "done": "Done"
+    "toSubmit": "To Submit",
+    "done": "Done",
+    "submit": "Submit"
   },
   "menus": {
     "personal": {
@@ -28,5 +30,7 @@
     },
     "addTask": "+ Task",
     "purchase": "Purchase"
-  }
+  },
+  "burnout": "Burning out in:",
+  "rent_due": "{{amount}} Rent due in: "
 }

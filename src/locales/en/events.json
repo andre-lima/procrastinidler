@@ -1,0 +1,6 @@
+{
+  "title": "Events",
+  "rent_paid": "Rent is due, you paid ${{amount}}",
+  "rent_owed": "Rent is due, you owe us ${{amount}}",
+  "metadata_event": "Metadata event"
+}

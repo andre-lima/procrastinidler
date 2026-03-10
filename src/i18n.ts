@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import upgradesEn from './locales/en/upgrades.json';
 import commonEn from './locales/en/common.json';
+import eventsEn from './locales/en/events.json';
 
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 
@@ -19,6 +20,7 @@ const resources = {
   en: {
     upgrades: upgradesEn,
     common: commonEn,
+    events: eventsEn,
     // statistics: statisticsEn,
     // generators: generatorsEn,
     // settings: settingsEn,
@@ -40,6 +42,7 @@ i18n
     ns: [
       'common',
       'upgrades',
+      'events',
       // 'statistics',
       // 'generators',
       // 'settings',

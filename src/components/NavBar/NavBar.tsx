@@ -9,8 +9,7 @@ import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
 import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
-import { RentMeter } from '../../game/RentMeter';
-import { BurnoutMeter } from '../../game/BurnoutMeter';
+import { Meters } from '../Meters/Meters';
 import { useUpgradesStore } from '../../store/upgradesStore';
 
 export const NavBar = () => {
@@ -58,9 +57,10 @@ export const NavBar = () => {
 
         {boss && <Boss />}
       </div>
+      <div className="gameHeaderMeters">
+        <Meters />
+      </div>
       <div className="gameHeaderCurrency" style={{ padding: 'var(--space-4) var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-4)' }}>
-        <RentMeter />
-        <BurnoutMeter />
         <MoneyDisplay />
       </div>
     </>

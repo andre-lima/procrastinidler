@@ -6,7 +6,7 @@
 
 .sidebar {
   background:   var(--color-sidebar-bg, var(--color-bg-dark));
-  box-shadow:   var(--sidebar-box-shadow, none);
+  box-shadow:   var(--container-box-shadow, none);
   margin-right: var(--component-sidebar-margin-right);
   padding: 2px;
 }

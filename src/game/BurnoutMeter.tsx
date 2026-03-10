@@ -5,8 +5,10 @@ import { useRentStore } from '../store/rentStore';
 import { config } from './config';
 import { IntervalController } from '../helpers/interval-controller';
 import { Flex } from '../components/shared';
+import { useTranslation } from 'react-i18next';
 
 export const BurnoutMeter = () => {
+  const { t } = useTranslation('common');
   const burnout = useGameStore((state) => state.burnout);
   const setBurnout = useGameStore((state) => state.setBurnout);
   const rentAmount = useRentStore((state) => state.rentAmount);
@@ -33,7 +35,7 @@ export const BurnoutMeter = () => {
 
   return (
     <Flex gap={3} align="center">
-      <AsciiProgressBar title="burnout" value={burnout} barCount={50} />
+      <AsciiProgressBar title={t('burnout')} value={burnout} barCount={30} />
     </Flex>
   );
 };

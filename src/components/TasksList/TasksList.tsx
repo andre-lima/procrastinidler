@@ -43,7 +43,7 @@ export const TasksList = memo(
     const windowTitle = `${title} (${humanNumber(itemIds.length)})`;
 
     return (
-      <WindowContainer variant="secondary" title={windowTitle} className="tasksListPanel">
+      <WindowContainer variant="primary" title={windowTitle} className="tasksListPanel">
         {maxNumOfTasks != null && maxNumOfTasks <= itemIds.length && (
           <Text size="2" style={{ marginBottom: 'var(--space-2)', color: 'var(--color-danger)' }}>
             Max of {maxNumOfTasks} tasks reached
