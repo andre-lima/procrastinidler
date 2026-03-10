@@ -25,5 +25,12 @@ export function WorkerProgressLoop() {
     };
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      useTasksStore.getState().fillIdleAssistantsWithUnassignedTasks();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return null;
 }

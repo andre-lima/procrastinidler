@@ -5,9 +5,11 @@ export const config = {
   maxCardsPerColumn: 30,
   maxTodoTasks: 50,
   tickLength: 1000,
-  burnoutGrowthPerTick: 2,
-  /** Rent amount; burnout increases when money is below this */
+  burnoutGrowthPerTick: 0.1,
+  /** Rent amount (initial); burnout increases when money is below this; increases by 1 after each collection */
   rentAmount: 100,
+  /** Seconds between rent collections (timer resets after each collection) */
+  rentIntervalSeconds: 120,
   /** Seconds to fill task progress from 0% to 100% when holding (scaled by difficulty) */
   fillSpeedSeconds: 1.8,
   /** Seconds for an assistant to fill 0→100% (scaled by difficulty); higher = slower */

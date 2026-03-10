@@ -6,6 +6,7 @@ export interface AsciiProgressBarProps {
   max?: number;
   showPercent?: boolean;
   className?: string;
+  barCount?: number;
 }
 
 export function AsciiProgressBar({
@@ -14,8 +15,9 @@ export function AsciiProgressBar({
   max = 100,
   showPercent = true,
   className = "",
+  barCount = BAR_WIDTH,
 }: AsciiProgressBarProps) {
-  const filled = Math.round((value / max) * BAR_WIDTH);
+  const filled = Math.round((value / max) * barCount);
   const percent = Math.round((value / max) * 100);
 
   return (
@@ -23,7 +25,7 @@ export function AsciiProgressBar({
       <span className="asciiProgressBar_title">{title}</span>{" "}
       <span className="asciiProgressBar_bar">
         <span className="asciiProgressBar_bracket">[</span>
-        {Array.from({ length: BAR_WIDTH }, (_, i) => (
+        {Array.from({ length: barCount }, (_, i) => (
           <span
             key={i}
             className={i < filled ? "asciiProgressBar_fill" : "asciiProgressBar_empty"}

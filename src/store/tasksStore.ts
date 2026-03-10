@@ -80,6 +80,7 @@ export const useTasksStore = createGameStore<
     ) => (Task | undefined)[];
     newTask: (task?: Task) => void;
     tryAssignAssistantToTask: (task: Task) => void;
+    fillIdleAssistantsWithUnassignedTasks: () => void;
     tryAssignBossToTask: (task: Task) => void;
     tryAssignBossToNextReviewTasks: () => void;
     recoverTasks: () => void;
@@ -137,10 +138,25 @@ export const useTasksStore = createGameStore<
 
       if (!newTaskObj.isSpecial && newTaskObj.assignedTo.length === 0) {
         get().tryAssignAssistantToTask(newTaskObj);
+        get().fillIdleAssistantsWithUnassignedTasks();
+      }
+    },
+    fillIdleAssistantsWithUnassignedTasks: () => {
+      const assistants = useAssistantStore.getState().assistants;
+      const numCapacity =
+        useUpgradesStore.getState().upgrades.assistantsMultitasking?.currentValue ?? 1;
+      let totalSlots = 0;
+      for (const a of Object.values(assistants)) {
+        if (a) totalSlots += Math.max(0, numCapacity - (a.assignedTo?.length ?? 0));
+      }
+      if (totalSlots <= 0) return;
+      const tasks = get().getNextUnassignedTask(totalSlots, [TaskState.Todo]);
+      for (const task of tasks) {
+        if (task) get().tryAssignAssistantToTask(task);
       }
     },
     tryAssignAssistantToTask: (task: Task) => {
-      if (task.assignedTo.length > 0) return;
+      if ((task.assignedTo ?? []).length > 0) return;
       if (task.state === TaskState.InReview) {
         if (useUpgradesStore.getState().upgrades.bossAssistant?.owned !== 1) return;
       } else if (task.state !== TaskState.Todo) return;
@@ -200,16 +216,21 @@ export const useTasksStore = createGameStore<
     ) => {
       const tasksToAssign: (Task | undefined)[] = [];
       const tasks = get().getTasksArray();
-      for (let i = 0; i < tasks.length; i++) {
+      const newerFirst = useGameStore.getState().filters?.newerTasksFirst ?? true;
+      const match = (task: Task | undefined) =>
+        task &&
+        (task.assignedTo ?? []).length === 0 &&
+        taskStates.includes(task.state) &&
+        !task.isSpecial;
+      for (let j = 0; j < tasks.length && tasksToAssign.length < numToAssign; j++) {
+        const i = newerFirst ? tasks.length - 1 - j : j;
         const task = tasks[i];
-        if (
-          task?.assignedTo?.length === 0 &&
-          taskStates.includes(task?.state) &&
-          !task.isSpecial
-        ) {
-          tasksToAssign.push(task);
-        }
-        if (tasksToAssign.length === numToAssign) break;
+        if (match(task) && task!.category === Category.Metagame) tasksToAssign.push(task);
+      }
+      for (let j = 0; j < tasks.length && tasksToAssign.length < numToAssign; j++) {
+        const i = newerFirst ? tasks.length - 1 - j : j;
+        const task = tasks[i];
+        if (match(task) && task!.category !== Category.Metagame) tasksToAssign.push(task);
       }
       return tasksToAssign;
     },

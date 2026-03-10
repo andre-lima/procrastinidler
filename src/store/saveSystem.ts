@@ -50,4 +50,5 @@ export const STORE_KEYS = [
   'tasks-store',
   'boss-store',
   'assistant-store',
+  'rent-store',
 ] as const;

@@ -33,7 +33,7 @@ const initialState: GameStoreState = {
     unlockedDeadline: false,
   },
   filters: {
-    newerTasksFirst: false,
+    newerTasksFirst: true,
     showRejectedTasks: false,
     sfxOn: true,
   },

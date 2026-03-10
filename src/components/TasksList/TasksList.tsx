@@ -1,8 +1,10 @@
+import { useMemo } from 'react';
 import { Box, Flex, Heading, ScrollArea, Text } from '../shared';
 import { TaskCard } from '../TaskCard/TaskCard';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import type { TasksState } from '../../store/tasksStore';
+import { Category } from '../../store/tasksStore';
 import { useGameStore } from '../../store/gameStore';
 import { config } from '../../game/config';
 import { humanNumber } from '../../helpers/human-number';
@@ -19,7 +21,23 @@ export const TasksList = memo(
     maxNumOfTasks?: number;
   }) => {
     const itemIds = useTasksStore(useShallow(tasksSelector));
+    const tasks = useTasksStore((state) => state.tasks);
     const sortByNewer = useGameStore((state) => state.filters.newerTasksFirst);
+
+    const sortedIds = useMemo(() => {
+      const orderMap = new Map(itemIds.map((id, idx) => [id, idx]));
+      return [...itemIds].sort((a, b) => {
+        const taskA = tasks[a];
+        const taskB = tasks[b];
+        if (!taskA || !taskB) return 0;
+        const metaA = taskA.category === Category.Metagame ? 0 : 1;
+        const metaB = taskB.category === Category.Metagame ? 0 : 1;
+        if (metaA !== metaB) return metaA - metaB;
+        const orderA = orderMap.get(a) ?? 0;
+        const orderB = orderMap.get(b) ?? 0;
+        return sortByNewer ? orderB - orderA : orderA - orderB;
+      });
+    }, [itemIds, tasks, sortByNewer]);
 
     return (
       <Box
@@ -45,11 +63,11 @@ export const TasksList = memo(
         </Flex>
 
         <ScrollArea maxHeight="70vh">
-          <Flex direction={sortByNewer ? 'column-reverse' : 'column'} gap={2}>
-            {itemIds.slice(0, config.maxCardsPerColumn - 1).map((id) => (
+          <Flex direction="column" gap={2}>
+            {sortedIds.slice(0, config.maxCardsPerColumn - 1).map((id) => (
               <TaskCard key={id} id={id} />
             ))}
-            {itemIds.length > config.maxCardsPerColumn && (
+            {sortedIds.length > config.maxCardsPerColumn && (
               <span style={{ padding: '12px', margin: '0 auto', color: 'var(--color-fg-dim)' }}>
                 …
               </span>
