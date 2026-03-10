@@ -17,6 +17,7 @@ import type { ReactNode } from "react";
 
 import {
   Sidebar,
+  WindowContainer,
   AccordionRoot,
   AccordionItem,
   AccordionHeader,
@@ -241,6 +242,14 @@ export default function App() {
           {/* ── SIDEBAR ── */}
           <div className="col3">
             <Sidebar items={SIDEBAR_ITEMS} />
+            <div style={{ marginTop: "var(--space-4, 16px)", display: "flex", flexDirection: "column", gap: "var(--space-4, 16px)" }}>
+              <WindowContainer variant="primary" title="Primary (gray)">
+                <div style={{ padding: "8px 0", color: "var(--color-fg-dim)" }}>Content in primary window.</div>
+              </WindowContainer>
+              <WindowContainer variant="secondary" title="Secondary (black)">
+                <div style={{ padding: "8px 0", color: "var(--color-fg-dim)" }}>Content in secondary window.</div>
+              </WindowContainer>
+            </div>
           </div>
 
           {/* ── CONTENT ── */}

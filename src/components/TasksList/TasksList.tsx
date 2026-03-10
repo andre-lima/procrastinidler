@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { Box, Flex, Heading, ScrollArea, Text } from '../shared';
+import { Flex, ScrollArea, Text } from '../shared';
 import { TaskCard } from '../TaskCard/TaskCard';
+import { WindowContainer } from '../ui';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import type { TasksState } from '../../store/tasksStore';
@@ -39,29 +40,15 @@ export const TasksList = memo(
       });
     }, [itemIds, tasks, sortByNewer]);
 
+    const windowTitle = `${title} (${humanNumber(itemIds.length)})`;
+
     return (
-      <Box
-        className="tasksListPanel"
-        style={{
-          padding: 'var(--space-4)',
-          paddingRight: 'var(--space-2)',
-          background: 'var(--color-bg-panel)',
-        }}
-      >
-        <Flex align="end" gap={2}>
-          <Heading size="4" as="h2" style={{ marginBottom: 'var(--space-4)' }}>
-            {title} ({humanNumber(itemIds.length)})
-          </Heading>
-
-          {maxNumOfTasks && (
-            <Text size="2" style={{ marginBottom: 'var(--space-3)', color: 'var(--color-danger)' }}>
-              {maxNumOfTasks && maxNumOfTasks <= itemIds.length && (
-                <span>Max of {maxNumOfTasks} tasks reached</span>
-              )}
-            </Text>
-          )}
-        </Flex>
-
+      <WindowContainer variant="secondary" title={windowTitle} className="tasksListPanel">
+        {maxNumOfTasks != null && maxNumOfTasks <= itemIds.length && (
+          <Text size="2" style={{ marginBottom: 'var(--space-2)', color: 'var(--color-danger)' }}>
+            Max of {maxNumOfTasks} tasks reached
+          </Text>
+        )}
         <ScrollArea maxHeight="70vh">
           <Flex direction="column" gap={2}>
             {sortedIds.slice(0, config.maxCardsPerColumn - 1).map((id) => (
@@ -74,7 +61,7 @@ export const TasksList = memo(
             )}
           </Flex>
         </ScrollArea>
-      </Box>
+      </WindowContainer>
     );
   }
 );

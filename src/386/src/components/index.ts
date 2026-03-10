@@ -84,5 +84,6 @@ export {
 export { Button } from "./Button";
 
 export { Sidebar } from "./Sidebar";
+export { WindowContainer } from "./WindowContainer";
 
 export { AsciiProgressBar } from "./AsciiProgressBar";

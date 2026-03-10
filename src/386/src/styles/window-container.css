@@ -1,0 +1,66 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Component styles — WindowContainer
+   Similar to sidebar but with thicker inner border. Optional title on top border.
+───────────────────────────────────────────────────────────────────────────── */
+
+.windowContainer {
+  --window-container-outer-padding: 6px;
+  --window-container-inner-border: 4px;
+  position: relative;
+  padding: var(--window-container-outer-padding);
+  margin-right: var(--component-sidebar-margin-right, 1rem);
+}
+
+.windowContainer--primary {
+  background: var(--color-sidebar-bg, var(--color-bg-dark));
+  box-shadow: var(--sidebar-box-shadow, none);
+}
+
+.windowContainer--primary .windowContainer_titleWrap {
+  background:  #000000;
+}
+
+.windowContainer--primary .windowContainer_title {
+  color: #ffffff;
+}
+
+.windowContainer--secondary {
+  background: var(--color-bg-black);
+  box-shadow: 4px 4px 0 #888888;
+}
+
+.windowContainer--secondary .windowContainerInner {
+  border-color: #ffffff;
+}
+
+.windowContainer--secondary .windowContainer_titleWrap {
+  background: #ffffff;
+}
+
+.windowContainer--secondary .windowContainer_title {
+  color: #000000;
+}
+
+.windowContainerInner {
+  margin: 0;
+  border: var(--window-container-inner-border) solid var(--color-border);
+  padding: 8px;
+  /* min-height: 40px; */
+}
+
+.windowContainer_titleWrap {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--window-container-outer-padding) + var(--window-container-inner-border) / 2);
+  transform: translate(-50%, -50%);
+  padding: 0 8px;
+  background: inherit;
+  z-index: 1;
+}
+
+.windowContainer_title {
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 600;
+  color: var(--color-fg-text);
+  white-space: nowrap;
+}
