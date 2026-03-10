@@ -13,6 +13,7 @@ import { DifficultyMeter } from './components/DifficultyMeter';
 import './styles.scss';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
+import { Category } from '../../store/tasksStore';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { memo, useState, useRef, useEffect, useCallback } from 'react';
 import { ProgressMeter } from './components/ProgressMeter';
@@ -115,10 +116,20 @@ export const TaskCard = memo(({ id }: { id: string }) => {
     return null;
   }
 
+  const variant =
+    category === Category.Metagame
+      ? 'metagame'
+      : state === TaskState.InReview
+        ? 'inReview'
+        : assignedTo.length > 0
+          ? 'assigned'
+          : 'todo';
+
   return (
     <div
       className={
-        'panel panelInner taskCard' +
+        'panel panelInner taskCard taskCard--' +
+        variant +
         (isSpecial ? ' special ' : ' ') +
         state +
         (canHold ? ' canClick' : '')
@@ -126,7 +137,6 @@ export const TaskCard = memo(({ id }: { id: string }) => {
       style={{
         marginRight: 'var(--space-3)',
         cursor: canHold ? 'pointer' : 'default',
-        opacity: isLocked && state !== TaskState.Completed && state !== TaskState.ToSubmit ? 0.6 : 1,
       }}
       role="button"
       tabIndex={canHold ? 0 : undefined}
@@ -156,8 +166,19 @@ export const TaskCard = memo(({ id }: { id: string }) => {
         areas="'title title category' 'assignedTo deadline difficulty' 'progress progress progress'"
       >
         <Box gridArea="title">
-          <Flex gap={2} align="start">
+          <Flex gap={2} align="start" wrap="wrap">
             <Text className="taskTitle">{title}</Text>
+            {state === TaskState.InReview && (
+              <span
+                className="taskCard-inReviewLabel"
+                style={{
+                  fontSize: 'var(--text-sm)',
+                  fontWeight: 600,
+                }}
+              >
+                In review
+              </span>
+            )}
             <Box flexShrink={0} style={{ paddingTop: 'var(--space-1)' }}>
               {requiresReview && state !== TaskState.Completed && state !== TaskState.ToSubmit && (
                 <TooltipProvider>
@@ -182,7 +203,7 @@ export const TaskCard = memo(({ id }: { id: string }) => {
           {category && (
             <span
               style={{
-                border: '1px solid var(--color-border)',
+                backgroundColor: 'var(--color-bg-black)',
                 padding: '2px 6px',
                 fontSize: 'var(--text-sm)',
                 color: getBadgeColor(category),

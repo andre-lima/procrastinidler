@@ -1,10 +1,9 @@
 import './App.scss';
 import { useEffect } from 'react';
-import { Box, Flex, Grid } from './components/shared';
+import { Box, Flex } from './components/shared';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './store/tasksStore';
 import { TasksList } from './components/TasksList/TasksList';
-import { useUpgradesStore } from './store/upgradesStore';
 import { useGameStore } from './store/gameStore';
 import { useEventsStore } from './store/eventsStore';
 import { Settings } from './components/Settings/Settings';
@@ -12,9 +11,9 @@ import { config } from './game/config';
 import { WorkerProgressLoop } from './components/WorkerProgressLoop/WorkerProgressLoop';
 import { CompletedCount } from './components/CompletedCount/CompletedCount';
 import { EventsLog } from './components/EventsLog/EventsLog';
+import { Meters } from './components/Meters/Meters';
 
 function App() {
-  const showReviewsColumn = useUpgradesStore((state) => state.upgrades.requiresReview.owned > 0);
   const showRejectedColumn = useGameStore((state) => state.filters.showRejectedTasks);
 
   useEffect(() => {
@@ -29,32 +28,26 @@ function App() {
       </header>
 
       <div className="gameTasks">
-        <Grid
+        <Flex
           gap={4}
           style={{
-            gridAutoColumns: '1fr',
-            gridAutoFlow: 'column',
             flex: 1,
             minHeight: 0,
             padding: 'var(--space-4)',
           }}
         >
           <TasksList
-            title="To Do"
+            title="Tasks"
             maxNumOfTasks={config.maxTodoTasks}
+            sortByState="todoAndReview"
             tasksSelector={(state: TasksState) =>
-              Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.Todo)
+              Object.keys(state.tasks).filter(
+                (task) =>
+                  state.tasks[task]?.state === TaskState.Todo ||
+                  state.tasks[task]?.state === TaskState.InReview
+              )
             }
           />
-          {showReviewsColumn && (
-            <TasksList
-              title="In Review"
-              tasksSelector={(state: TasksState) =>
-                Object.keys(state.tasks).filter((task) => state.tasks[task]?.state === TaskState.InReview)
-              }
-            />
-          )}
-
           {showRejectedColumn && (
             <TasksList
               title="Expired"
@@ -63,7 +56,7 @@ function App() {
               }
             />
           )}
-        </Grid>
+        </Flex>
       </div>
 
       <div className="gameCompleted">
@@ -73,6 +66,10 @@ function App() {
       <div className="gamePlayer">Player</div>
       <div className="gameEvents">
         <EventsLog />
+      </div>
+
+      <div className="gameHeaderMeters">
+        <Meters />
       </div>
 
       <Box className="gameFooter">

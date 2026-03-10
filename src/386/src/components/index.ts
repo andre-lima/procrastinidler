@@ -87,3 +87,4 @@ export { Sidebar } from "./Sidebar";
 export { WindowContainer } from "./WindowContainer";
 
 export { AsciiProgressBar } from "./AsciiProgressBar";
+export { InfoBox } from "./InfoBox";

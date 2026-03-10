@@ -1,6 +1,7 @@
 .taskCard {
   user-select: none;
   cursor: default;
+  box-shadow: 2px 2px 0 #1a1a1a;
 
   .taskTitle {
     font-size: var(--text-xl);
@@ -10,8 +11,56 @@
     cursor: pointer;
   }
 
+  /* Variants: todo = white, assigned = light gray, metagame = black, inReview = cyan */
+  &.taskCard--todo {
+    background-color: #fff;
+    color: #1a1a1a;
+    border-color: #e5e5e5;
+    --color-fg-text: #1a1a1a;
+    --color-fg-dim: #525252;
+  }
+
+  &.taskCard--assigned {
+    background-color: #e5e5e5;
+    color: #1a1a1a;
+    border-color: #d4d4d4;
+    --color-fg-text: #1a1a1a;
+    --color-fg-dim: #525252;
+  }
+
+  &.taskCard--metagame {
+    background-color: #000;
+    color: #e5e5e5;
+    border-color: #404040;
+    --color-fg-text: #e5e5e5;
+    --color-fg-dim: #a3a3a3;
+
+    .progressTrack {
+      background: #333;
+      border-color: #404040;
+    }
+  }
+
+  &.taskCard--inReview {
+    background-color: #55ffff;
+    color: #000000;
+    border-color: #0891b2;
+    --color-fg-text: #0c4a6e;
+    --color-fg-dim: #0e7490;
+
+    .progressTrack {
+      background: #0891b2;
+      border-color: #0e7490;
+    }
+  }
+
   &.special {
+    /* Override variant for special cards if needed; metagame already black */
     background-color: var(--color-bg-dark);
+  }
+
+  &.taskCard--metagame.special {
+    background-color: #000;
   }
 
   .assignedAssistantImage {

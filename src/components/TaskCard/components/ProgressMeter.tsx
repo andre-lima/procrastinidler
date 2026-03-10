@@ -36,9 +36,6 @@ export const ProgressMeter = ({
             {state === TaskState.InReview ? 'Review' : state === TaskState.ToSubmit ? 'Ready to submit' : 'Progress'}
           </Text>
         </Box>
-        <Text size="2" style={{ color: 'var(--color-fg-dim)' }}>
-          {humanNumber(value, 0)}%
-        </Text>
       </Flex>
       <ProgressRoot value={value} style={{ marginBottom: 'var(--space-2)' }}>
         <ProgressTrack>

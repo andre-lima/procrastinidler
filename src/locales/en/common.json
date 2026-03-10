@@ -31,6 +31,6 @@
     "addTask": "+ Task",
     "purchase": "Purchase"
   },
-  "burnout": "Burning out in:",
-  "rent_due": "{{amount}} Rent due in: "
+  "burnout": "Stress levels:",
+  "rent_due": "{{amount}}$ Rent due in: "
 }

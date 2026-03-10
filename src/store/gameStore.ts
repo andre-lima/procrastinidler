@@ -22,7 +22,7 @@ interface GameStoreState {
 }
 
 const initialState: GameStoreState = {
-  money: 0,
+  money: 1000000,
   burnout: 0,
   gameProgress: {
     startedAt: Date.now(),

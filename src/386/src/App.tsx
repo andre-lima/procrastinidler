@@ -78,6 +78,7 @@ import {
   NumberFieldIncrement,
   Button,
   AsciiProgressBar,
+  InfoBox,
 } from "./components";
 
 import "./styles/theme.css";
@@ -369,7 +370,7 @@ export default function App() {
                 </Sect>
 
                 <Sect title="4. RADIO GROUP">
-                  <div className="infoBox">Select a graphics adapter from the choices below</div>
+                  <InfoBox>Select a graphics adapter from the choices below</InfoBox>
                   <RadioGroupRoot value={radioVal} onValueChange={(v) => setRadioVal(String(v ?? ""))}>
                     {RADIO_OPTIONS.map(({ v, l }) => (
                       <RadioRoot key={v} value={v} selected={radioVal === v}>
@@ -427,9 +428,9 @@ export default function App() {
               {/* ════ DIALOG ════ */}
               <TabsPanel value="dialog" className="tabPanel">
                 <Sect title="7. DIALOG / MODAL">
-                  <div className="infoBox">
+                  <InfoBox>
                     Dialogs are windowed overlays. Click the button below to open one.
-                  </div>
+                  </InfoBox>
                   <DialogRoot open={dialogOpen} onOpenChange={setDialogOpen}>
                     <DialogTrigger render={<Button variant="secondary">Open Dialog</Button>} />
                     <DialogPortal>
@@ -446,9 +447,9 @@ export default function App() {
                           <DialogDescription className="dialogDescription">
                             Use ↑ ↓ and ENTER to select. ESC to go back.
                           </DialogDescription>
-                          <div className="infoBox">
+                          <InfoBox>
                             Copyright 1991-92<br />Sierra On-Line, Inc.<br />All rights reserved.
-                          </div>
+                          </InfoBox>
                         </DialogBody>
                         <DialogFooter>
                           <DialogClose render={
@@ -542,7 +543,7 @@ export default function App() {
                       ))}
                     </div>
                     <div style={{ flex: 2 }}>
-                      <div className="infoBox">Example body text</div>
+                      <InfoBox>Example body text</InfoBox>
                       <p className="bodyText">
                         Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque
                         penatibus et magnis dis parturient montes, nascetur ridiculus mus.
