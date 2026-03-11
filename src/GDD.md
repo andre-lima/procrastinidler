@@ -49,7 +49,7 @@ The difficulty level determines how many clicks is needed to complete it. Still 
 
 Tasks also have types: Work, Education, Financial, Leisure, etc.
 
-#### Deadline
+#### Deadline (maybe)
 
 Some tasks have a deadlinee to be completed.
 
@@ -73,6 +73,18 @@ He'll also review tasks.
 
 Eventually, he'll turn out to be a monster
 
+### Phases
+
+Every time you get back from a burnout, you get currency to get something special (TBD), and also a modifier that makes the game more difficult
+
+Requires renting an office
+
+Requires review
+
+Requires uploading work (WFH)
+
+Mandatory fun
+
 ### Upgrades
 
 ### Rent Timer
@@ -90,6 +102,8 @@ Burning out works as a prestige. Next run, the player can purchase resiliency wi
 An upgrade can make the burnout slowly reduce, but initially it never goes down.
 
 ### Boosts/Events
+
+Coming back from a burnout, choose or purchase modifiers for the next run.
 
 Coffee/boost
 

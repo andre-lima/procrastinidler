@@ -27,6 +27,21 @@
   box-shadow: var(--component-btn-shadow-size-pressed) var(--component-btn-shadow-size-pressed) 0 var(--color-btn-shadow);
 }
 
+/* Disabled: no interaction, muted look, flat shadow */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity:      0.6;
+  cursor:       not-allowed;
+  transform:    none;
+  box-shadow:   var(--component-btn-shadow-size-pressed) var(--component-btn-shadow-size-pressed) 0 var(--color-btn-shadow);
+}
+
+.btn:disabled:active,
+.btn[aria-disabled="true"]:active {
+  transform:    none;
+  box-shadow:   var(--component-btn-shadow-size-pressed) var(--component-btn-shadow-size-pressed) 0 var(--color-btn-shadow);
+}
+
 .btnLg {
   padding:   var(--component-btn-padding-y-lg) var(--component-btn-padding-x-lg);
   font-size: var(--text-lg);

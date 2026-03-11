@@ -17,7 +17,7 @@ import { localStorageSaveSystem } from './saveSystem';
 
 interface AssistantsUpgradesStoreState {
   buyAssistants: Upgrade;
-  assistantEfficiency: Upgrade;
+  // assistantEfficiency: Upgrade;
   assistantsMultitasking: Upgrade;
   assistantInterval: Upgrade;
   bossAssistant: Upgrade;
@@ -35,17 +35,17 @@ const initialState: AssistantsUpgradesStoreState = {
     ownedLimit: 5,
     deltaPerOwned: 0,
   },
-  assistantEfficiency: {
-    id: 'assistantEfficiency',
-    type: 'assistants',
-    currentValue: 100,
-    baseValue: 100,
-    cost: 25,
-    rate: 1.2,
-    owned: 0,
-    ownedLimit: 60,
-    deltaPerOwned: 7.5,
-  },
+  // assistantEfficiency: {
+  //   id: 'assistantEfficiency',
+  //   type: 'assistants',
+  //   currentValue: 100,
+  //   baseValue: 100,
+  //   cost: 25,
+  //   rate: 1.2,
+  //   owned: 0,
+  //   ownedLimit: 60,
+  //   deltaPerOwned: 7.5,
+  // },
   assistantsMultitasking: {
     id: 'assistantsMultitasking',
     type: 'assistants',

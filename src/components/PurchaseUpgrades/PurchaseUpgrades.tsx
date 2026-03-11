@@ -10,7 +10,12 @@ export const PurchaseUpgrades = ({
 }) => {
   const upgrades = useUpgradesStore(
     useShallow((state) =>
-      Object.values(state.upgrades).filter((upgrade) => upgrade.type === id)
+      Object.values(state.upgrades).filter(
+        (upgrade) =>
+          upgrade.type === id &&
+          // FIRE is shown in the player grid area instead of the Personal dialog
+          upgrade.id !== 'FIRE'
+      )
     )
   );
 

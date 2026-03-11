@@ -6,7 +6,7 @@ import { localStorageSaveSystem } from './saveSystem';
 
 interface PersonalUpgradesStoreState {
   personalMoneyPerTask: Upgrade;
-  personalEfficiency: Upgrade;
+  // personalEfficiency: Upgrade;
   personalTasksCreation: Upgrade;
   taskPairing: Upgrade;
   FIRE: Upgrade;
@@ -24,17 +24,17 @@ const initialState: PersonalUpgradesStoreState = {
     ownedLimit: 500,
     deltaPerOwned: 1,
   },
-  personalEfficiency: {
-    id: 'personalEfficiency',
-    type: 'personal',
-    currentValue: 100,
-    baseValue: 100,
-    cost: 10,
-    rate: 1.2,
-    owned: 0,
-    ownedLimit: 30,
-    deltaPerOwned: 10,
-  },
+  // personalEfficiency: {
+  //   id: 'personalEfficiency',
+  //   type: 'personal',
+  //   currentValue: 100,
+  //   baseValue: 100,
+  //   cost: 10,
+  //   rate: 1.2,
+  //   owned: 0,
+  //   ownedLimit: 30,
+  //   deltaPerOwned: 10,
+  // },
   personalTasksCreation: {
     id: 'personalTasksCreation',
     type: 'personal',
@@ -62,7 +62,7 @@ const initialState: PersonalUpgradesStoreState = {
     type: 'personal',
     currentValue: 0,
     baseValue: 0,
-    cost: 5000000,
+    cost: 10000000,
     rate: 1,
     owned: 0,
     ownedLimit: 1,

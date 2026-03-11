@@ -5,7 +5,8 @@ import { WindowContainer } from '../ui';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import type { TasksState } from '../../store/tasksStore';
-import { Category } from '../../store/tasksStore';
+import { Category, TaskState } from '../../store/tasksStore';
+import { useUpgradesStore } from '../../store/upgradesStore';
 import { config } from '../../game/config';
 import { humanNumber } from '../../helpers/human-number';
 import { memo } from 'react';
@@ -16,13 +17,19 @@ export const TasksList = memo(
     title,
     tasksSelector,
     maxNumOfTasks,
+    titleTodoInReview,
   }: {
     title: string;
     tasksSelector: (state: TasksState) => string[];
     maxNumOfTasks?: number;
+    /** When true, title shows "To-Do (#) / In Review (#)" instead of "title (total)" */
+    titleTodoInReview?: boolean;
   }) => {
     const itemIds = useTasksStore(useShallow(tasksSelector));
     const tasks = useTasksStore((state) => state.tasks);
+    const requiresReviewPurchased = useUpgradesStore(
+      (state) => (state.upgrades.requiresReview?.owned ?? 0) > 0
+    );
 
     const sortedIds = useMemo(() => {
       const orderMap = new Map(itemIds.map((id, idx) => [id, idx]));
@@ -39,7 +46,21 @@ export const TasksList = memo(
       });
     }, [itemIds, tasks]);
 
-    const windowTitle = `${title} (${humanNumber(itemIds.length)})`;
+    // Optional title format: "To-Do (#)" or "To-Do (#) / In Review (#)" when requiresReview is purchased
+    const windowTitle = titleTodoInReview
+      ? (() => {
+          let todo = 0;
+          let inReview = 0;
+          for (const id of itemIds) {
+            const s = tasks[id]?.state;
+            if (s === TaskState.Todo) todo++;
+            else if (s === TaskState.InReview) inReview++;
+          }
+          return requiresReviewPurchased
+            ? `To-Do (${humanNumber(todo)}) / In Review (${humanNumber(inReview)})`
+            : `To-Do (${humanNumber(todo)})`;
+        })()
+      : `${title} (${humanNumber(itemIds.length)})`;
 
     return (
       <div className="tasksList">

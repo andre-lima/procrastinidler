@@ -2,5 +2,6 @@
   "title": "Events",
   "rent_paid": "Rent is due, you paid <span class='highlight'>${{amount}}</span>",
   "rent_owed": "Rent is due, you owe us <span class='highlight'>${{amount}}</span>",
-  "metadata_event": "<span class='highlight'>[Game Event]:</span> {{event}}"
+  "metadata_event": "<span class='highlight'>[Game Event]:</span> {{event}}",
+  "burnout": "Burnout! Stress hit 100%. Time to recover."
 }

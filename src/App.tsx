@@ -1,17 +1,50 @@
 import './App.scss';
 import { useEffect } from 'react';
-import { Box, Flex } from './components/shared';
+import { Box, Flex, Text } from './components/shared';
 import { NavBar } from './components/NavBar/NavBar';
 import { TaskState, type TasksState } from './store/tasksStore';
 import { TasksList } from './components/TasksList/TasksList';
 import { useGameStore } from './store/gameStore';
-import { useEventsStore } from './store/eventsStore';
 import { Settings } from './components/Settings/Settings';
 import { config } from './game/config';
 import { WorkerProgressLoop } from './components/WorkerProgressLoop/WorkerProgressLoop';
 import { CompletedCount } from './components/CompletedCount/CompletedCount';
 import { EventsLog } from './components/EventsLog/EventsLog';
 import { Meters } from './components/Meters/Meters';
+import { useUpgradesStore } from './store/upgradesStore';
+import { Button } from './components/ui';
+import { useTranslation } from 'react-i18next';
+import { humanNumber } from './helpers/human-number';
+
+/** Renders the FIRE upgrade in the player grid area. */
+function PlayerFireUpgrade() {
+  const fireUpgrade = useUpgradesStore((state) => state.upgrades.FIRE);
+  const money = useGameStore((state) => state.money);
+  const { t: tUpgrades } = useTranslation('upgrades');
+
+  if (!fireUpgrade) return null;
+
+  return <>
+    <Box gridArea="title" className="upgradeCard_title">
+      <Text>{tUpgrades(fireUpgrade.id + '.title')}</Text>
+    </Box>
+    <Box gridArea="button" className="">
+      <Button
+        variant="danger"
+        size="lg"
+        className=""
+        disabled={
+          fireUpgrade.cost > money
+        }
+        onClick={() =>
+          useUpgradesStore.getState().purchaseUpgrade(fireUpgrade.id)
+        }
+      >
+        {humanNumber(fireUpgrade.cost)}$
+      </Button>
+    </Box>
+  </>;
+}
 
 function App() {
   const showRejectedColumn = useGameStore((state) => state.filters.showRejectedTasks);
@@ -38,6 +71,7 @@ function App() {
         >
           <TasksList
             title="Tasks"
+            titleTodoInReview
             maxNumOfTasks={config.maxTodoTasks}
             tasksSelector={(state: TasksState) =>
               Object.keys(state.tasks).filter(
@@ -62,7 +96,9 @@ function App() {
         <CompletedCount />
       </div>
       <div className="gameBoost">Boost</div>
-      <div className="gamePlayer">Player</div>
+      <div className="gamePlayer">
+        <PlayerFireUpgrade />
+      </div>
       <div className="gameEvents">
         <EventsLog />
       </div>

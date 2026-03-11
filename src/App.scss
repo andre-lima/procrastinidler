@@ -186,3 +186,23 @@ body {
     transform: translateX(0px);
   }
 }
+
+/* Rent / burnout meter labels: red + pulsate when in danger, green when safe */
+.meterLabel--danger {
+  color: var(--color-danger);
+  animation: meterPulsate 1.2s ease-in-out infinite;
+}
+
+.meterLabel--safe {
+  color: var(--color-success);
+}
+
+@keyframes meterPulsate {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}

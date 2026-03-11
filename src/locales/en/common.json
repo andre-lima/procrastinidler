@@ -32,5 +32,6 @@
     "purchase": "Purchase"
   },
   "burnout": "Stress levels:",
-  "rent_due": "{{amount}}$ Rent due in: "
+  "rent_due": "{{amount}}$ Rent due in: ",
+  "rent_due_suffix": "Rent due in: "
 }

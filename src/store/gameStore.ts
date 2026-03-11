@@ -3,9 +3,19 @@ import { useUpgradesStore } from './upgradesStore';
 import { checkProgressTriggers } from './gameProgressTriggers';
 import { localStorageSaveSystem } from './saveSystem';
 
+/** Flags for which game features are currently enabled (e.g. by upgrades or progress). */
+export interface FeaturesEnabled {
+  requiresReview: boolean;
+  rentPayment: boolean;
+  uploadWorkCompleted: boolean;
+  burnoutMeter: boolean;
+}
+
 interface GameStoreState {
   money: number;
   burnout: number;
+  /** Which features are enabled; used to show/hide or gate mechanics. */
+  featuresEnabled: FeaturesEnabled;
   gameProgress: {
     startedAt: number;
     canPurchasePersonalUpgrades: boolean;
@@ -22,8 +32,14 @@ interface GameStoreState {
 }
 
 const initialState: GameStoreState = {
-  money: 1000000000,
+  money: 0,
   burnout: 0,
+  featuresEnabled: {
+    requiresReview: false,
+    rentPayment: false,
+    uploadWorkCompleted: false,
+    burnoutMeter: false,
+  },
   gameProgress: {
     startedAt: Date.now(),
     canPurchasePersonalUpgrades: false,
@@ -49,6 +65,7 @@ const useGameStore = createGameStore<
     setShowingRejected: (showRejected: boolean) => void;
     setSfxOn: (sfxOn: boolean) => void;
     setGameProgress: (progressUpdate: Partial<GameStoreState['gameProgress']>) => void;
+    setFeaturesEnabled: (update: Partial<FeaturesEnabled>) => void;
   }
 >(
   {
@@ -90,6 +107,11 @@ const useGameStore = createGameStore<
     setGameProgress: (progressUpdate) => {
       set((state) => ({
         gameProgress: { ...state.gameProgress, ...progressUpdate },
+      } as Partial<GameStoreState>));
+    },
+    setFeaturesEnabled: (update) => {
+      set((state) => ({
+        featuresEnabled: { ...state.featuresEnabled, ...update },
       } as Partial<GameStoreState>));
     },
   })

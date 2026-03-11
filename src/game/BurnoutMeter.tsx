@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { AsciiProgressBar } from '../components/ui';
 import { useGameStore } from '../store/gameStore';
 import { useRentStore } from '../store/rentStore';
+import { useEventsStore } from '../store/eventsStore';
 import { config } from './config';
 import { IntervalController } from '../helpers/interval-controller';
 import { Flex } from '../components/shared';
@@ -11,6 +12,7 @@ export const BurnoutMeter = () => {
   const { t } = useTranslation('common');
   const burnout = useGameStore((state) => state.burnout);
   const setBurnout = useGameStore((state) => state.setBurnout);
+  const money = useGameStore((state) => state.money);
   const rentAmount = useRentStore((state) => state.rentAmount);
 
   const tick = useCallback(() => {
@@ -21,7 +23,7 @@ export const BurnoutMeter = () => {
       setBurnout(newBurnout);
 
       if (newBurnout >= 100) {
-        console.log('Burnout triggered!');
+        useEventsStore.getState().addEvent('burnout');
         setBurnout(0);
       }
     }
@@ -33,9 +35,17 @@ export const BurnoutMeter = () => {
     return () => timer.stop();
   }, [tick]);
 
+  const safe = money >= rentAmount;
+  const titleClass = safe ? 'meterLabel meterLabel--safe' : 'meterLabel meterLabel--danger';
+
   return (
     <Flex gap={3} align="center">
-      <AsciiProgressBar title={t('burnout')} value={burnout} barCount={30} />
+      <AsciiProgressBar
+        title={<span className={titleClass}>{t('burnout')}</span>}
+        value={burnout}
+        barCount={30}
+        theme={safe ? 'disabled' : 'default'}
+      />
     </Flex>
   );
 };

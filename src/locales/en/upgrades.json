@@ -1,8 +1,4 @@
 {
-  "personalEfficiency": {
-    "title": "Efficiency",
-    "description": "Increase chunk of work completion by click."
-  },
   "personalMoneyPerTask": {
     "title": "Money per task",
     "description": "Increase money rewards per completed task by 1$"
@@ -16,7 +12,7 @@
     "description": "Allows you to help on tasks already assigned to an assistant."
   },
   "FIRE": {
-    "title": "Retire early",
+    "title": "Retire Now!",
     "description": "You can take a break now... enjoy what you accomplished and be free."
   },
   "Billions": {
@@ -34,10 +30,6 @@
   "assistantsMultitasking": {
     "title": "Multitasking",
     "description": "Assistants can take on more tasks at once."
-  },
-  "assistantEfficiency": {
-    "title": "Efficiency",
-    "description": "Increase chunk of work completion rate."
   },
   "assistantInterval": {
     "title": "Fast worker",

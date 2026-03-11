@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type GameEventKey = 'rent_paid' | 'rent_owed' | 'metadata_event';
+export type GameEventKey = 'rent_paid' | 'rent_owed' | 'metadata_event' | 'burnout';
 
 export interface GameEvent {
   id: string;

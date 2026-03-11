@@ -87,7 +87,7 @@ export const useTasksStore = createGameStore<
     recoverTasks: () => void;
     assignAssistantToTask: (assistantId: string, task: Task) => void;
     assignBossToTask: (task: Task) => void;
-    makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => void;
+    // makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => void;
     /** Merge player progress when helping an assigned task; keeps max(current, progress) so assistant progress is not lost */
     mergeTaskProgress: (id: string, progress: number) => void;
     tickWorkerProgress: (deltaTimeSeconds: number) => void;
@@ -260,40 +260,40 @@ export const useTasksStore = createGameStore<
         set({ tasks: { ...get().tasks, [task.id]: task } });
       }
     },
-    makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => {
-      const task = get().tasks[id];
-      const upgrades = useUpgradesStore.getState().upgrades;
+    // makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => {
+    //   const task = get().tasks[id];
+    //   const upgrades = useUpgradesStore.getState().upgrades;
 
-      let progressEfficiency: number;
-      switch (worker) {
-        case 'assistant':
-          progressEfficiency = upgrades.assistantEfficiency?.currentValue ?? 100;
-          break;
-        case 'personal':
-          progressEfficiency = upgrades.personalEfficiency?.currentValue ?? 100;
-          break;
-        case 'boss':
-          progressEfficiency = 200;
-          break;
-        default:
-          progressEfficiency = upgrades.personalEfficiency?.currentValue ?? 100;
-          break;
-      }
+    //   let progressEfficiency: number;
+    //   switch (worker) {
+    //     case 'assistant':
+    //       progressEfficiency = upgrades.assistantEfficiency?.currentValue ?? 100;
+    //       break;
+    //     case 'personal':
+    //       progressEfficiency = upgrades.personalEfficiency?.currentValue ?? 100;
+    //       break;
+    //     case 'boss':
+    //       progressEfficiency = 200;
+    //       break;
+    //     default:
+    //       progressEfficiency = upgrades.personalEfficiency?.currentValue ?? 100;
+    //       break;
+    //   }
 
-      if (task && task.progress < 100) {
-        const progressPerClick =
-          progressEfficiency /
-          (task.difficulty * config.clicksPerDifficultyLevel);
-        task.progress = Math.min(task.progress + progressPerClick, 100);
+    //   if (task && task.progress < 100) {
+    //     const progressPerClick =
+    //       progressEfficiency /
+    //       (task.difficulty * config.clicksPerDifficultyLevel);
+    //     task.progress = Math.min(task.progress + progressPerClick, 100);
 
-        if (task.progress >= 100) {
-          setTimeout(() => {
-            get().completeTask(id);
-          }, 300);
-        }
-        set({ tasks: { ...get().tasks, [id]: task } });
-      }
-    },
+    //     if (task.progress >= 100) {
+    //       setTimeout(() => {
+    //         get().completeTask(id);
+    //       }, 300);
+    //     }
+    //     set({ tasks: { ...get().tasks, [id]: task } });
+    //   }
+    // },
     mergeTaskProgress: (id: string, progress: number) => {
       const task = get().tasks[id];
       if (!task) return;
@@ -374,7 +374,12 @@ export const useTasksStore = createGameStore<
           completedTask.state = TaskState.InReview;
           completedTask.progress = 0;
         } else {
-          completedTask.state = TaskState.ToSubmit;
+          // When uploadWorkCompleted is off, skip ToSubmit and complete + pay immediately
+          const uploadWorkCompleted =
+            useGameStore.getState().featuresEnabled.uploadWorkCompleted;
+          completedTask.state = uploadWorkCompleted
+            ? TaskState.ToSubmit
+            : TaskState.Completed;
           completedTask.progress = 100;
         }
 
