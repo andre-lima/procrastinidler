@@ -12,36 +12,32 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
   const { t: tUpgrades } = useTranslation('upgrades');
 
   return (
-    <div className="panel panelInner">
+    <div className="upgradeCard panel panelInner">
       <Grid
+        className="upgradeCard_grid"
         columns="1fr auto"
         rows="auto auto"
         areas="'title price' 'description button'"
         gap={2}
-        style={{ alignItems: 'end' }}
       >
-        <Box gridArea="title">
+        <Box gridArea="title" className="upgradeCard_title">
           <Text>{tUpgrades(upgrade.id + '.title')}</Text>
         </Box>
-        <Box gridArea="description">
-          <Text size="2" style={{ color: 'var(--color-fg-dim)' }}>
-            {tUpgrades(upgrade.id + '.description')}
-          </Text>
+        <Box gridArea="description" className="upgradeCard_description">
+          <Text>{tUpgrades(upgrade.id + '.description')}</Text>
         </Box>
-        <Flex gap={4} gridArea="price" align="center">
-          <Text size="1" style={{ color: 'var(--color-fg-dim)' }}>
+        <Flex gap={4} gridArea="price" align="center" className="upgradeCard_price">
+          <Text className="upgradeCard_owned">
             Owned {upgrade.owned} / {upgrade.ownedLimit}
           </Text>
-          <Text>
+          <Text className="upgradeCard_cost">
             <Flex gap={1} align="center">
-              <Text size="2" style={{ fontWeight: 'bold' }}>
-                {humanNumber(upgrade.cost)}
-              </Text>
+              <Text>{humanNumber(upgrade.cost)}$</Text>
             </Flex>
           </Text>
         </Flex>
 
-        <Box style={{ marginLeft: 'auto' }} gridArea="button">
+        <Box gridArea="button" className="upgradeCard_button">
           <Button
             variant="primary"
             className="purchaseUpgradeButton"

@@ -1,5 +1,38 @@
+.upgradeCard {
+  font-size: var(--text-base);
+
+  &_grid {
+    align-items: end;
+  }
+
+  &_title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+  }
+
+  &_description {
+    color: var(--color-fg-dim);
+    font-size: var(--text-md);
+  }
+
+  &_owned {
+    color: var(--color-fg-dim);
+    font-size: var(--text-sm);
+  }
+
+  &_cost {
+    font-size: var(--text-lg);
+    font-weight: bold;
+  }
+
+  &_button {
+    margin-left: auto;
+  }
+}
+
 .purchaseUpgradeButton {
   cursor: pointer;
+  font-size: var(--text-base);
 
   &:disabled {
     cursor: not-allowed;

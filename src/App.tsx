@@ -39,7 +39,6 @@ function App() {
           <TasksList
             title="Tasks"
             maxNumOfTasks={config.maxTodoTasks}
-            sortByState="todoAndReview"
             tasksSelector={(state: TasksState) =>
               Object.keys(state.tasks).filter(
                 (task) =>
@@ -92,7 +91,7 @@ function App() {
             )} */}
           </Flex>
           <span className="footerBrand" style={{ fontSize: 'var(--text-base)', fontWeight: 'var(--font-weight-bold)' }}>
-            Procrastinidler
+            Procrastinidler 386
           </span>
         </Flex>
       </Box>

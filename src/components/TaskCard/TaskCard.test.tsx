@@ -16,7 +16,7 @@ describe('TaskCard component', () => {
     renderComponent();
 
     expect(
-      screen.getByText('Click white cards to complete them and earn money $')
+      screen.getByText('Click and hold on white cards to complete them and earn money $')
     ).toBeInTheDocument();
   });
 

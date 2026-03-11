@@ -8,7 +8,7 @@ export const DifficultyMeter = ({ difficulty }: { difficulty: number }) => {
   };
 
   return (
-    <Flex gap="2px" align="center">
+    <Flex gap="2px" align="center" style={{ backgroundColor: 'var(--color-bg-black)', padding: '2px 6px' }}>
       <Box style={{ marginLeft: 'auto' }}>
         <span style={{ fontSize: 'var(--text-sm)', color: getBarColor() }}>Lv{difficulty}</span>
       </Box>
@@ -16,6 +16,7 @@ export const DifficultyMeter = ({ difficulty }: { difficulty: number }) => {
         <Box
           key={index}
           style={{
+
             width: '6px',
             height: '12px',
             backgroundColor: getBarColor(),

@@ -5,8 +5,7 @@ import { WindowContainer } from '../ui';
 import { useShallow } from 'zustand/react/shallow';
 import { useTasksStore } from '../../store/tasksStore';
 import type { TasksState } from '../../store/tasksStore';
-import { Category, TaskState } from '../../store/tasksStore';
-import { useGameStore } from '../../store/gameStore';
+import { Category } from '../../store/tasksStore';
 import { config } from '../../game/config';
 import { humanNumber } from '../../helpers/human-number';
 import { memo } from 'react';
@@ -17,17 +16,13 @@ export const TasksList = memo(
     title,
     tasksSelector,
     maxNumOfTasks,
-    sortByState,
   }: {
     title: string;
     tasksSelector: (state: TasksState) => string[];
     maxNumOfTasks?: number;
-    /** When 'todoAndReview', sort order is: Metagame first, then InReview, then Todo */
-    sortByState?: 'todoAndReview';
   }) => {
     const itemIds = useTasksStore(useShallow(tasksSelector));
     const tasks = useTasksStore((state) => state.tasks);
-    const sortByNewer = useGameStore((state) => state.filters.newerTasksFirst);
 
     const sortedIds = useMemo(() => {
       const orderMap = new Map(itemIds.map((id, idx) => [id, idx]));
@@ -38,16 +33,11 @@ export const TasksList = memo(
         const metaA = taskA.category === Category.Metagame ? 0 : 1;
         const metaB = taskB.category === Category.Metagame ? 0 : 1;
         if (metaA !== metaB) return metaA - metaB;
-        if (sortByState === 'todoAndReview') {
-          const reviewA = taskA.state === TaskState.InReview ? 0 : 1;
-          const reviewB = taskB.state === TaskState.InReview ? 0 : 1;
-          if (reviewA !== reviewB) return reviewA - reviewB;
-        }
         const orderA = orderMap.get(a) ?? 0;
         const orderB = orderMap.get(b) ?? 0;
-        return sortByNewer ? orderB - orderA : orderA - orderB;
+        return orderA - orderB;
       });
-    }, [itemIds, tasks, sortByNewer, sortByState]);
+    }, [itemIds, tasks]);
 
     const windowTitle = `${title} (${humanNumber(itemIds.length)})`;
 

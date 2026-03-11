@@ -49,7 +49,7 @@ const initialState: TasksStoreState = {
   tasks: {
     initial: {
       id: 'initial',
-      title: 'Click white cards to complete them and earn money $',
+      title: 'Click and hold on white cards to complete them and earn money $',
       category: Category.Metagame,
       assignedTo: [],
       difficulty: 1,
@@ -88,6 +88,8 @@ export const useTasksStore = createGameStore<
     assignAssistantToTask: (assistantId: string, task: Task) => void;
     assignBossToTask: (task: Task) => void;
     makeProgress: (id: string, worker: 'assistant' | 'personal' | 'boss') => void;
+    /** Merge player progress when helping an assigned task; keeps max(current, progress) so assistant progress is not lost */
+    mergeTaskProgress: (id: string, progress: number) => void;
     tickWorkerProgress: (deltaTimeSeconds: number) => void;
     rejectTask: (id: string) => void;
     completeTask: (id: string) => void;
@@ -216,23 +218,28 @@ export const useTasksStore = createGameStore<
       numToAssign: number = 1,
       taskStates: TaskState[] = [TaskState.Todo]
     ) => {
-      const tasksToAssign: (Task | undefined)[] = [];
-      const tasks = get().getTasksArray();
-      const newerFirst = useGameStore.getState().filters?.newerTasksFirst ?? true;
+      const tasks = get().tasks;
+      const taskIds = Object.keys(tasks);
+      const orderMap = new Map(taskIds.map((id, i) => [id, i]));
+      const sortedIds = [...taskIds].sort((a, b) => {
+        const taskA = tasks[a];
+        const taskB = tasks[b];
+        if (!taskA || !taskB) return 0;
+        const metaA = taskA.category === Category.Metagame ? 0 : 1;
+        const metaB = taskB.category === Category.Metagame ? 0 : 1;
+        if (metaA !== metaB) return metaA - metaB;
+        return (orderMap.get(a) ?? 0) - (orderMap.get(b) ?? 0);
+      });
       const match = (task: Task | undefined) =>
         task &&
         (task.assignedTo ?? []).length === 0 &&
         taskStates.includes(task.state) &&
         !task.isSpecial;
-      for (let j = 0; j < tasks.length && tasksToAssign.length < numToAssign; j++) {
-        const i = newerFirst ? tasks.length - 1 - j : j;
-        const task = tasks[i];
-        if (match(task) && task!.category === Category.Metagame) tasksToAssign.push(task);
-      }
-      for (let j = 0; j < tasks.length && tasksToAssign.length < numToAssign; j++) {
-        const i = newerFirst ? tasks.length - 1 - j : j;
-        const task = tasks[i];
-        if (match(task) && task!.category !== Category.Metagame) tasksToAssign.push(task);
+      const tasksToAssign: (Task | undefined)[] = [];
+      for (const id of sortedIds) {
+        if (tasksToAssign.length >= numToAssign) break;
+        const task = tasks[id];
+        if (match(task)) tasksToAssign.push(task);
       }
       return tasksToAssign;
     },
@@ -285,6 +292,16 @@ export const useTasksStore = createGameStore<
         }
         set({ tasks: { ...get().tasks, [id]: task } });
       }
+    },
+    mergeTaskProgress: (id: string, progress: number) => {
+      const task = get().tasks[id];
+      if (!task) return;
+      const current = task.progress ?? 0;
+      task.progress = Math.min(100, Math.max(current, progress));
+      if (task.progress >= 100) {
+        setTimeout(() => get().completeTask(id), 300);
+      }
+      set({ tasks: { ...get().tasks, [id]: task } });
     },
     tickWorkerProgress: (deltaTimeSeconds: number) => {
       const currentTasks = get().tasks;
@@ -376,10 +393,10 @@ export const useTasksStore = createGameStore<
         if (completedTask.state === TaskState.Completed) {
           useGameStore.getState().addMoney(
             config.moneyPerTaskCompleted *
-              completedTask.difficulty *
-              deadlineMoneyMultiplier *
-              requiresReviewMoneyMultiplier *
-              promotionMoneyMultiplier
+            completedTask.difficulty *
+            deadlineMoneyMultiplier *
+            requiresReviewMoneyMultiplier *
+            promotionMoneyMultiplier
           );
         }
 
@@ -389,7 +406,7 @@ export const useTasksStore = createGameStore<
             get()
               .getTasksArray()
               .filter((t) => t?.state === TaskState.Completed).length >
-              config.maxCardsPerColumn + 1
+            config.maxCardsPerColumn + 1
           ) {
             return {
               tasks: {
@@ -432,10 +449,10 @@ export const useTasksStore = createGameStore<
         nextTasks[task.id] = updated;
         useGameStore.getState().addMoney(
           config.moneyPerTaskCompleted *
-            task.difficulty *
-            deadlineMoneyMultiplier *
-            requiresReviewMoneyMultiplier *
-            promotionMoneyMultiplier
+          task.difficulty *
+          deadlineMoneyMultiplier *
+          requiresReviewMoneyMultiplier *
+          promotionMoneyMultiplier
         );
       }
       set({ tasks: nextTasks });

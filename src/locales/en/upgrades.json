@@ -9,7 +9,7 @@
   },
   "personalTasksCreation": {
     "title": "Batch tasks creation",
-    "description": "The + Task button creates 10 tasks per upgrade level instead of only 1."
+    "description": "The + Task button creates 1 extra task per upgrade level."
   },
   "taskPairing": {
     "title": "Pairing",

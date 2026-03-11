@@ -43,17 +43,20 @@ export const TaskCard = memo(({ id }: { id: string }) => {
   const progressRef = useRef(0);
   /** Ref for the progress bar fill; we update its width in RAF during hold to avoid re-renders */
   const liveFillRef = useRef<HTMLDivElement | null>(null);
+  /** Effective progress for starting a hold: localProgress (unassigned partial) or store progress. Kept in ref so startFilling can read current value without stale closure. */
+  const effectiveProgressRef = useRef(0);
 
   const isLocked =
     isSpecial ||
     assignedTo.length > 0 ||
     state !== TaskState.Todo;
-  const canHold = !isLocked && (canPair || assignedTo.length === 0);
-
-  const fillSpeed =
-    (config.fillSpeedSeconds ?? 1.8) * (difficulty || 1);
+  const canHold =
+    !isSpecial &&
+    state === TaskState.Todo &&
+    (assignedTo.length === 0 || canPair);
 
   const displayProgress = localProgress ?? progress;
+  effectiveProgressRef.current = displayProgress;
 
   const stopFilling = useCallback(() => {
     setIsHolding(false);
@@ -62,25 +65,41 @@ export const TaskCard = memo(({ id }: { id: string }) => {
     startTimeRef.current = null;
     const final = progressRef.current;
     if (final < 100) {
-      setLocalProgress(final);
+      const task = useTasksStore.getState().tasks[id];
+      const isAssigned = (task?.assignedTo?.length ?? 0) > 0;
+      if (isAssigned) {
+        useTasksStore.getState().mergeTaskProgress(id, final);
+        setLocalProgress(null);
+      } else {
+        setLocalProgress(final);
+      }
     }
-  }, []);
+  }, [id]);
 
   const startFilling = useCallback(
     (e: React.MouseEvent | React.TouchEvent) => {
-      if (isLocked) return;
+      const task = useTasksStore.getState().tasks[id];
+      const canPairNow = (useUpgradesStore.getState().upgrades.taskPairing?.owned ?? 0) > 0;
+      const canStart =
+        task &&
+        !task.isSpecial &&
+        task.state === TaskState.Todo &&
+        ((task.assignedTo?.length ?? 0) === 0 || canPairNow);
+      if (!canStart) return;
       e.preventDefault();
+      e.stopPropagation?.();
       setIsHolding(true);
-      const startProgress = state === TaskState.Todo ? displayProgress : 0;
+      const startProgress = Math.min(100, effectiveProgressRef.current);
       progressRef.current = startProgress;
       if (startProgress >= 100) return;
 
+      const speed = (config.fillSpeedSeconds ?? 1.8) * (task.difficulty || 1);
       startTimeRef.current =
-        performance.now() - (startProgress / 100) * fillSpeed * 1000;
+        performance.now() - (startProgress / 100) * speed * 1000;
 
       const tick = (timestamp: number) => {
         const elapsed = (timestamp - (startTimeRef.current ?? 0)) / 1000;
-        const next = Math.min((elapsed / fillSpeed) * 100, 100);
+        const next = Math.min((elapsed / speed) * 100, 100);
         progressRef.current = next;
         if (liveFillRef.current) {
           liveFillRef.current.style.width = `${next}%`;
@@ -99,12 +118,19 @@ export const TaskCard = memo(({ id }: { id: string }) => {
       };
       rafRef.current = requestAnimationFrame(tick);
     },
-    [id, isLocked, state, displayProgress, fillSpeed]
+    [id]
   );
 
   useEffect(() => {
     if (state !== TaskState.Todo) setLocalProgress(null);
   }, [state]);
+
+  useEffect(() => {
+    if (assignedTo.length > 0 && localProgress !== null) {
+      useTasksStore.getState().mergeTaskProgress(id, localProgress);
+      setLocalProgress(null);
+    }
+  }, [id, assignedTo.length, localProgress]);
 
   useEffect(
     () => () => {
@@ -205,10 +231,11 @@ export const TaskCard = memo(({ id }: { id: string }) => {
             </Box>
           </Flex>
         </Box>
-        <Flex justify="end" gridArea="category">
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gridArea: 'category' }}>
           {category && (
             <span
               style={{
+                display: 'inline-block',
                 backgroundColor: 'var(--color-bg-black)',
                 padding: '2px 6px',
                 fontSize: 'var(--text-sm)',
@@ -218,7 +245,7 @@ export const TaskCard = memo(({ id }: { id: string }) => {
               {category}
             </span>
           )}
-        </Flex>
+        </div>
 
         {assignedTo.length > 0 && (
           <Box gridArea="assignedTo">
