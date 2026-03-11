@@ -141,7 +141,6 @@ export const useTasksStore = createGameStore<
       });
 
       if (!newTaskObj.isSpecial && newTaskObj.assignedTo.length === 0) {
-        get().tryAssignAssistantToTask(newTaskObj);
         get().fillIdleAssistantsWithUnassignedTasks();
       }
     },
@@ -219,9 +218,11 @@ export const useTasksStore = createGameStore<
       taskStates: TaskState[] = [TaskState.Todo]
     ) => {
       const tasks = get().tasks;
-      const taskIds = Object.keys(tasks);
-      const orderMap = new Map(taskIds.map((id, i) => [id, i]));
-      const sortedIds = [...taskIds].sort((a, b) => {
+      const candidateIds = Object.keys(tasks).filter((id) =>
+        taskStates.includes(tasks[id]?.state as TaskState)
+      );
+      const orderMap = new Map(candidateIds.map((id, i) => [id, i]));
+      const sortedIds = [...candidateIds].sort((a, b) => {
         const taskA = tasks[a];
         const taskB = tasks[b];
         if (!taskA || !taskB) return 0;

@@ -231,7 +231,7 @@ export const TaskCard = memo(({ id }: { id: string }) => {
             </Box>
           </Flex>
         </Box>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gridArea: 'category' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'start', gridArea: 'category' }}>
           {category && (
             <span
               style={{
