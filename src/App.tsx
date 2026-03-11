@@ -17,7 +17,7 @@ function App() {
   const showRejectedColumn = useGameStore((state) => state.filters.showRejectedTasks);
 
   useEffect(() => {
-    useEventsStore.getState().addEvent('metadata_event');
+    // useEventsStore.getState().addEvent('metadata_event');
   }, []);
 
   return (

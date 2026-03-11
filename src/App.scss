@@ -7,7 +7,7 @@
   grid-template-areas:
     'header  header     header'
     'tasks   completed  player'
-    'tasks   meters  player'
+    'tasks   meters  events'
     'tasks   boost      events'
     'footer  footer     footer';
   grid-template-columns: 40% 1fr 1fr;
@@ -22,6 +22,10 @@
   grid-template-areas: 'navigation currency';
   grid-template-columns: auto 1fr auto;
   background: var(--color-nav-bg);
+}
+
+.gameMeters .asciiProgressBar {
+  font-size: var(--text-lg);
 }
 
 .gameHeaderNav {

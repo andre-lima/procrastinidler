@@ -18,6 +18,7 @@ import { useUpgradesStore } from '../../store/upgradesStore';
 import { memo, useState, useRef, useEffect, useCallback } from 'react';
 import { ProgressMeter } from './components/ProgressMeter';
 import { config } from '../../game/config';
+import { useEventsStore } from '../../store/eventsStore';
 
 export const TaskCard = memo(({ id }: { id: string }) => {
   const {
@@ -116,14 +117,19 @@ export const TaskCard = memo(({ id }: { id: string }) => {
     return null;
   }
 
-  const variant =
-    category === Category.Metagame
-      ? 'metagame'
-      : state === TaskState.InReview
-        ? 'inReview'
-        : assignedTo.length > 0
-          ? 'assigned'
-          : 'todo';
+  useEffect(() => {
+    if (category === Category.Metagame || isSpecial) {
+      useEventsStore.getState().addEvent('metadata_event', { event: `"${title}"` });
+    }
+  }, []);
+
+  const variant = isSpecial
+    ? 'special'
+    : state === TaskState.InReview
+      ? 'inReview'
+      : assignedTo.length > 0
+        ? 'assigned'
+        : 'todo';
 
   return (
     <div

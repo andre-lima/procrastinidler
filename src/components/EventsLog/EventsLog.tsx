@@ -6,10 +6,11 @@ import { useEventsStore, type GameEventKey } from '../../store/eventsStore';
 
 function EventLine({ event }: { event: { id: string; key: GameEventKey; params?: Record<string, number | string> } }) {
   const { t } = useTranslation('events');
-  const text = t(event.key, event.params ?? {});
+  const html = t(event.key, event.params ?? {});
   return (
     <div className="eventsLog_line" key={event.id}>
-      &gt; {text}
+      <span>&gt;</span>{' '}
+      <span dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 }
