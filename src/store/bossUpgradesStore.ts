@@ -45,8 +45,8 @@ const initialState: BossUpgradesStoreState = {
     cost: 500,
     rate: 1.4,
     owned: 0,
-    ownedLimit: 10,
-    deltaPerOwned: -(config.bossFillSpeedSeconds * 1000) / 10,
+    ownedLimit: 50,
+    deltaPerOwned: -(config.bossFillSpeedSeconds * 10),
   },
   requiresReview: {
     id: 'requiresReview',

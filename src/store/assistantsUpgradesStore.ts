@@ -57,6 +57,7 @@ const initialState: AssistantsUpgradesStoreState = {
     ownedLimit: 5,
     deltaPerOwned: 1,
   },
+  // Lowers fill time per task (same idea as bossInterval: lower currentValue = faster completion in tickWorkerProgress).
   assistantInterval: {
     id: 'assistantInterval',
     type: 'assistants',
@@ -65,8 +66,8 @@ const initialState: AssistantsUpgradesStoreState = {
     cost: 250,
     rate: 1.5,
     owned: 0,
-    ownedLimit: 10,
-    deltaPerOwned: -(config.assistantFillSpeedSeconds * 1000) / 10,
+    ownedLimit: 50,
+    deltaPerOwned: -(config.assistantFillSpeedSeconds * 10),
   },
   bossAssistant: {
     id: 'bossAssistant',
