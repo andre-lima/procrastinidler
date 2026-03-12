@@ -8,6 +8,23 @@ You play as a guy tired of the 9 to 5 grind but stuck in the work life.
 
 The game has a darker theme, with UI based on 386/DOS menus.
 
+## Game Modes
+
+There are 2 game modes. Regular and Idle.
+
+At the beginning of the game the player is presented with a dialog box asking to choose between 2 modes.
+
+xxxxxxxxxx
+Welcome to Procrastinidler 386. Please install the program you want to run:
+
+"If I don't do this job, I'll sleep in the gutter"
+- In this mode you have to pay rent, and is constantly risking burning out from stress
+
+"I have a rich daddy, don't "
+- In this mode you have your rich daddy as a fallback if things don't work out... do whatever you want
+- (Disabled on the demo)
+xxxxxxxxxx
+
 ## Game Loop
 
 Your work is to complete tasks that are create on a To-Do board. Every task completed gives the player money, which they can use to buy upgrades, hire assistants, etc, and make more money from each task completed and complete tasks faster.
@@ -19,6 +36,12 @@ The player risks burnouts, which will pause the game, and set them back for a wh
 The game will have different phases, where the player will climb the corporate ladder, the game play changes, adding more features.
 
 I'm aiming for a 2h to 3h time to beat the whole game. DON'T FEATURE CREEP THIS TIME!
+
+### Idle Mode ("I have a rich daddy" mode)
+
+Instead of having to pay rent and risk burnout, the player can choose to prestige whenever they like.
+
+The retire button turns into "Take a Sabbatical", where they'll be brought to the same mini-games as in the regular mode.
 
 ## Requirements
 
@@ -40,6 +63,14 @@ SNF -> October
 Release -> December
 
 ## Features Breakdown
+
+### Currencies
+
+Regular dollars, to pay for upgrades
+
+RAM, prestige currency. Gathered during prestige mini-games. Used to purchase special upgrades that makes the game easier.
+
+Conversion: Some upgrades will allow you to buy money with RAM or RAM with money (money sink)
 
 ### Task
 
