@@ -28,10 +28,18 @@
         "title": "Assistants Upgrades"
       }
     },
+    "computer": {
+      "navButton": "Computer",
+      "dialog": {
+        "title": "Computer Upgrades"
+      }
+    },
     "addTask": "+ Task",
+    "newRun": "New Run",
     "purchase": "Purchase"
   },
   "burnout": "Stress levels:",
+  "jobLabel": "Job #{{number}}",
   "rent_due": "{{amount}}$ Rent due in: ",
   "rent_due_suffix": "Rent due in: "
 }

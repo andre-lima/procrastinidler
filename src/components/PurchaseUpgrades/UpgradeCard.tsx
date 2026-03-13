@@ -9,7 +9,14 @@ import { humanNumber } from '../../helpers/human-number';
 
 export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
   const money = useGameStore((state) => state.money);
+  const ram = useGameStore((state) => state.RAM);
   const { t: tUpgrades } = useTranslation('upgrades');
+
+  const isRamCurrency = upgrade.currency === 'RAM';
+  const balance = isRamCurrency ? ram : money;
+  const costLabel = isRamCurrency
+    ? `${humanNumber(upgrade.cost)} RAM`
+    : `${humanNumber(upgrade.cost)}$`;
 
   return (
     <div className="upgradeCard panel panelInner">
@@ -32,7 +39,7 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
           </Text>
           <Text className="upgradeCard_cost">
             <Flex gap={1} align="center">
-              <Text>{humanNumber(upgrade.cost)}$</Text>
+              <Text>{costLabel}</Text>
             </Flex>
           </Text>
         </Flex>
@@ -45,7 +52,7 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
               useUpgradesStore.getState().purchaseUpgrade(upgrade.id)
             }
             disabled={
-              upgrade.owned >= upgrade.ownedLimit || upgrade.cost > money
+              upgrade.owned >= upgrade.ownedLimit || upgrade.cost > balance
             }
           >
             Purchase

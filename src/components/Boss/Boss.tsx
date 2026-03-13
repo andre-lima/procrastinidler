@@ -4,6 +4,7 @@ import { useUpgradesStore } from '../../store/upgradesStore';
 import { useBossStore } from '../../store/bossStore';
 import { TaskState } from '../../store/tasksStore';
 import { IntervalController } from '../../helpers/interval-controller';
+import { useGameStore } from '../../store/gameStore';
 
 export const Boss = () => {
   const bossInterval = useUpgradesStore(
@@ -12,6 +13,8 @@ export const Boss = () => {
   // const boss = useBossStore((state) => state.boss[id]);
 
   const bossLoop = useCallback(() => {
+    if (useGameStore.getState().paused) return;
+
     useTasksStore.getState().newTask();
 
     const assignedTasks = useBossStore.getState().boss?.assignedTo ?? [];

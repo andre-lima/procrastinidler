@@ -16,6 +16,9 @@ export const BurnoutMeter = () => {
   const rentAmount = useRentStore((state) => state.rentAmount);
 
   const tick = useCallback(() => {
+    // Don't advance burnout while game is paused (e.g. burnout overlay).
+    if (useGameStore.getState().paused) return;
+
     const { money, burnout: currentBurnout } = useGameStore.getState();
 
     if (money < rentAmount) {
@@ -24,6 +27,9 @@ export const BurnoutMeter = () => {
 
       if (newBurnout >= 100) {
         useEventsStore.getState().addEvent('burnout');
+        // Enter burned-out paused state; overlay & loops will respect these flags.
+        useGameStore.getState().setBurnedOut(true);
+        useGameStore.getState().setPaused(true);
         setBurnout(0);
       }
     }

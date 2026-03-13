@@ -9,13 +9,16 @@ import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
 import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
+import { RamDisplay } from '../RamDisplay/RamDisplay';
 import { Meters } from '../Meters/Meters';
 import { useUpgradesStore } from '../../store/upgradesStore';
+import { useGameStore } from '../../store/gameStore';
 
 export const NavBar = () => {
   const assistants = useAssistantStore((state) => state.assistants);
   const boss = useBossStore((state) => state.boss);
   const { t } = useTranslation('common');
+  const runNumber = useGameStore((state) => state.runNumber ?? 1);
 
   const createNewTask = () => {
     const newTaskTodo = useTasksStore.getState().tasks.clickNewTask;
@@ -38,6 +41,13 @@ export const NavBar = () => {
           {t('menus.addTask')}
         </Button>
 
+        <Button
+          variant="secondary"
+          onClick={() => useGameStore.getState().startNewRun()}
+        >
+          {t('menus.newRun')}
+        </Button>
+
         <NavDialogButton id="personal">
           <PurchaseUpgrades id="personal" />
         </NavDialogButton>
@@ -50,6 +60,10 @@ export const NavBar = () => {
           <PurchaseUpgrades id="assistants" />
         </NavDialogButton>
 
+        <NavDialogButton id="computer">
+          <PurchaseUpgrades id="computer" />
+        </NavDialogButton>
+
         {Object.values(assistants).map(
           (assistant) =>
             assistant && <Assistant key={assistant.id} id={assistant.id} />
@@ -59,6 +73,10 @@ export const NavBar = () => {
       </div>
 
       <div className="gameHeaderCurrency" style={{ padding: 'var(--space-4) var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-4)' }}>
+        <span style={{ color: 'var(--color-fg-dim)', fontFamily: 'var(--font-mono)' }}>
+          {t('jobLabel', { number: runNumber })}
+        </span>
+        <RamDisplay />
         <MoneyDisplay />
       </div>
     </>

@@ -21,6 +21,7 @@ export const useRentStore = createGameStore<
   RentStoreState,
   {
     tick: () => void;
+    resetForNewRun: () => void;
   }
 >(
   {
@@ -50,6 +51,9 @@ export const useRentStore = createGameStore<
       } else {
         set({ remainingMs: newRemaining });
       }
+    },
+    resetForNewRun: () => {
+      set({ rentAmount: initialState.rentAmount, remainingMs: rentIntervalMs });
     },
   })
 );

@@ -10,7 +10,6 @@ interface BossUpgradesStoreState {
   increaseDifficulty: Upgrade;
   bossInterval: Upgrade;
   requiresReview: Upgrade;
-  bossMultitasking: Upgrade;
   promotion: Upgrade;
 }
 
@@ -59,17 +58,6 @@ const initialState: BossUpgradesStoreState = {
     ownedLimit: 5,
     deltaPerOwned: 20,
   },
-  bossMultitasking: {
-    id: 'bossMultitasking',
-    type: 'boss',
-    currentValue: 1,
-    baseValue: 0,
-    cost: 1500,
-    rate: 1.2,
-    owned: 1,
-    ownedLimit: 10,
-    deltaPerOwned: 1,
-  },
   promotion: {
     id: 'promotion',
     type: 'boss',
@@ -85,7 +73,7 @@ const initialState: BossUpgradesStoreState = {
 
 export const useBossUpgradesStore = createGameStore<
   BossUpgradesStoreState,
-  { purchaseUpgrade: (upgradeId: string) => void }
+  { purchaseUpgrade: (upgradeId: string) => void; resetForNewRun: () => void }
 >(
   {
     saveKey: 'boss-upgrades-store',
@@ -110,6 +98,9 @@ export const useBossUpgradesStore = createGameStore<
 
         set({ [updated.id]: updated });
       }
+    },
+    resetForNewRun: () => {
+      set({ ...initialState });
     },
   })
 );

@@ -21,6 +21,7 @@ export const useAssistantStore = createGameStore<
     addAssistant: () => void;
     assignTaskToAssistant: (taskId: string, assistantId: string) => void;
     unassignTask: (taskId: string, assistantId: string) => void;
+    resetForNewRun: () => void;
   }
 >(
   {
@@ -66,6 +67,9 @@ export const useAssistantStore = createGameStore<
           ? { assistants: { ...get().assistants, [assistant.id]: assistant } }
           : {}
       );
+    },
+    resetForNewRun: () => {
+      set({ assistants: {} });
     },
   })
 );

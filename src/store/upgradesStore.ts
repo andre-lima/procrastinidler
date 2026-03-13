@@ -5,6 +5,7 @@ import type { Upgrade } from './assistantsUpgradesStore';
 export type { Upgrade };
 import { useBossUpgradesStore } from './bossUpgradesStore';
 import { usePersonalUpgradesStore } from './personalUpgradesStore';
+import { useComputerUpgradesStore } from './computerUpgradesStore';
 
 export interface UpgradesStoreState {
   upgrades: Record<string, Upgrade>;
@@ -22,6 +23,7 @@ function getMergedUpgrades(): Record<string, Upgrade> {
     ...getUpgradesFromStore(useAssistantsUpgradesStore.getState() as unknown as Record<string, unknown>),
     ...getUpgradesFromStore(useBossUpgradesStore.getState() as unknown as Record<string, unknown>),
     ...getUpgradesFromStore(usePersonalUpgradesStore.getState() as unknown as Record<string, unknown>),
+    ...getUpgradesFromStore(useComputerUpgradesStore.getState() as unknown as Record<string, unknown>),
   };
 }
 
@@ -29,6 +31,7 @@ function purchaseUpgrade(upgradeId: string): void {
   const assistants = getUpgradesFromStore(useAssistantsUpgradesStore.getState() as unknown as Record<string, unknown>);
   const boss = getUpgradesFromStore(useBossUpgradesStore.getState() as unknown as Record<string, unknown>);
   const personal = getUpgradesFromStore(usePersonalUpgradesStore.getState() as unknown as Record<string, unknown>);
+  const computer = getUpgradesFromStore(useComputerUpgradesStore.getState() as unknown as Record<string, unknown>);
 
   if (upgradeId in assistants) {
     useAssistantsUpgradesStore.getState().purchaseUpgrade(upgradeId);
@@ -36,6 +39,8 @@ function purchaseUpgrade(upgradeId: string): void {
     useBossUpgradesStore.getState().purchaseUpgrade(upgradeId);
   } else if (upgradeId in personal) {
     usePersonalUpgradesStore.getState().purchaseUpgrade(upgradeId);
+  } else if (upgradeId in computer) {
+    useComputerUpgradesStore.getState().purchaseUpgrade(upgradeId);
   }
 }
 
@@ -43,14 +48,16 @@ function useUpgradesStoreHook<T>(selector: (state: UpgradesStoreState) => T): T 
   const assistantsState = useAssistantsUpgradesStore((s) => s);
   const bossState = useBossUpgradesStore((s) => s);
   const personalState = usePersonalUpgradesStore((s) => s);
+  const computerState = useComputerUpgradesStore((s) => s);
 
   const upgrades = useMemo(
     () => ({
       ...getUpgradesFromStore(assistantsState as unknown as Record<string, unknown>),
       ...getUpgradesFromStore(bossState as unknown as Record<string, unknown>),
       ...getUpgradesFromStore(personalState as unknown as Record<string, unknown>),
+      ...getUpgradesFromStore(computerState as unknown as Record<string, unknown>),
     }),
-    [assistantsState, bossState, personalState]
+    [assistantsState, bossState, personalState, computerState]
   );
 
   const purchaseUpgradeFn = useCallback((id: string) => purchaseUpgrade(id), []);

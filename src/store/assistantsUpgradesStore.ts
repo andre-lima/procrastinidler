@@ -1,7 +1,7 @@
 import { createGameStore } from '../reactive-store/createGameStore';
 export interface Upgrade {
   id: string;
-  type: 'assistants' | 'boss' | 'personal';
+  type: 'assistants' | 'boss' | 'personal' | 'computer';
   baseValue: number;
   currentValue: number;
   cost: number;
@@ -9,6 +9,8 @@ export interface Upgrade {
   owned: number;
   ownedLimit: number;
   deltaPerOwned: number;
+  /** Currency for purchase; default 'money'. Computer upgrades use 'RAM'. */
+  currency?: 'money' | 'RAM';
 }
 import { useGameStore } from './gameStore';
 import { gameEvents } from './gameEvents';
@@ -18,7 +20,6 @@ import { localStorageSaveSystem } from './saveSystem';
 interface AssistantsUpgradesStoreState {
   buyAssistants: Upgrade;
   // assistantEfficiency: Upgrade;
-  assistantsMultitasking: Upgrade;
   assistantInterval: Upgrade;
   bossAssistant: Upgrade;
 }
@@ -46,17 +47,6 @@ const initialState: AssistantsUpgradesStoreState = {
   //   ownedLimit: 60,
   //   deltaPerOwned: 7.5,
   // },
-  assistantsMultitasking: {
-    id: 'assistantsMultitasking',
-    type: 'assistants',
-    currentValue: 1,
-    baseValue: 0,
-    cost: 80,
-    rate: 1.8,
-    owned: 1,
-    ownedLimit: 5,
-    deltaPerOwned: 1,
-  },
   // Lowers fill time per task (same idea as bossInterval: lower currentValue = faster completion in tickWorkerProgress).
   assistantInterval: {
     id: 'assistantInterval',
@@ -84,7 +74,7 @@ const initialState: AssistantsUpgradesStoreState = {
 
 export const useAssistantsUpgradesStore = createGameStore<
   AssistantsUpgradesStoreState,
-  { purchaseUpgrade: (upgradeId: string) => void }
+  { purchaseUpgrade: (upgradeId: string) => void; resetForNewRun: () => void }
 >(
   {
     saveKey: 'assistants-upgrades-store',
@@ -109,6 +99,9 @@ export const useAssistantsUpgradesStore = createGameStore<
 
         set({ [updated.id]: updated });
       }
+    },
+    resetForNewRun: () => {
+      set({ ...initialState });
     },
   })
 );

@@ -12,7 +12,8 @@ import { CompletedCount } from './components/CompletedCount/CompletedCount';
 import { EventsLog } from './components/EventsLog/EventsLog';
 import { Meters } from './components/Meters/Meters';
 import { useUpgradesStore } from './store/upgradesStore';
-import { Button } from './components/ui';
+import { useComputerUpgradesStore } from './store/computerUpgradesStore';
+import { Button, WindowContainer } from './components/ui';
 import { useTranslation } from 'react-i18next';
 import { humanNumber } from './helpers/human-number';
 
@@ -24,7 +25,7 @@ function PlayerFireUpgrade() {
 
   if (!fireUpgrade) return null;
 
-  return <>
+  return <Flex gap={2} align='center' justify='center'>
     <Box gridArea="title" className="upgradeCard_title">
       <Text>{tUpgrades(fireUpgrade.id + '.title')}</Text>
     </Box>
@@ -43,11 +44,16 @@ function PlayerFireUpgrade() {
         {humanNumber(fireUpgrade.cost)}$
       </Button>
     </Box>
-  </>;
+  </Flex>;
 }
 
 function App() {
   const showRejectedColumn = useGameStore((state) => state.filters.showRejectedTasks);
+  const maxTaskSlots =
+    useComputerUpgradesStore(
+      (s) => s.taskSlots?.currentValue ?? config.maxTodoTasks
+    );
+  const burnedOut = useGameStore((state) => (state as any).burnedOut ?? false);
 
   useEffect(() => {
     // useEventsStore.getState().addEvent('metadata_event');
@@ -72,7 +78,7 @@ function App() {
           <TasksList
             title="Tasks"
             titleTodoInReview
-            maxNumOfTasks={config.maxTodoTasks}
+            maxNumOfTasks={maxTaskSlots}
             tasksSelector={(state: TasksState) =>
               Object.keys(state.tasks).filter(
                 (task) =>
@@ -97,7 +103,12 @@ function App() {
       </div>
       <div className="gameBoost">Boost</div>
       <div className="gamePlayer">
-        <PlayerFireUpgrade />
+        <WindowContainer variant="secondary">
+          <Flex align="center" gap={2} direction='column'>
+            <img src="/man.png" alt="Player" />
+            <PlayerFireUpgrade />
+          </Flex>
+        </WindowContainer>
       </div>
       <div className="gameEvents">
         <EventsLog />
@@ -131,6 +142,40 @@ function App() {
           </span>
         </Flex>
       </Box>
+
+      {burnedOut && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            background: 'rgba(128, 0, 0, 1)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#000000',
+          }}
+        >
+          <Flex direction="column" align="center" gap={4}>
+            <Text as="h1" size="5" style={{ fontWeight: 'var(--font-weight-bold)' }}>
+              You burned out.
+            </Text>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => {
+                const game = useGameStore.getState();
+                game.startNewRun();
+                game.setBurnedOut(false);
+                game.setPaused(false);
+              }}
+            >
+              Find a New Job
+            </Button>
+          </Flex>
+        </div>
+      )}
     </div>
   );
 }

@@ -39,6 +39,7 @@ import { useAssistantStore } from './assistantStore';
 import { getRandomCategory } from '../helpers/random-category';
 import { useUpgradesStore } from './upgradesStore';
 import { useBossStore } from './bossStore';
+import { useComputerUpgradesStore } from './computerUpgradesStore';
 import { localStorageSaveSystem } from './saveSystem';
 
 interface TasksStoreState {
@@ -75,6 +76,8 @@ export const useTasksStore = createGameStore<
   {
     getTasksArray: () => (Task | undefined)[];
     getTodosLength: () => number;
+    /** Count of tasks in Todo or InReview (including isSpecial); used for slot limit. */
+    getTodoOrInReviewCount: () => number;
     getNextUnassignedTask: (
       numToAssign?: number,
       taskStates?: TaskState[]
@@ -94,6 +97,7 @@ export const useTasksStore = createGameStore<
     rejectTask: (id: string) => void;
     completeTask: (id: string) => void;
     submitTasks: () => void;
+    resetForNewRun: () => void;
   }
 >(
   {
@@ -108,8 +112,23 @@ export const useTasksStore = createGameStore<
       get()
         .getTasksArray()
         .filter((task) => task?.state === TaskState.Todo).length,
+    getTodoOrInReviewCount: () =>
+      get()
+        .getTasksArray()
+        .filter(
+          (task) =>
+            task &&
+            (task.state === TaskState.Todo || task.state === TaskState.InReview)
+        ).length,
     newTask: (task?: Task) => {
-      if (!task?.isSpecial && get().getTodosLength() >= 50) {
+      const maxTaskSlots =
+        useComputerUpgradesStore.getState().taskSlots?.currentValue ??
+        config.maxTodoTasks;
+      // isSpecial tasks always allowed (player must not miss them); they still count toward slots once added
+      if (
+        !task?.isSpecial &&
+        get().getTodoOrInReviewCount() >= maxTaskSlots
+      ) {
         return;
       }
 
@@ -462,6 +481,22 @@ export const useTasksStore = createGameStore<
         );
       }
       set({ tasks: nextTasks });
+    },
+    resetForNewRun: () => {
+      // Restore initial tutorial/meta tasks, but only show the \"clickNewTask\" helper on the very first run.
+      const currentRun = useGameStore.getState().runNumber ?? 1;
+      const nextRun = currentRun + 1;
+
+      const baseTasks: TasksStoreState['tasks'] = {
+        initial: initialState.tasks.initial,
+      };
+
+      // Only Job #1 (the very first run) should have the \"clickNewTask\" card.
+      if (nextRun === 1 && initialState.tasks.clickNewTask) {
+        baseTasks.clickNewTask = initialState.tasks.clickNewTask;
+      }
+
+      set({ tasks: baseTasks });
     },
   })
 );

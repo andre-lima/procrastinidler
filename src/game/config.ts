@@ -3,7 +3,8 @@ export const config = {
   moneyPerTaskCompleted: 1,
   maxDeadline: 45 * 1000,
   maxCardsPerColumn: 30,
-  maxTodoTasks: 50,
+  /** Base max number of Todo+InReview slots (non-special); computer upgrade adds more. */
+  maxTodoTasks: 10,
   tickLength: 1000,
   burnoutGrowthPerTick: 0.5,
   /** Rent amount (initial); burnout increases when money is below this; increases by 1 after each collection */

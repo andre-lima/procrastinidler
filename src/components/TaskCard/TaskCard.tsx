@@ -248,7 +248,7 @@ export const TaskCard = memo(({ id }: { id: string }) => {
         </div>
 
         {assignedTo.length > 0 && (
-          <Box gridArea="assignedTo">
+          <Box gridArea="assignedTo" style={{ position: 'relative' }}>
             {assignedTo.map((assistantId) => (
               <div key={assistantId} className="assignedAssistantImage">
                 <img

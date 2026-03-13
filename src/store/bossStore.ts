@@ -23,6 +23,7 @@ export const useBossStore = createGameStore<
     assignTaskToBoss: (todoId: string) => void;
     addBoss: () => void;
     unassignTask: (todoId: string) => void;
+    resetForNewRun: () => void;
   }
 >(
   {
@@ -51,6 +52,9 @@ export const useBossStore = createGameStore<
         boss.assignedTo = boss.assignedTo.filter((taskId) => taskId !== todoId);
       }
       set({ boss: boss ?? null });
+    },
+    resetForNewRun: () => {
+      set({ boss: null, bossInterval: initialState.bossInterval });
     },
   })
 );

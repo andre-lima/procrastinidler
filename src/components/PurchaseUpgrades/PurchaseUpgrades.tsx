@@ -6,7 +6,7 @@ import { useShallow } from 'zustand/react/shallow';
 export const PurchaseUpgrades = ({
   id,
 }: {
-  id: 'assistants' | 'boss' | 'personal';
+  id: 'assistants' | 'boss' | 'personal' | 'computer';
 }) => {
   const upgrades = useUpgradesStore(
     useShallow((state) =>

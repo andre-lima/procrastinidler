@@ -46,6 +46,10 @@ export const TasksList = memo(
       });
     }, [itemIds, tasks]);
 
+    // Show "max reached" when total Todo+InReview count (including isSpecial) is at or over limit
+    const atSlotLimit =
+      maxNumOfTasks != null && itemIds.length >= maxNumOfTasks;
+
     // Optional title format: "To-Do (#)" or "To-Do (#) / In Review (#)" when requiresReview is purchased
     const windowTitle = titleTodoInReview
       ? (() => {
@@ -65,7 +69,7 @@ export const TasksList = memo(
     return (
       <div className="tasksList">
         <WindowContainer variant="primary" title={windowTitle} className="tasksListPanel">
-          {maxNumOfTasks != null && maxNumOfTasks <= itemIds.length && (
+          {atSlotLimit && (
             <Text size="2" style={{ marginBottom: 'var(--space-2)', color: 'var(--color-danger)' }}>
               Max of {maxNumOfTasks} tasks reached
             </Text>

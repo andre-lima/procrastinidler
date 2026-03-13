@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useTasksStore } from '../../store/tasksStore';
+import { useGameStore } from '../../store/gameStore';
 
 /**
  * Runs a requestAnimationFrame loop that advances assistant/boss task progress
@@ -13,7 +14,8 @@ export function WorkerProgressLoop() {
     const tick = (now: number) => {
       const deltaSeconds = (now - lastTimeRef.current) / 1000;
       lastTimeRef.current = now;
-      if (deltaSeconds > 0 && deltaSeconds < 1) {
+      const paused = useGameStore.getState().paused;
+      if (!paused && deltaSeconds > 0 && deltaSeconds < 1) {
         useTasksStore.getState().tickWorkerProgress(deltaSeconds);
       }
       rafRef.current = requestAnimationFrame(tick);
@@ -27,7 +29,9 @@ export function WorkerProgressLoop() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      useTasksStore.getState().fillIdleAssistantsWithUnassignedTasks();
+      if (!useGameStore.getState().paused) {
+        useTasksStore.getState().fillIdleAssistantsWithUnassignedTasks();
+      }
     }, 5000);
     return () => clearInterval(interval);
   }, []);

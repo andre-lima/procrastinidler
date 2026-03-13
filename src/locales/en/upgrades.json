@@ -29,7 +29,7 @@
   },
   "assistantsMultitasking": {
     "title": "Multitasking",
-    "description": "Assistants can take on more tasks at once."
+    "description": "Upgrades the assistants' computers so they can take on more work at once."
   },
   "assistantInterval": {
     "title": "Fast worker",
@@ -65,10 +65,18 @@
   },
   "bossMultitasking": {
     "title": "Multitasking",
-    "description": "Boss can review more tasks at once."
+    "description": "Upgrades the boss's computer so they can review more tasks at once."
   },
   "bossInterval": {
     "title": "Moar!",
     "description": "Increase Boss tasks generation and reviews speed."
+  },
+  "taskSlots": {
+    "title": "Task slots",
+    "description": "Add 2 slots to the max number of tasks (To-Do + In Review). Costs 1 RAM."
+  },
+  "beerMoney": {
+    "title": "Beer money",
+    "description": "On the beginning of each run, you will receive enough money to cover your rent for a while."
   }
 }
