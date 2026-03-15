@@ -8,6 +8,7 @@ interface PersonalUpgradesStoreState {
   personalMoneyPerTask: Upgrade;
   // personalEfficiency: Upgrade;
   personalTasksCreation: Upgrade;
+  resiliency: Upgrade;
   taskPairing: Upgrade;
   FIRE: Upgrade;
 }
@@ -45,6 +46,18 @@ const initialState: PersonalUpgradesStoreState = {
     owned: 0,
     ownedLimit: 10,
     deltaPerOwned: 1,
+  },
+  // Slows burnout growth by 1% per level (used in BurnoutMeter).
+  resiliency: {
+    id: 'resiliency',
+    type: 'personal',
+    currentValue: 0,
+    baseValue: 0,
+    cost: 500,
+    rate: 1.2,
+    owned: 0,
+    ownedLimit: 50,
+    deltaPerOwned: 0.01,
   },
   taskPairing: {
     id: 'taskPairing',

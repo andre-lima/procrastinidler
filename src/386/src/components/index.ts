@@ -81,7 +81,7 @@ export {
   NumberFieldIncrement,
 } from "./NumberField";
 
-export { Button } from "./Button";
+export { Button, type ButtonVariant } from "./Button";
 
 export { Sidebar } from "./Sidebar";
 export { WindowContainer } from "./WindowContainer";

@@ -1,6 +1,6 @@
 /* Re-exports from 386 component library — themed Base UI wrappers */
 
-export { Button } from '../../386/src/components/Button';
+export { Button, type ButtonVariant } from '../../386/src/components/Button';
 export { Switch } from '../../386/src/components/Switch';
 export {
   DialogRoot,

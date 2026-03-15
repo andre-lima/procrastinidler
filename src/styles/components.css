@@ -182,10 +182,17 @@
   font-size: var(--text-xs);
 }
 
+/* Primary + type: override bg/border via variables; .btnPrimary uses them */
 .btnSuccess  { --color-btn-primary-bg: var(--color-success);  --color-btn-primary-border: var(--color-success); }
 .btnWarning  { --color-btn-primary-bg: var(--color-warning);  --color-btn-primary-border: var(--color-warning); }
 .btnDanger   { --color-btn-primary-bg: var(--color-danger);   --color-btn-primary-border: var(--color-danger);  }
 .btnInfo     { --color-btn-primary-bg: var(--color-info);     --color-btn-primary-border: var(--color-info);    }
+
+/* Secondary + type: outlined style (border and text in type color) */
+.btnSecondary.btnSuccess { border-color: var(--color-success); color: var(--color-success); }
+.btnSecondary.btnWarning { border-color: var(--color-warning); color: var(--color-warning); }
+.btnSecondary.btnDanger  { border-color: var(--color-danger);  color: var(--color-danger);  }
+.btnSecondary.btnInfo    { border-color: var(--color-info);    color: var(--color-info);    }
 
 .input {
   background:    var(--color-bg-black);

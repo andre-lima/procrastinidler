@@ -58,7 +58,7 @@ const initialState: ComputerUpgradesStoreState = {
     // currentValue tracks level; reward is granted on purchase via money payout.
     currentValue: 0,
     baseValue: 0,
-    cost: 1,
+    cost: 5,
     rate: 1.5,
     owned: 0,
     ownedLimit: 10,

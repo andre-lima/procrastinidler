@@ -271,18 +271,18 @@ export default function App() {
                   <div style={{ marginBottom: "10px" }}>
                     <div className="label" style={{ marginBottom: "6px" }}>Primary (filled):</div>
                     <Button variant="primary">Default</Button>
-                    <Button variant="success" style={{ color: "var(--color-bg-black)" }}>Success</Button>
-                    <Button variant="warning" style={{ color: "var(--color-bg-black)" }}>Warning</Button>
-                    <Button variant="danger" style={{ color: "var(--color-bg-black)" }}>Danger</Button>
-                    <Button variant="info" style={{ color: "var(--color-bg-black)" }}>Info</Button>
+                    <Button variant="primary" type="success">Success</Button>
+                    <Button variant="primary" type="warning">Warning</Button>
+                    <Button variant="primary" type="danger">Danger</Button>
+                    <Button variant="primary" type="info">Info</Button>
                   </div>
                   <div style={{ marginBottom: "10px" }}>
                     <div className="label" style={{ marginBottom: "6px" }}>Secondary (outlined):</div>
                     <Button variant="secondary">Default</Button>
-                    <Button variant="secondary" style={{ borderColor: "var(--color-success)", color: "var(--color-success)" }}>Success</Button>
-                    <Button variant="secondary" style={{ borderColor: "var(--color-warning)", color: "var(--color-warning)" }}>Warning</Button>
-                    <Button variant="secondary" style={{ borderColor: "var(--color-danger)", color: "var(--color-danger)" }}>Danger</Button>
-                    <Button variant="secondary" style={{ borderColor: "var(--color-info)", color: "var(--color-info)" }}>Info</Button>
+                    <Button variant="secondary" type="success">Success</Button>
+                    <Button variant="secondary" type="warning">Warning</Button>
+                    <Button variant="secondary" type="danger">Danger</Button>
+                    <Button variant="secondary" type="info">Info</Button>
                   </div>
                   <div>
                     <div className="label" style={{ marginBottom: "6px" }}>Sizes:</div>
@@ -453,9 +453,7 @@ export default function App() {
                         </DialogBody>
                         <DialogFooter>
                           <DialogClose render={
-                            <Button variant="secondary" style={{ borderColor: "var(--color-fg-dim)", color: "var(--color-fg-dim)" }}>
-                              Cancel
-                            </Button>
+                            <Button variant="secondary">Cancel</Button>
                           } />
                           <DialogClose render={
                             <Button variant="primary" style={{ background: "var(--color-accent-hi)", borderColor: "var(--color-accent-hi)", color: "var(--color-bg-black)" }}>

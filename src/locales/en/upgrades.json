@@ -7,6 +7,10 @@
     "title": "Batch tasks creation",
     "description": "The + Task button creates 1 extra task per upgrade level."
   },
+  "resiliency": {
+    "title": "Resiliency",
+    "description": "Slows the burnout timer by 1% per level."
+  },
   "taskPairing": {
     "title": "Pairing",
     "description": "Allows you to help on tasks already assigned to an assistant."

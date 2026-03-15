@@ -14,6 +14,8 @@ import { Meters } from './components/Meters/Meters';
 import { useUpgradesStore } from './store/upgradesStore';
 import { useComputerUpgradesStore } from './store/computerUpgradesStore';
 import { Button, WindowContainer } from './components/ui';
+import { BurnoutOverlay } from './components/BurnoutOverlay/BurnoutOverlay';
+import { useDebugStore } from './store/debugStore';
 import { useTranslation } from 'react-i18next';
 import { humanNumber } from './helpers/human-number';
 
@@ -53,10 +55,24 @@ function App() {
     useComputerUpgradesStore(
       (s) => s.taskSlots?.currentValue ?? config.maxTodoTasks
     );
-  const burnedOut = useGameStore((state) => (state as any).burnedOut ?? false);
-
   useEffect(() => {
     // useEventsStore.getState().addEvent('metadata_event');
+  }, []);
+
+  // Debug: press "d" to toggle 3x game speed (timers run 3x faster).
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'd' || e.key === 'D') {
+        useDebugStore.getState().toggleSpeed();
+      } else if (e.key === 'f' || e.key === 'F') {
+        useDebugStore.getState().toggleSpeed(20);
+      } else if (e.key === 'g' || e.key === 'G') {
+        useDebugStore.getState().giveMoney(1000);
+        useDebugStore.getState().giveRAM(10);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
   return (
@@ -101,7 +117,7 @@ function App() {
       <div className="gameCompleted">
         <CompletedCount />
       </div>
-      <div className="gameBoost">Boost</div>
+      {/* <div className="gameBoost">Boost</div> */}
       <div className="gamePlayer">
         <WindowContainer variant="secondary">
           <Flex align="center" gap={2} direction='column'>
@@ -143,39 +159,7 @@ function App() {
         </Flex>
       </Box>
 
-      {burnedOut && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 9999,
-            background: 'rgba(128, 0, 0, 1)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#000000',
-          }}
-        >
-          <Flex direction="column" align="center" gap={4}>
-            <Text as="h1" size="5" style={{ fontWeight: 'var(--font-weight-bold)' }}>
-              You burned out.
-            </Text>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => {
-                const game = useGameStore.getState();
-                game.startNewRun();
-                game.setBurnedOut(false);
-                game.setPaused(false);
-              }}
-            >
-              Find a New Job
-            </Button>
-          </Flex>
-        </div>
-      )}
+      <BurnoutOverlay />
     </div>
   );
 }

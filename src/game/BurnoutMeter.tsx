@@ -3,6 +3,8 @@ import { AsciiProgressBar } from '../components/ui';
 import { useGameStore } from '../store/gameStore';
 import { useRentStore } from '../store/rentStore';
 import { useEventsStore } from '../store/eventsStore';
+import { useDebugStore } from '../store/debugStore';
+import { usePersonalUpgradesStore } from '../store/personalUpgradesStore';
 import { config } from './config';
 import { IntervalController } from '../helpers/interval-controller';
 import { Flex } from '../components/shared';
@@ -14,15 +16,17 @@ export const BurnoutMeter = () => {
   const setBurnout = useGameStore((state) => state.setBurnout);
   const money = useGameStore((state) => state.money);
   const rentAmount = useRentStore((state) => state.rentAmount);
+  const resiliency = usePersonalUpgradesStore((s) => s.resiliency.currentValue);
 
   const tick = useCallback(() => {
     // Don't advance burnout while game is paused (e.g. burnout overlay).
     if (useGameStore.getState().paused) return;
 
     const { money, burnout: currentBurnout } = useGameStore.getState();
+    const growthFactor = Math.max(0.5, 1 - resiliency);
 
     if (money < rentAmount) {
-      const newBurnout = currentBurnout + config.burnoutGrowthPerTick;
+      const newBurnout = currentBurnout + config.burnoutGrowthPerTick * growthFactor;
       setBurnout(newBurnout);
 
       if (newBurnout >= 100) {
@@ -33,13 +37,15 @@ export const BurnoutMeter = () => {
         setBurnout(0);
       }
     }
-  }, [setBurnout, rentAmount]);
+  }, [setBurnout, rentAmount, resiliency]);
 
+  const speedMultiplier = useDebugStore((state) => state.speedMultiplier);
   useEffect(() => {
-    const timer = new IntervalController(tick, config.tickLength);
+    const interval = config.tickLength / speedMultiplier;
+    const timer = new IntervalController(tick, interval);
     timer.start();
     return () => timer.stop();
-  }, [tick]);
+  }, [tick, speedMultiplier]);
 
   const safe = money >= rentAmount;
   const titleClass = safe ? 'meterLabel meterLabel--safe' : 'meterLabel meterLabel--danger';

@@ -37,30 +37,30 @@ export const NavBar = () => {
   return (
     <>
       <div className="gameHeaderNav" style={{ padding: 'var(--space-3) var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-        <Button variant="primary" onClick={createNewTask}>
+        <Button variant="secondary" type="danger" onClick={createNewTask}>
           {t('menus.addTask')}
         </Button>
 
         <Button
-          variant="secondary"
+          variant="primary"
           onClick={() => useGameStore.getState().startNewRun()}
         >
           {t('menus.newRun')}
         </Button>
 
-        <NavDialogButton id="personal">
+        <NavDialogButton id="personal" variant="secondary" type="warning">
           <PurchaseUpgrades id="personal" />
         </NavDialogButton>
 
-        <NavDialogButton id="boss">
+        <NavDialogButton id="boss" variant="secondary" type="warning">
           <PurchaseUpgrades id="boss" />
         </NavDialogButton>
 
-        <NavDialogButton id="assistants">
+        <NavDialogButton id="assistants" variant="secondary" type="info">
           <PurchaseUpgrades id="assistants" />
         </NavDialogButton>
 
-        <NavDialogButton id="computer">
+        <NavDialogButton id="computer" variant="secondary" type="info">
           <PurchaseUpgrades id="computer" />
         </NavDialogButton>
 

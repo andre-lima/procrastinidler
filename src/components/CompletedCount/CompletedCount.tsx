@@ -4,7 +4,7 @@ import { useGameStore } from '../../store/gameStore';
 import { Box, Flex, Heading } from '../shared';
 import { humanNumber } from '../../helpers/human-number';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../ui';
+import { Button, WindowContainer } from '../ui';
 
 export function CompletedCount() {
   const { t } = useTranslation('common');
@@ -22,12 +22,9 @@ export function CompletedCount() {
   const showSubmitButton = uploadWorkCompleted && toSubmitCount > 0;
 
   return (
-    <Box
-      className="tasksListPanel"
-      style={{
-        padding: 'var(--space-4)',
-        background: 'var(--color-bg-panel)',
-      }}
+    <WindowContainer
+      variant="primary"
+      title="Completed"
     >
       <Flex direction="column" gap={3}>
         <Heading size="4" as="h2">
@@ -44,6 +41,6 @@ export function CompletedCount() {
           </Button>
         )}
       </Flex>
-    </Box>
+    </WindowContainer>
   );
 }

@@ -14,13 +14,19 @@ import {
   DialogDescription,
 } from '../ui';
 import './styles.scss';
+import type { ButtonVariant } from '../ui';
+import type { ButtonType } from '../../386/src/components/Button';
 
 export const NavDialogButton = ({
   id,
   children,
+  variant = 'secondary',
+  type = 'default',
 }: {
   id: string;
   children: ReactNode;
+  variant?: ButtonVariant;
+  type?: ButtonType;
 }) => {
   const { t } = useTranslation('common');
 
@@ -28,7 +34,7 @@ export const NavDialogButton = ({
     <DialogRoot>
       <DialogTrigger
         render={
-          <Button variant="secondary" className="navButton">
+          <Button variant={variant} type={type} className="navButton">
             {t('menus.' + id + '.navButton')}
           </Button>
         }

@@ -12,39 +12,47 @@ const classes = {
   btnSm: "btnSm",
 };
 
-type ButtonVariant = "primary" | "secondary" | "success" | "warning" | "danger" | "info";
+export type ButtonVariant = "primary" | "secondary";
+export type ButtonType = "default" | "success" | "warning" | "danger" | "info";
 type ButtonSize = "default" | "lg" | "sm";
+
+type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> & {
+  children: ReactNode;
+  variant?: ButtonVariant;
+  /** Semantic color; use with variant for filled (primary) or outlined (secondary) look. */
+  type?: ButtonType;
+  size?: ButtonSize;
+  className?: string;
+};
 
 export function Button({
   children,
   variant = "primary",
+  type: typeProp = "default",
   size = "default",
   className = "",
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: ReactNode;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  className?: string;
-}) {
+}: ButtonProps) {
   const variantClass =
-    variant === "primary"
-      ? classes.btnPrimary
-      : variant === "secondary"
-        ? classes.btnSecondary
-        : variant === "success"
-          ? `${classes.btnPrimary} ${classes.btnSuccess}`
-          : variant === "warning"
-            ? `${classes.btnPrimary} ${classes.btnWarning}`
-            : variant === "danger"
-              ? `${classes.btnPrimary} ${classes.btnDanger}`
-              : `${classes.btnPrimary} ${classes.btnInfo}`;
+    variant === "primary" ? classes.btnPrimary : classes.btnSecondary;
+
+  const typeClass =
+    typeProp === "default"
+      ? ""
+      : typeProp === "success"
+        ? classes.btnSuccess
+        : typeProp === "warning"
+          ? classes.btnWarning
+          : typeProp === "danger"
+            ? classes.btnDanger
+            : classes.btnInfo;
 
   const sizeClass = size === "lg" ? classes.btnLg : size === "sm" ? classes.btnSm : "";
 
   return (
     <button
-      className={`${classes.btn} ${variantClass} ${sizeClass} ${className}`}
+      type="button"
+      className={`${classes.btn} ${variantClass} ${typeClass} ${sizeClass} ${className}`.trim()}
       {...props}
     >
       {children}

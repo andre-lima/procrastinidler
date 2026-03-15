@@ -18,12 +18,14 @@ xxxxxxxxxx
 Welcome to Procrastinidler 386. Please install the program you want to run:
 
 "If I don't do this job, I'll sleep in the gutter"
+
 - In this mode you have to pay rent, and is constantly risking burning out from stress
 
 "I have a rich daddy, don't "
+
 - In this mode you have your rich daddy as a fallback if things don't work out... do whatever you want
 - (Disabled on the demo)
-xxxxxxxxxx
+  xxxxxxxxxx
 
 ## Game Loop
 
@@ -52,13 +54,12 @@ The retire button turns into "Take a Sabbatical", where they'll be brought to th
 ## External Contributors
 
 Ana: Capsule arts
-other art? Alice?
 
 ## Release Plan
 
 Short itch demo -> End of April
 Steam playtest -> End of may
-Steam demo -> End of June
+Steam and Itch demo -> End of June
 SNF -> October
 Release -> December
 

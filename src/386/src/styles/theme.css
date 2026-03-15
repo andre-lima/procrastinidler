@@ -43,9 +43,9 @@
   --color-btn-primary-border: #777777;
   --color-btn-primary-fg:     #000000;
 
-  /* Buttons — secondary (outlined) */
-  --color-btn-secondary-border: #55ffff;
-  --color-btn-secondary-fg:     #55ffff;
+  /* Buttons — secondary default (outlined, gray) */
+  --color-btn-secondary-border: #888888;
+  --color-btn-secondary-fg:     #bbbbbb;
 
   /* Button shadow */
   --color-btn-shadow: #333333;
@@ -105,8 +105,8 @@
   --color-btn-primary-border: #996600;
   --color-btn-primary-fg:     #ffcc44;
 
-  --color-btn-secondary-border: #ffb000;
-  --color-btn-secondary-fg:     #ffb000;
+  --color-btn-secondary-border: #888888;
+  --color-btn-secondary-fg:     #888888;
 
   --color-btn-shadow: #111111;
 
@@ -159,8 +159,8 @@
   --color-btn-primary-border: #007700;
   --color-btn-primary-fg:     #55ff55;
 
-  --color-btn-secondary-border: #55ff55;
-  --color-btn-secondary-fg:     #55ff55;
+  --color-btn-secondary-border: #888888;
+  --color-btn-secondary-fg:     #888888;
 
   --color-btn-shadow: #111111;
 

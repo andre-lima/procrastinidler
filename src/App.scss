@@ -6,9 +6,9 @@
   display: grid;
   grid-template-areas:
     'header  header     header'
-    'tasks   completed  player'
-    'tasks   meters  events'
-    'tasks   boost      events'
+    'tasks   completed  meters'
+    'tasks   upgrades  player'
+    'tasks   upgrades      events'
     'footer  footer     footer';
   grid-template-columns: 40% 1fr 1fr;
   grid-template-rows: auto auto 1fr 1fr auto;

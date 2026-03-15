@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { AsciiProgressBar } from '../components/ui';
 import { useRentStore } from '../store/rentStore';
 import { useGameStore } from '../store/gameStore';
+import { useDebugStore } from '../store/debugStore';
 import { config } from './config';
 import { IntervalController } from '../helpers/interval-controller';
 import { Flex } from '../components/shared';
@@ -15,18 +16,20 @@ export const RentMeter = () => {
   const money = useGameStore((state) => state.money);
   const rentAmount = useRentStore((state) => state.rentAmount);
   const remainingMs = useRentStore((state) => state.remainingMs);
+  const speedMultiplier = useDebugStore((state) => state.speedMultiplier);
 
   const tickCb = useCallback(() => {
     useRentStore.getState().tick();
   }, []);
 
   useEffect(() => {
-    const timer = new IntervalController(tickCb, config.tickLength);
+    const interval = config.tickLength / speedMultiplier;
+    const timer = new IntervalController(tickCb, interval);
     timer.start();
     return () => timer.stop();
-  }, [tickCb]);
+  }, [tickCb, speedMultiplier]);
 
-  const progressValue = Math.max(0, Math.min(remainingMs, rentIntervalMs));
+  const progressValue = Math.max(0, rentIntervalMs - Math.min(remainingMs, rentIntervalMs));
   const safe = money >= rentAmount;
   const amountClass = safe ? 'meterLabel meterLabel--safe' : 'meterLabel meterLabel--danger';
 

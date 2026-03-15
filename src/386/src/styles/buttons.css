@@ -88,3 +88,28 @@
   background: var(--color-info);
   color:      var(--color-bg-black);
 }
+
+/* Secondary + type: outlined style (border and text in type color) */
+.btnSecondary.btnSuccess {
+  border-color: var(--color-success);
+  background:   var(--color-btn-primary-fg);
+  color:        var(--color-success);
+}
+
+.btnSecondary.btnWarning {
+  border-color: var(--color-warning);
+  background:   var(--color-btn-primary-fg);
+  color:        var(--color-warning);
+}
+
+.btnSecondary.btnDanger {
+  border-color: var(--color-danger);
+  background:   var(--color-btn-primary-fg);
+  color:        var(--color-danger);
+}
+
+.btnSecondary.btnInfo {
+  border-color: var(--color-info);
+  background:   var(--color-btn-primary-fg);
+  color:        var(--color-info);
+}
