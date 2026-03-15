@@ -45,11 +45,6 @@ export const NavBar = () => {
           {t('menus.newRun')}
         </Button>
 
-        {Object.values(assistants).map(
-          (assistant) =>
-            assistant && <Assistant key={assistant.id} id={assistant.id} />
-        )}
-
         {boss && <Boss />}
       </div>
 

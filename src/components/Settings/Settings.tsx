@@ -25,6 +25,7 @@ export const Settings = () => {
   const [activeTab, setActiveTab] = useState<TabId>('audio');
   const [confirmClear, setConfirmClear] = useState(false);
   const sfxOn = useGameStore((state) => state.filters.sfxOn);
+  const crtEnabled = useGameStore((state) => state.crtEnabled);
 
   const clearSave = () => {
     resetAllStores();
@@ -77,6 +78,15 @@ export const Settings = () => {
 
               <TabsPanel value="game" className="tabPanel">
                 <Flex gap={2} align="center" direction="column" style={{ alignItems: 'flex-start' }}>
+                  <Flex gap={2} align="center">
+                    <Switch
+                      label="CRT effect"
+                      checked={crtEnabled}
+                      onCheckedChange={(v) => useGameStore.getState().setCrtEnabled(v)}
+                      onLabel="ON"
+                      offLabel="OFF"
+                    />
+                  </Flex>
                   {confirmClear ? (
                     <>
                       <Flex direction="column" style={{ position: 'relative' }}>

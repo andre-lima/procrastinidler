@@ -38,7 +38,7 @@ function UpgradeDialogItem({
       />
       <DialogPortal container={typeof document !== 'undefined' ? document.body : undefined}>
         <DialogBackdrop />
-        <DialogPopup style={{ maxWidth: '450px' }}>
+        <DialogPopup style={{ maxWidth: '650px' }}>
           <DialogTitleBar>
             <span>{t('menus.' + id + '.dialog.title')}</span>
             <DialogClose

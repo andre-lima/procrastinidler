@@ -4,21 +4,26 @@
 ───────────────────────────────────────────────────────────────────────────── */
 
 .dialogBackdrop {
-  position:   fixed;
-  inset:      0;
-  background: var(--color-bg-overlay);
-  display:    flex;
-  align-items: center;
+  position:        fixed;
+  inset:           0;
+  background:      var(--color-bg-overlay);
+  display:         flex;
+  align-items:     center;
   justify-content: center;
-  z-index:    200;
+  z-index:         9998;
 }
 
 .dialogPopup {
-  background:   var(--color-bg-panel);
-  border:      2px solid var(--color-border);
-  width:        var(--component-dialog-width);
-  max-width:    90vw;
-  box-shadow:  4px 4px 0 var(--color-bg-black);
+  position:   fixed;
+  left:       50%;
+  top:        50%;
+  transform:  translate(-50%, -50%);
+  z-index:    9999;
+  background: var(--color-bg-panel);
+  border:     2px solid var(--color-border);
+  width:      var(--component-dialog-width);
+  max-width:  90vw;
+  box-shadow: 4px 4px 0 var(--color-bg-black);
 }
 
 [class*="dialogTitleBar"] {

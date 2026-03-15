@@ -46,7 +46,8 @@ export const UpgradeCard = ({ upgrade }: { upgrade: Upgrade }) => {
 
         <Box gridArea="button" className="upgradeCard_button">
           <Button
-            variant="primary"
+            variant="secondary"
+            type="warning"
             className="purchaseUpgradeButton"
             onClick={() =>
               useUpgradesStore.getState().purchaseUpgrade(upgrade.id)

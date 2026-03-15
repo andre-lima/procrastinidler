@@ -16,6 +16,7 @@ import { useUpgradesStore } from './store/upgradesStore';
 import { useComputerUpgradesStore } from './store/computerUpgradesStore';
 import { Button, WindowContainer } from './components/ui';
 import { BurnoutOverlay } from './components/BurnoutOverlay/BurnoutOverlay';
+import { CRTFilter } from './components/CRTFilter';
 import { useDebugStore } from './store/debugStore';
 import { useTranslation } from 'react-i18next';
 import { humanNumber } from './helpers/human-number';
@@ -164,6 +165,7 @@ function App() {
       </Box>
 
       <BurnoutOverlay />
+      <CRTFilter />
     </div>
   );
 }

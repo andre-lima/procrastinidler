@@ -45,10 +45,16 @@
 }
 
 .switchRoot {
+  display:        inline-flex;
   border:         1px solid var(--color-border);
   background:     var(--color-bg-black);
+  cursor:         pointer;
+  padding:        0;
   width:          var(--component-switch-width);
   height:         var(--component-switch-height);
+  position:       relative;
+  vertical-align: middle;
+  margin-right:   8px;
 }
 
 .switchRootOn {
@@ -56,39 +62,78 @@
 }
 
 .switchThumb {
+  display:     block;
+  width:       var(--component-switch-thumb-width);
+  height:      var(--component-switch-thumb-height);
   background:  var(--color-border-dim);
+  margin:      1px;
+  transition:  transform 0.15s, background 0.15s;
   font-size:   var(--text-xxs);
   color:       var(--color-bg-black);
+  line-height: var(--component-switch-thumb-height);
+  text-align:  center;
+  font-family: var(--font-mono);
 }
 
 .switchThumbOn {
+  transform:  translateX(var(--component-switch-thumb-travel));
   background: var(--color-accent-hi);
 }
 
 .switchLabel {
-  color: var(--color-fg-text);
+  display:     flex;
+  align-items: center;
+  cursor:      pointer;
+  font-size:   var(--text-base);
+  color:       var(--color-fg-text);
+}
+
+.sliderRoot {
+  width:        100%;
+  position:     relative;
+  height:       var(--component-slider-height);
+  display:      flex;
+  align-items:  center;
+}
+
+.sliderControl {
+  width:        100%;
+  position:     relative;
+  height:       var(--component-slider-height);
+  display:      flex;
+  align-items:  center;
 }
 
 .sliderTrack {
+  width:     100%;
   height:    var(--component-slider-track-height);
   background: var(--color-bg-black);
   border:    1px solid var(--color-border);
+  position:  relative;
 }
 
 .sliderFill {
+  height:     100%;
   background: var(--color-accent);
 }
 
 .sliderThumb {
-  width:     var(--component-slider-thumb-width);
-  height:    var(--component-slider-thumb-height);
+  width:      var(--component-slider-thumb-width);
+  height:     var(--component-slider-thumb-height);
   background: var(--color-accent-hi);
+  border:     none;
+  position:   absolute;
+  top:        50%;
+  transform:  translate(-50%, -50%);
+  cursor:     pointer;
+  outline:    none;
 }
 
 .progressTrack {
   background: var(--color-bg-black);
   border:     1px solid var(--color-border);
   height:     var(--component-progress-height);
+  width:      100%;
 }
 
 .progressFill {

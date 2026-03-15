@@ -20,7 +20,7 @@ const initialState: PersonalUpgradesStoreState = {
     currentValue: 1,
     baseValue: 1,
     cost: 5,
-    rate: 1.3,
+    rate: 1.8,
     owned: 0,
     ownedLimit: 500,
     deltaPerOwned: 1,
@@ -85,7 +85,7 @@ const initialState: PersonalUpgradesStoreState = {
 
 export const usePersonalUpgradesStore = createGameStore<
   PersonalUpgradesStoreState,
-  { purchaseUpgrade: (upgradeId: string) => void }
+  { purchaseUpgrade: (upgradeId: string) => void; resetForNewRun: () => void }
 >(
   {
     saveKey: 'personal-upgrades-store',
@@ -94,6 +94,10 @@ export const usePersonalUpgradesStore = createGameStore<
     saveSystem: localStorageSaveSystem,
   },
   (set, get) => ({
+    /** Reset personal upgrades to initial state when starting a new run (computer upgrades are kept). */
+    resetForNewRun: () => {
+      set({ ...initialState });
+    },
     purchaseUpgrade: (upgradeId: string) => {
       const upgrade = (get() as unknown as Record<string, Upgrade>)[upgradeId];
       const money = useGameStore.getState().money;

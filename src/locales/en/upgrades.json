@@ -32,7 +32,7 @@
     "description": "Hire a new assistant to help you complete tasks."
   },
   "assistantsMultitasking": {
-    "title": "Multitasking",
+    "title": "Overworked",
     "description": "Upgrades the assistants' computers so they can take on more work at once."
   },
   "assistantInterval": {
@@ -68,7 +68,7 @@
     "description": "Increase deadline for tasks by 10%."
   },
   "bossMultitasking": {
-    "title": "Multitasking",
+    "title": "Micro-management",
     "description": "Upgrades the boss's computer so they can review more tasks at once."
   },
   "bossInterval": {

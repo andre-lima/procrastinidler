@@ -30,8 +30,11 @@ export function BurnoutOverlay() {
       }}
     >
       <Flex direction="column" align="center" gap={4}>
-        <Text as="h1" size="5" style={{ fontWeight: 'var(--font-weight-bold)' }}>
+        <Text as="h1" size="8" style={{ fontWeight: 'var(--font-weight-bold)' }}>
           You burned out.
+        </Text>
+        <Text as="p" size="6">
+          You were awarded 2 RAM.
         </Text>
         <Button variant="primary" size="lg" onClick={handleFindNewJob}>
           Find a New Job

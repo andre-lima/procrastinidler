@@ -1,0 +1,10 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   bundle.css — single entry point for 386 library styles.
+   Import this once at app root (e.g. in main.tsx) to get theme, tokens, and
+   all component styles. Set data-theme on <html> to switch themes.
+───────────────────────────────────────────────────────────────────────────── */
+
+@import "./theme.css";
+@import "./spacing.css";
+@import "./typography.css";
+@import "./index.css";

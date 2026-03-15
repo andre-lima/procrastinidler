@@ -9,6 +9,7 @@ import { useBossStore } from './bossStore';
 import { useRentStore } from './rentStore';
 import { useAssistantsUpgradesStore } from './assistantsUpgradesStore';
 import { useBossUpgradesStore } from './bossUpgradesStore';
+import { usePersonalUpgradesStore } from './personalUpgradesStore';
 
 /** Flags for which game features are currently enabled (e.g. by upgrades or progress). */
 export interface FeaturesEnabled {
@@ -43,11 +44,14 @@ interface GameStoreState {
     showRejectedTasks: boolean;
     sfxOn: boolean;
   };
+  /** CRT overlay: on/off and chromatic aberration strength (0–100). */
+  crtEnabled: boolean;
+  crtChromaticAberration: number;
 }
 
 const initialState: GameStoreState = {
-  money: 100000,
-  RAM: 10,
+  money: 0,
+  RAM: 0,
   burnout: 0,
   paused: false,
   burnedOut: false,
@@ -71,6 +75,8 @@ const initialState: GameStoreState = {
     showRejectedTasks: false,
     sfxOn: true,
   },
+  crtEnabled: true,
+  crtChromaticAberration: 10,
 };
 
 const useGameStore = createGameStore<
@@ -89,6 +95,8 @@ const useGameStore = createGameStore<
     setPaused: (paused: boolean) => void;
     setBurnedOut: (burnedOut: boolean) => void;
     startNewRun: () => void;
+    setCrtEnabled: (enabled: boolean) => void;
+    setCrtChromaticAberration: (value: number) => void;
   }
 >(
   {
@@ -152,13 +160,14 @@ const useGameStore = createGameStore<
     startNewRun: () => {
       const currentRun = get().runNumber ?? 1;
 
-      // Reset run-scoped stores
+      // Reset run-scoped stores (computer upgrades are kept)
       useTasksStore.getState().resetForNewRun();
       useAssistantStore.getState().resetForNewRun();
       useBossStore.getState().resetForNewRun();
       useRentStore.getState().resetForNewRun();
       useAssistantsUpgradesStore.getState().resetForNewRun();
       useBossUpgradesStore.getState().resetForNewRun();
+      usePersonalUpgradesStore.getState().resetForNewRun();
 
       // Zero money for the new run
       set({ money: 0 });
@@ -177,6 +186,9 @@ const useGameStore = createGameStore<
       // Increment run number, reset burnout, and unpause for the new Job
       set({ runNumber: currentRun + 1, paused: false, burnedOut: false, burnout: 0 });
     },
+    setCrtEnabled: (crtEnabled) => set({ crtEnabled }),
+    setCrtChromaticAberration: (crtChromaticAberration) =>
+      set({ crtChromaticAberration: Math.max(0, Math.min(100, crtChromaticAberration)) }),
   })
 );
 

@@ -12,9 +12,11 @@
     'tasks   upgrades   events'
     'footer  footer     footer';
   grid-template-columns: 40% 1fr 1fr;
-  grid-template-rows: auto auto 1fr 1fr auto;
+  grid-template-rows: auto auto auto 1fr 28px;
   gap: var(--space-4);
-  min-height: 100vh;
+  /* Constrain to viewport so the page never grows taller than the screen (e.g. after closing burnout overlay). */
+  height: 100vh;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -39,6 +41,7 @@
 
 .gameHeaderMeters {
   grid-area: meters;
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,7 +137,7 @@
     border: none;
     background: transparent;
     font-family: var(--font-mono);
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     color: var(--color-bg-black);
     cursor: pointer;
     padding: var(--component-sidebar-item-padding, 2px 12px);
@@ -204,6 +207,14 @@
 #root {
   position: relative;
   z-index: 0;
+}
+
+/* CRT overlay portal: full-screen, non-interactive, below Base UI dialogs */
+#crt-overlay-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
 }
 
 /* Base UI portal container — must sit above #root and contain the overlay layer */

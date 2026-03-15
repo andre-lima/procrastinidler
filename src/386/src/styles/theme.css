@@ -46,6 +46,8 @@
   /* Buttons — secondary default (outlined, gray) */
   --color-btn-secondary-border: #888888;
   --color-btn-secondary-fg:     #bbbbbb;
+  --color-btn-secondary-bg: #000000;
+
 
   /* Button shadow */
   --color-btn-shadow: #333333;

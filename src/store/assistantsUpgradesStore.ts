@@ -31,7 +31,7 @@ const initialState: AssistantsUpgradesStoreState = {
     currentValue: 0,
     baseValue: 0,
     cost: 10,
-    rate: 3.5,
+    rate: 5,
     owned: 0,
     ownedLimit: 5,
     deltaPerOwned: 0,

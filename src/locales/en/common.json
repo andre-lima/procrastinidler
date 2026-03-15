@@ -9,6 +9,11 @@
     "done": "Done",
     "submit": "Submit"
   },
+  "windows": {
+    "meters": {
+      "title": "Status"
+    }
+  },
   "menus": {
     "upgrades": {
       "title": "Upgrades"

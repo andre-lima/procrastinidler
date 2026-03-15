@@ -31,6 +31,8 @@ export const BurnoutMeter = () => {
 
       if (newBurnout >= 100) {
         useEventsStore.getState().addEvent('burnout');
+        // Award 1 RAM as consolation for burning out (prestige-style currency).
+        useGameStore.getState().addRAM(2);
         // Enter burned-out paused state; overlay & loops will respect these flags.
         useGameStore.getState().setBurnedOut(true);
         useGameStore.getState().setPaused(true);
