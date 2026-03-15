@@ -2,6 +2,7 @@ import './App.scss';
 import { useEffect } from 'react';
 import { Box, Flex, Text } from './components/shared';
 import { NavBar } from './components/NavBar/NavBar';
+import { UpgradesSidebar } from './components/UpgradesSidebar/UpgradesSidebar';
 import { TaskState, type TasksState } from './store/tasksStore';
 import { TasksList } from './components/TasksList/TasksList';
 import { useGameStore } from './store/gameStore';
@@ -33,7 +34,8 @@ function PlayerFireUpgrade() {
     </Box>
     <Box gridArea="button" className="">
       <Button
-        variant="danger"
+        variant="primary"
+        type="danger"
         size="lg"
         className=""
         disabled={
@@ -117,7 +119,9 @@ function App() {
       <div className="gameCompleted">
         <CompletedCount />
       </div>
-      {/* <div className="gameBoost">Boost</div> */}
+      <div className="gameUpgrades">
+        <UpgradesSidebar />
+      </div>
       <div className="gamePlayer">
         <WindowContainer variant="secondary">
           <Flex align="center" gap={2} direction='column'>

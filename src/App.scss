@@ -1,17 +1,19 @@
 /* ── Game layout (grid) ───────────────────────────────────────
    Header: navigation | currency
    Body:   tasks (60%) | player + events (40%, stacked)
+   Upgrades area: sidebar with Personal, Boss, Assistants, Computer
 ───────────────────────────────────────────────────────────── */
 .gameLayout {
   display: grid;
   grid-template-areas:
     'header  header     header'
     'tasks   completed  meters'
-    'tasks   upgrades  player'
-    'tasks   upgrades      events'
+    'tasks   upgrades   player'
+    'tasks   upgrades   events'
     'footer  footer     footer';
   grid-template-columns: 40% 1fr 1fr;
   grid-template-rows: auto auto 1fr 1fr auto;
+  gap: var(--space-4);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -105,6 +107,51 @@
   > * {
     flex: 1;
     min-height: 0;
+  }
+}
+
+/* Upgrades area: WindowContainer with list of links that open upgrade dialogs */
+.gameUpgrades {
+  grid-area: upgrades;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  overflow: auto;
+  min-width: 0;
+
+  .upgradesSidebar_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .upgradesSidebar_link {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    color: var(--color-bg-black);
+    cursor: pointer;
+    padding: var(--component-sidebar-item-padding, 2px 12px);
+    text-decoration: none;
+
+    &::first-letter {
+      color: var(--color-danger);
+    }
+
+    &:hover {
+      color: var(--color-fg-text);
+      background: var(--color-bg-black);
+
+      &::first-letter {
+        color: var(--color-fg-text);
+      }
+    }
   }
 }
 

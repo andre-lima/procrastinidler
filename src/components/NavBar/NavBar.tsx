@@ -3,14 +3,11 @@ import { TaskState } from '../../store/tasksStore';
 import { useTasksStore } from '../../store/tasksStore';
 import { Assistant } from '../Assistant/Assistant';
 import { useAssistantStore } from '../../store/assistantStore';
-import { PurchaseUpgrades } from '../PurchaseUpgrades/PurchaseUpgrades';
-import { NavDialogButton } from './NavDialogButton';
 import { useBossStore } from '../../store/bossStore';
 import { Boss } from '../Boss/Boss';
 import { useTranslation } from 'react-i18next';
 import { MoneyDisplay } from '../MoneyDisplay/MoneyDisplay';
 import { RamDisplay } from '../RamDisplay/RamDisplay';
-import { Meters } from '../Meters/Meters';
 import { useUpgradesStore } from '../../store/upgradesStore';
 import { useGameStore } from '../../store/gameStore';
 
@@ -47,22 +44,6 @@ export const NavBar = () => {
         >
           {t('menus.newRun')}
         </Button>
-
-        <NavDialogButton id="personal" variant="secondary" type="warning">
-          <PurchaseUpgrades id="personal" />
-        </NavDialogButton>
-
-        <NavDialogButton id="boss" variant="secondary" type="warning">
-          <PurchaseUpgrades id="boss" />
-        </NavDialogButton>
-
-        <NavDialogButton id="assistants" variant="secondary" type="info">
-          <PurchaseUpgrades id="assistants" />
-        </NavDialogButton>
-
-        <NavDialogButton id="computer" variant="secondary" type="info">
-          <PurchaseUpgrades id="computer" />
-        </NavDialogButton>
 
         {Object.values(assistants).map(
           (assistant) =>

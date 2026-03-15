@@ -7,6 +7,7 @@ import './386/src/styles/window-container.css';
 import './styles/spacing.css';
 import './styles/typography.css';
 import './styles/components.css';
+import './386/src/styles/sidebar.css';
 import './index.scss';
 import { initStoreWiring } from './store/store-wiring';
 import App from './App.tsx';

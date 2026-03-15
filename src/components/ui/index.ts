@@ -31,3 +31,4 @@ export {
 } from '../../386/src/components/Progress';
 export { AsciiProgressBar } from '../../386/src/components/AsciiProgressBar';
 export { WindowContainer } from '../../386/src/components/WindowContainer';
+export { Sidebar } from '../../386/src/components/Sidebar';

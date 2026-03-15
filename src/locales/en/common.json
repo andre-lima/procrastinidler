@@ -10,6 +10,9 @@
     "submit": "Submit"
   },
   "menus": {
+    "upgrades": {
+      "title": "Upgrades"
+    },
     "personal": {
       "navButton": "Personal",
       "dialog": {
